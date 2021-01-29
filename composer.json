@@ -2,15 +2,8 @@
 	"name": "isengine/core",
     "type": "project",
 	"description": "This is not so much a CMS-system as an automated engine for creating websites https://isengine.org",
-	"version": "0.13.0",
-	"keywords": [ "php", "cms", "framework" ],
-	"homepage": "https://isengine.org",
-	"repositories": [
-		{
-			"type": "git",
-			"url": "https://github.com/isengine/core"
-		}
-	],
+	"version": "0.13-dev",
+	"keywords": [ "php", "cms", "framework", "isengine" ],
 	"license": "MIT",
 	"authors": [
 		{
@@ -18,12 +11,10 @@
 			"homepage": "https://github.com/fwmakc"
 		}
 	],
+    "minimum-stability": "dev",
 	"require": {
         "php" : "^5.6.0|^7.0|^8.0"
 	},
 	"autoload": {
-        "psr-4": {
-            "is\\": "/"
-        }
 	}
 }
