@@ -1,5 +1,6 @@
 {
 	"name": "isengine/core",
+    "type": "project",
 	"description": "This is not so much a CMS-system as an automated engine for creating websites https://isengine.org",
 	"version": "0.13.0",
 	"keywords": [ "php", "cms", "framework" ],
