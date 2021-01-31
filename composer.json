@@ -1,6 +1,6 @@
 {
 	"name": "isengine/core",
-    "type": "project",
+	"type": "project",
 	"description": "This is not so much a CMS-system as an automated engine for creating websites https://isengine.org",
 	"version": "0.13-dev",
 	"keywords": [ "php", "cms", "framework", "isengine" ],
@@ -11,9 +11,9 @@
 			"homepage": "https://github.com/fwmakc"
 		}
 	],
-    "minimum-stability": "dev",
+	"minimum-stability": "dev",
 	"require": {
-        "php" : "^5.6.0|^7.0|^8.0"
+		"php" : "^5.6.0|^7.0|^8.0"
 	},
 	"autoload": {
 	}
