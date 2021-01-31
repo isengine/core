@@ -1,7 +1,7 @@
 {
 	"name": "isengine/core",
 	"type": "project",
-	"description": "This is not so much a CMS-system as an automated engine for creating websites https://isengine.org",
+	"description": "This is automated engine for creating websites based on self framework",
 	"version": "0.13-dev",
 	"keywords": [ "php", "cms", "framework", "isengine" ],
 	"license": "MIT",
