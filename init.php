@@ -6,14 +6,13 @@ namespace is;
 
 // Базовые константы
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'defines.php';
+if (!defined('isENGINE')) { define('isENGINE', microtime(true)); }
+if (!defined('DS')) { define('DS', DIRECTORY_SEPARATOR); }
+if (!defined('DP')) { define('DP', '..' . DIRECTORY_SEPARATOR); }
 
-// определяем функции инициализации компонентов системы
+// Launch system configuration
+// Запускаем конфигурацию системы
 
-require_once __DIR__ . DS . 'init' . DS . 'config.php';
-
-// Include configuration file
-// Подключаем файл конфигурации
-//require_once PATH_SITE . 'configuration.php';
+require_once __DIR__ . DS . 'configuration' . DS . 'init.php';
 
 ?>
