@@ -18,7 +18,7 @@ $config = Config::getInstance();
 // Читаем настройки системы
 
 $default = [];
-require_once __DIR__ . DS . 'default.php';
+require_once __DIR__ . DS . 'config' . DS . 'default.php';
 $data -> setData($default);
 unset($default);
 
@@ -46,12 +46,12 @@ $config -> initialize();
 
 // Задаем оставшиеся системные настройки
 
-require_once __DIR__ . DS . 'system.php';
+require_once __DIR__ . DS . 'config' . DS . 'system.php';
 
 // Делаем проверку системы, но только в режиме разработки
 
 if ($config -> get('default:mode') === 'develop') {
-	//require_once __DIR__ . DS . 'check.php';
+	//require_once __DIR__ . DS . 'config' . DS .  . 'check.php';
 }
 
 // ТОЛЬКО ДЛЯ ОТЛАДКИ !!!

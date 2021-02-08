@@ -2,6 +2,7 @@
 
 $site = realpath($_SERVER['DOCUMENT_ROOT']) . DS;
 $base = realpath($_SERVER['DOCUMENT_ROOT'] . DS . '..') . DS;
+$core = realpath($_SERVER['DOCUMENT_ROOT'] . DS . '..') . DS;
 
 $default = [
 	'system' => [
@@ -14,36 +15,47 @@ $default = [
 	'path' => [
 		'site' => $site,
 		'base' => $base,
+		'core' => __DIR__,
+		
 		'assets' => $site . 'public' . DS . 'assets' . DS,
 		'cache' => $site . 'cache' . DS,
-		'core' => $site . 'vendor' . DS . 'isengine' . DS . 'core' . DS,
-		'custom' => $site . 'public' . DS . 'custom' . DS,
+		'content' => $site . 'public' . DS 'content' . DS,
+		//'core' => $site . 'vendor' . DS . 'isengine' . DS . 'core' . DS,
+		'custom' => $site . 'custom' . DS,
 		'database' => $site . 'database' . DS,
+		'errors' => 'error',
 		'extensions' => $site . 'vendor' . DS,
-		'local' => $site . 'public' . DS . 'local' . DS,
+		'storage' => $site . 'public' . DS . 'storage' . DS,
 		'log' => $site . 'log' . DS,
+		'process' => $site . 'vendor' . DS . 'isengine' . DS . 'core' . DS . 'process',
 		'templates' => $site . 'public' . DS . 'templates' . DS
 	],
 	'name' => [
 		'assets' => 'assets',
 		'cache' => 'cache',
+		'content' => 'content',
 		'core' => 'core',
 		'custom' => 'custom',
 		'database' => 'database',
+		'errors' => 'error',
 		'extensions' => 'vendor',
-		'local' => 'local',
+		'storage' => 'storage',
 		'log' => 'log',
+		'process' => 'process',
 		'templates' => 'templates'
 	],
 	'url' => [
 		'assets' => '/public/assets/',
-		'cache' => '/cache/',
+		'cache' => '/',
+		'content' => '/',
 		'core' => '/',
 		'custom' => '/',
 		'database' => '/',
 		'extensions' => '/vendor/',
-		'local' => '/public/local/',
-		'log' => '/log/',
+		'errors' => '/error/',
+		'storage' => '/public/storage/',
+		'log' => '/',
+		'process' => '/process/',
 		'templates' => '/public/templates/'
 	]
 ];
