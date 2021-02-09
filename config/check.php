@@ -5,11 +5,14 @@
 namespace is;
 
 use is\Helpers\Strings;
+use is\Helpers\Objects;
 use is\Helpers\System;
 use is\Helpers\Sessions;
 use is\Model\Constants\Config;
 use is\Model\Constants\Session;
 use is\Model\Data\LocalData;
+use is\Model\Globals\Log;
+use is\Model\Globals\Session as Sess;
 use is\Parents\Path;
 use is\Parents\Local;
 
@@ -19,10 +22,15 @@ $config = Config::getInstance();
 $mode = $config -> get('default:mode');
 $errors = null;
 
+$session = Sess::getInstance();
+$session -> log();
+$session -> logPath('log');
+$session -> path('errors');
+
 // Проверяем версию php
 
 if (version_compare(PHP_VERSION, $config -> get('system:php'), '<')) {
-	$errors[] = 'php is not compatible version';
+	$session -> logAdd('php is not compatible version');
 }
 
 // Проверяем существование модулей php
@@ -34,7 +42,7 @@ $extensions = ['curl', 'date', 'intl', 'json', 'mbstring', 'pcre', 'SimpleXML', 
 
 foreach ($extensions as $item) {
 	if (!extension_loaded($item)) {
-		$errors[] = 'not installed required php extension \"' . $item . '\"';
+		$session -> logAdd('not installed required php extension \"' . $item . '\"');
 	}
 }
 
@@ -52,7 +60,7 @@ if (
 		!$config -> get('db:writing:pass')
 	)
 ) {
-	$errors[] = 'system constants is set wrong';
+	$session -> logAdd('system constants is set wrong');
 }
 
 // Проверяем существование системных папок
@@ -63,13 +71,12 @@ foreach ($folders as $item) {
 	$path = $config -> get('path:' . $item);
 	if (!file_exists($path) || !is_dir($path)) {
 		mkdir($path);
-		$errors[] = 'system folder from path constant \"' . $item . '\" does not exist and was created';
+		$session -> logAdd('system folder from path constant \"' . $item . '\" does not exist and was created');
 	}
 }
 
-if ($errors) {
-	echo '<pre>' . print_r($errors, 1) . '</pre>';
-	exit;
+if ($session -> logGet()) {
+	$session -> close();
 }
 
 unset($item, $extensions, $folders);
