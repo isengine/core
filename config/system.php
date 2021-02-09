@@ -1,6 +1,17 @@
 <?php
 
+// Рабочее пространство имен
+
+namespace is;
+
+use is\Model\Constants\Config;
+use is\Model\Data\LocalData;
+use is\Parents\Path;
+use is\Parents\Local;
+
 // задаем конфигурацию php
+
+$config = Config::getInstance();
 
 // принудительно устанавливаем имя идентификатора сессии
 // т.к. например в nginx он отказывается его принимать в конфиге

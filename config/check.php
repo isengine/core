@@ -1,62 +1,77 @@
 <?php
 
+// Рабочее пространство имен
+
+namespace is;
+
+use is\Helpers\Strings;
+use is\Helpers\System;
+use is\Helpers\Sessions;
+use is\Model\Constants\Config;
+use is\Model\Constants\Session;
+use is\Model\Data\LocalData;
+use is\Parents\Path;
+use is\Parents\Local;
+
+// задаем конфигурацию php
+
+$config = Config::getInstance();
+$mode = $config -> get('default:mode');
+$errors = null;
+
 // Проверяем версию php
 
-if (version_compare(PHP_VERSION, CMS_MINIMUM_PHP, '<')) {
-	error('php', false, true);
+if (version_compare(PHP_VERSION, $config -> get('system:php'), '<')) {
+	$errors[] = 'php is not compatible version';
 }
 
 // Проверяем существование модулей php
+// Также рекомендуется наличие модулей fileinfo, gd | imagick, PDO | mysqli | sqlite3
+// Можно вывести все доступные модули:
+//echo '<pre>' . print_r(get_loaded_extensions(), 1) . '</pre>';
 
-$phpmods = [
-	'mbstring'
-];
+$extensions = ['curl', 'date', 'intl', 'json', 'mbstring', 'pcre', 'SimpleXML', 'session', 'zip'];
 
-foreach ($phpmods as $item) {
+foreach ($extensions as $item) {
 	if (!extension_loaded($item)) {
-		error('system', false, '[not php module : ' . $item . ']');
+		$errors[] = 'not installed required php extension \"' . $item . '\"';
 	}
 }
 
 // Проверяем взаимодействие констант
 
 if (
-	!DEFAULT_USERS && (SECURE_RIGHTS || SECURE_CSRF || USERS_RIGHTS || SECURE_USERS) ||
-	SECURE_WRITING && (!defined(DB_WRITINGUSER) || !defined(DB_WRITINGPASS) || !DB_WRITINGUSER || !DB_WRITINGPASS)
+	!$config -> get('default:users') && (
+		$config -> get('secure:rights') ||
+		$config -> get('secure:csrf') ||
+		$config -> get('users:rights') ||
+		$config -> get('secure:users')
+	) ||
+	$config -> get('secure:writing') && (
+		!$config -> get('db:writing:user') ||
+		!$config -> get('db:writing:pass')
+	)
 ) {
-	error('system', false, '[system constants is set wrong : ' . 
-		'SECURE_RIGHTS or SECURE_CSRF or USERS_RIGHTS or SECURE_USERS without DEFAULT_USERS // ' .
-		'SECURE_RIGHTS without USERS_RIGHTS // ' .
-		'SECURE_WRITING without DB_WRITINGUSER or DB_WRITINGPASS' .
-	']');
+	$errors[] = 'system constants is set wrong';
 }
 
 // Проверяем существование системных папок
 
-$folders = [
-	'assets', 'database', 'cache', 'core', 'libraries', 'local', 'log', 'modules', 'templates'
-];
+$folders = ['assets', 'cache', 'custom', 'database', 'extensions', 'log', 'templates'];
 
 foreach ($folders as $item) {
-	$item = strtoupper($item);
-	if (
-		!defined('NAME_' . $item) ||
-		!defined('URL_' . $item) ||
-		!defined('PATH_' . $item) ||
-		!file_exists(constant('PATH_' . $item)) ||
-		!is_dir(constant('PATH_' . $item))
-	) {
-		if (
-			!file_exists(constant('PATH_' . $item)) &&
-			SECURE_BLOCKIP === 'developlist'
-		) {
-			mkdir(constant('PATH_' . $item));
-		} else {
-			error('system', false, '[not system folder from path constant : ' . $item . ']');
-		}
+	$path = $config -> get('path:' . $item);
+	if (!file_exists($path) || !is_dir($path)) {
+		mkdir($path);
+		$errors[] = 'system folder from path constant \"' . $item . '\" does not exist and was created';
 	}
 }
 
-unset($item, $phpmods, $constants, $folders, $functions);
+if ($errors) {
+	echo '<pre>' . print_r($errors, 1) . '</pre>';
+	exit;
+}
+
+unset($item, $extensions, $folders);
 
 ?>

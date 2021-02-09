@@ -15,17 +15,17 @@ $local = new Local();
 $data = new LocalData($local);
 $config = Config::getInstance();
 
-// Читаем настройки системы
+$path = new Parents\Path(__DIR__ . DS . DP);
 
-$default = [];
-require_once __DIR__ . DS . 'config' . DS . 'default.php';
+// Читаем настройки системы по-умолчанию
+
+$default = $path -> include('config:default', 'default');
 $data -> setData($default);
 unset($default);
 
 // Создаем конфигурацию из констант
-
-$config -> data = $data -> getData();
-$config -> initialize();
+//$config -> data = $data -> getData();
+//$config -> initialize();
 
 // Читаем пользовательские настройки
 
@@ -46,20 +46,18 @@ $config -> initialize();
 
 // Задаем оставшиеся системные настройки
 
-require_once __DIR__ . DS . 'config' . DS . 'system.php';
+$path -> include('config:system');
 
 // Делаем проверку системы, но только в режиме разработки
 
 if ($config -> get('default:mode') === 'develop') {
-	//require_once __DIR__ . DS . 'config' . DS .  . 'check.php';
+	$path -> include('config:check');
 }
 
 // ТОЛЬКО ДЛЯ ОТЛАДКИ !!!
 // Смотрим итоги
 
-$get = $config -> get();
-
-//echo '<pre>' . print_r($config, 1) . '</pre>';
-echo '<pre>' . print_r($get, 1) . '</pre>';
+//$get = $config -> get();
+//echo '<pre>' . print_r($get, 1) . '</pre>';
 
 ?>

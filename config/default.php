@@ -1,8 +1,8 @@
 <?php
 
 $site = realpath($_SERVER['DOCUMENT_ROOT']) . DS;
-$base = realpath($_SERVER['DOCUMENT_ROOT'] . DS . '..') . DS;
-$core = realpath($_SERVER['DOCUMENT_ROOT'] . DS . '..') . DS;
+$base = DR;
+$core = realpath(__DIR__ . DS . DP) . DS;
 
 $default = [
 	'system' => [
@@ -12,54 +12,52 @@ $default = [
 		'local' => '127.0.0.1',
 		'sender' => 'X-Mailer: PHP/' . phpversion()
 	],
+	'time' => [
+		'minute' => 60,
+		'hour' => 3600,
+		'day' => 86400,
+		'week' => 604800,
+		'month' => 2628000,
+		'year' => 31556926
+	],
 	'path' => [
 		'site' => $site,
 		'base' => $base,
-		'core' => __DIR__,
+		'core' => $core,
 		
-		'assets' => $site . 'public' . DS . 'assets' . DS,
-		'cache' => $site . 'cache' . DS,
-		'content' => $site . 'public' . DS 'content' . DS,
-		//'core' => $site . 'vendor' . DS . 'isengine' . DS . 'core' . DS,
-		'custom' => $site . 'custom' . DS,
-		'database' => $site . 'database' . DS,
-		'errors' => 'error',
-		'extensions' => $site . 'vendor' . DS,
-		'storage' => $site . 'public' . DS . 'storage' . DS,
-		'log' => $site . 'log' . DS,
-		'process' => $site . 'vendor' . DS . 'isengine' . DS . 'core' . DS . 'process',
-		'templates' => $site . 'public' . DS . 'templates' . DS
+		'assets' => $base . 'public' . DS . 'assets' . DS,
+		'cache' => $base . 'public' . DS . 'cache' . DS,
+		'custom' => $base . 'custom' . DS,
+		'database' => $base . 'database' . DS,
+		'extensions' => $base . 'vendor' . DS,
+		'log' => $base . 'log' . DS,
+		'templates' => $base . 'templates' . DS
 	],
 	'name' => [
+		'default' => 'default',
+		'errors' => 'error',
+		'items' => 'items',
+		'process' => 'process',
+		
 		'assets' => 'assets',
 		'cache' => 'cache',
-		'content' => 'content',
-		'core' => 'core',
 		'custom' => 'custom',
 		'database' => 'database',
-		'errors' => 'error',
 		'extensions' => 'vendor',
-		'storage' => 'storage',
 		'log' => 'log',
-		'process' => 'process',
 		'templates' => 'templates'
 	],
 	'url' => [
-		'assets' => '/public/assets/',
-		'cache' => '/',
-		'content' => '/',
-		'core' => '/',
+		'assets' => '/assets/',
+		'cache' => '/cache/',
 		'custom' => '/',
 		'database' => '/',
-		'extensions' => '/vendor/',
-		'errors' => '/error/',
-		'storage' => '/public/storage/',
+		'extensions' => '/',
 		'log' => '/',
-		'process' => '/process/',
-		'templates' => '/public/templates/'
+		'templates' => '/'
 	]
 ];
 
-unset($site, $base);
+unset($site, $base, $core);
 
 ?>
