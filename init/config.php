@@ -6,8 +6,8 @@ namespace is;
 
 use is\Model\Constants\Config;
 use is\Model\Data\LocalData;
-use is\Parents\Path;
-use is\Parents\Local;
+use is\Model\Components\Path;
+use is\Model\Components\Local;
 
 // Подготавливаем конфигурацию
 
@@ -15,7 +15,7 @@ $local = new Local();
 $data = new LocalData($local);
 $config = Config::getInstance();
 
-$path = new Parents\Path(__DIR__ . DS . DP);
+$path = new Path(__DIR__ . DS . DP);
 
 // Читаем настройки системы по-умолчанию
 

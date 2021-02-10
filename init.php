@@ -22,7 +22,7 @@ unset($autoload, $framework);
 // Create including components
 // Создаем подключение компонентов
 
-$path = new Parents\Path(__DIR__);
+$path = new Model\Components\Path(__DIR__);
 
 // Launch system configuration
 // Запускаем конфигурацию системы

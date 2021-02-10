@@ -8,9 +8,10 @@ use is\Helpers\System;
 use is\Helpers\Sessions;
 use is\Model\Constants\Config;
 use is\Model\Data\LocalData;
-use is\Model\Globals\Session;
-use is\Parents\Path;
-use is\Parents\Local;
+//use is\Model\Globals\Session;
+use is\Model\Components\Session;
+use is\Model\Components\Path;
+use is\Model\Components\Local;
 
 // читаем сессию
 

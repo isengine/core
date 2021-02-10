@@ -11,10 +11,11 @@ use is\Helpers\Sessions;
 use is\Model\Constants\Config;
 use is\Model\Constants\Session;
 use is\Model\Data\LocalData;
-use is\Model\Globals\Log;
-use is\Model\Globals\Session as Sess;
-use is\Parents\Path;
-use is\Parents\Local;
+use is\Model\Components\Log;
+//use is\Model\Globals\Session as Sess;
+use is\Model\Components\Session as Sess;
+use is\Model\Components\Path;
+use is\Model\Components\Local;
 
 // задаем конфигурацию php
 
