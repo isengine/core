@@ -25,8 +25,8 @@ $default = [
 		'base' => $base,
 		'core' => $core,
 		
-		'assets' => $base . 'public' . DS . 'assets' . DS,
-		'cache' => $base . 'public' . DS . 'cache' . DS,
+		'assets' => $site . 'assets' . DS,
+		'cache' => $site . 'cache' . DS,
 		'custom' => $base . 'custom' . DS,
 		'database' => $base . 'database' . DS,
 		'extensions' => $base . 'vendor' . DS,
