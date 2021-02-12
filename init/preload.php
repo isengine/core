@@ -24,8 +24,8 @@ $block = null;
 
 if (!empty($list)) {
 	
-	$ip = Ip::ipReal();
-	$in_range = Ip::ipRange($ip, $list);
+	$ip = Ip::real();
+	$in_range = Ip::range($ip, $list);
 	
 	if (
 		($mode === 'blacklist' && $in_range) ||

@@ -49,6 +49,18 @@ $path -> include('init:error');
 
 $path -> include('init:session');
 
+// Launch check cookie
+// Запускаем проверку работы куки
+
+$path -> include('init:cookie');
+
+// Launch check query
+// Запускаем проверку качества запроса
+
+$path -> include('init:request');
+
+
+
 echo '<hr><p>END OF TESTS<br>' . number_format(memory_get_usage() / 1024, 3, '.', ' ') . ' KB total / ' . number_format(memory_get_peak_usage() / 1024, 3, '.', ' ') . ' KB in peak<br>' . number_format(microtime(true) - isENGINE, 3, null, null) . ' sec is speed</p>';
 
 ?>

@@ -16,7 +16,4 @@ use is\Model\Components\Display;
 $session = Session::getInstance();
 $session -> init();
 
-$print = Display::getInstance();
-$print -> dump($session);
-
 ?>
