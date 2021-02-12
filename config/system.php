@@ -4,10 +4,7 @@
 
 namespace is;
 
-use is\Model\Constants\Config;
-use is\Model\Data\LocalData;
-use is\Parents\Path;
-use is\Parents\Local;
+use is\Model\Components\Config;
 
 // задаем конфигурацию php
 

@@ -6,7 +6,7 @@ $core = realpath(__DIR__ . DS . DP) . DS;
 
 $default = [
 	'system' => [
-		'php' => '5.6.0',
+		'php' => '7.0',
 		'session' => 'SID',
 		'charset' => 'UTF-8',
 		'local' => '127.0.0.1',
@@ -34,11 +34,6 @@ $default = [
 		'templates' => $base . 'templates' . DS
 	],
 	'name' => [
-		'default' => 'default',
-		'errors' => 'error',
-		'items' => 'items',
-		'process' => 'process',
-		
 		'assets' => 'assets',
 		'cache' => 'cache',
 		'custom' => 'custom',
@@ -55,6 +50,16 @@ $default = [
 		'extensions' => '/',
 		'log' => '/',
 		'templates' => '/'
+	],
+	'error' => [
+		'name' => 'error',
+		'url' => '/error/',
+		'prefix' => '',
+		'postfix' => ''
+	],
+	'api' => [
+		'name' => 'api',
+		'url' => '/api/'
 	]
 ];
 

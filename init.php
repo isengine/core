@@ -19,6 +19,11 @@ $framework = DR . 'vendor' . DS . 'isengine' . DS . 'framework' . DS . 'php' . D
 require_once file_exists($autoload) ? $autoload : $framework;
 unset($autoload, $framework);
 
+// Pre-check for blocking by ip
+// Предварительная проверка на блокировку по ip
+
+require_once 'init' . DS . 'preload.php';
+
 // Create including components
 // Создаем подключение компонентов
 
@@ -29,12 +34,21 @@ $path = new Model\Components\Path(__DIR__);
 
 $path -> include('init:config');
 
+// Launch display buffer
+// Запускаем буфер вывода на экран
+
+$path -> include('init:display');
+
+// Launch error page settings
+// Запускаем настройку страницы ошибок
+
+$path -> include('init:error');
+
 // Launch session set and check
 // Запускаем установку и проверку сессии
 
 $path -> include('init:session');
 
-
-
+echo '<hr><p>END OF TESTS<br>' . number_format(memory_get_usage() / 1024, 3, '.', ' ') . ' KB total / ' . number_format(memory_get_peak_usage() / 1024, 3, '.', ' ') . ' KB in peak<br>' . number_format(microtime(true) - isENGINE, 3, null, null) . ' sec is speed</p>';
 
 ?>

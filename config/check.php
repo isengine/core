@@ -8,42 +8,34 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\System;
 use is\Helpers\Sessions;
-use is\Model\Constants\Config;
-use is\Model\Constants\Session;
-use is\Model\Data\LocalData;
+use is\Model\Components\Config;
 use is\Model\Components\Log;
-//use is\Model\Globals\Session as Sess;
-use is\Model\Components\Session as Sess;
+use is\Model\Components\Display;
+use is\Model\Components\Session;
 use is\Model\Components\Path;
 use is\Model\Components\Local;
 
 // задаем конфигурацию php
 
 $config = Config::getInstance();
-$mode = $config -> get('default:mode');
-$errors = null;
-
-$session = Sess::getInstance();
-$session -> log();
-$session -> logPath('log');
-$session -> path('errors');
+$log = Log::getInstance();
 
 // Проверяем версию php
 
 if (version_compare(PHP_VERSION, $config -> get('system:php'), '<')) {
-	$session -> logAdd('php is not compatible version');
+	$log -> data[] = 'php is not compatible [>=' . $config -> get('system:php') . '] version';
 }
 
 // Проверяем существование модулей php
-// Также рекомендуется наличие модулей fileinfo, gd | imagick, PDO | mysqli | sqlite3
+// Также рекомендуется наличие модулей 'intl', fileinfo, gd | imagick, PDO | mysqli | sqlite3
 // Можно вывести все доступные модули:
 //echo '<pre>' . print_r(get_loaded_extensions(), 1) . '</pre>';
 
-$extensions = ['curl', 'date', 'intl', 'json', 'mbstring', 'pcre', 'SimpleXML', 'session', 'zip'];
+$extensions = ['curl', 'date', 'json', 'mbstring', 'pcre', 'SimpleXML', 'session', 'zip'];
 
 foreach ($extensions as $item) {
 	if (!extension_loaded($item)) {
-		$session -> logAdd('not installed required php extension \"' . $item . '\"');
+		$log -> data[] = 'required php extension [' . $item . '] not installed';
 	}
 }
 
@@ -61,7 +53,7 @@ if (
 		!$config -> get('db:writing:pass')
 	)
 ) {
-	$session -> logAdd('system constants is set wrong');
+	$log -> data[] = 'system constants is set wrong';
 }
 
 // Проверяем существование системных папок
@@ -72,12 +64,24 @@ foreach ($folders as $item) {
 	$path = $config -> get('path:' . $item);
 	if (!file_exists($path) || !is_dir($path)) {
 		mkdir($path);
-		$session -> logAdd('system folder from path constant \"' . $item . '\" does not exist and was created');
+		$log -> data[] = 'system folder [' . $path . '] does not exist and was created';
 	}
 }
 
-if ($session -> logGet()) {
-	$session -> close();
+if ($log -> data) {
+	
+	$log -> init();
+	$log -> setPath('log');
+	
+	$print = Display::getInstance();
+	$print -> splitter = '<br>';
+	$print -> print($log -> data);
+	
+	$log -> summary();
+	$log -> close();
+	
+	exit;
+	
 }
 
 unset($item, $extensions, $folders);

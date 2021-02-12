@@ -4,15 +4,13 @@
 
 namespace is;
 
-use is\Model\Constants\Config;
-use is\Model\Data\LocalData;
+use is\Model\Components\Config;
 use is\Model\Components\Path;
-use is\Model\Components\Local;
+use is\Model\Components\Content;
 
 // Подготавливаем конфигурацию
 
-$local = new Local();
-$data = new LocalData($local);
+$data = new Content();
 $config = Config::getInstance();
 
 $path = new Path(__DIR__ . DS . DP);
@@ -20,29 +18,29 @@ $path = new Path(__DIR__ . DS . DP);
 // Читаем настройки системы по-умолчанию
 
 $default = $path -> include('config:default', 'default');
-$data -> setData($default);
+$data -> addContent($default);
 unset($default);
 
 // Создаем конфигурацию из констант
 //$config -> data = $data -> getData();
-//$config -> initialize();
+//$config -> init();
 
 // Читаем пользовательские настройки
 
-$local -> setFile('configuration.ini');
-$data -> joinData($local);
+$data -> setFile('configuration.ini');
+$data -> readContent();
 
 // Читаем настройки для запуска на локальной машине
 
 if ($_SERVER['REMOTE_ADDR'] === $config -> get('system:local')) {
-	$local -> setFile('configuration.local.ini');
-	$data -> joinData($local);
+	$data -> setFile('configuration.local.ini');
+	$data -> readContent();
 }
 
 // Создаем конфигурацию из констант
 
-$config -> data = $data -> getData();
-$config -> initialize();
+$config -> data = $data -> getContent();
+$config -> init();
 
 // Задаем оставшиеся системные настройки
 
