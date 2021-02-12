@@ -57,6 +57,10 @@ $default = [
 		'prefix' => '',
 		'postfix' => ''
 	],
+	'filter' => [
+		'name' => 'filter',
+		'url' => '/filter/'
+	],
 	'api' => [
 		'name' => 'api',
 		'url' => '/api/'

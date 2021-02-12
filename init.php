@@ -34,30 +34,41 @@ $path = new Model\Components\Path(__DIR__);
 
 $path -> include('init:config');
 
-// Launch display buffer
-// Запускаем буфер вывода на экран
+// Launch logs
+// Запускаем логи
 
-$path -> include('init:display');
-
-// Launch error page settings
-// Запускаем настройку страницы ошибок
-
-$path -> include('init:error');
+$path -> include('init:log');
 
 // Launch session set and check
 // Запускаем установку и проверку сессии
 
 $path -> include('init:session');
 
-// Launch check cookie
-// Запускаем проверку работы куки
+// Launch error page settings
+// Запускаем настройку страницы ошибок
 
-$path -> include('init:cookie');
+$path -> include('init:error');
 
 // Launch check query
 // Запускаем проверку качества запроса
 
 $path -> include('init:request');
+
+// Launch check cookie
+// Запускаем проверку работы куки
+
+$path -> include('init:cookie');
+
+// Launch uri
+// Запускаем разбор uri
+
+$path -> include('init:uri');
+
+// Launch display buffer
+// Запускаем буфер вывода на экран
+
+$path -> include('init:display');
+
 
 
 
