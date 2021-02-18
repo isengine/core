@@ -10,7 +10,7 @@ use is\Model\Components\Content;
 
 // Подготавливаем конфигурацию
 
-$data = new Content();
+$data = new Content('config');
 $config = Config::getInstance();
 
 $path = new Path(__DIR__ . DS . DP);

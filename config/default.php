@@ -25,27 +25,27 @@ $default = [
 		'base' => $base,
 		'core' => $core,
 		
+		'app' => $base . 'app' . DS,
 		'assets' => $site . 'assets' . DS,
 		'cache' => $site . 'cache' . DS,
-		'custom' => $base . 'custom' . DS,
 		'database' => $base . 'database' . DS,
 		'extensions' => $base . 'vendor' . DS,
 		'log' => $base . 'log' . DS,
 		'templates' => $base . 'templates' . DS
 	],
 	'name' => [
+		'app' => 'app',
 		'assets' => 'assets',
 		'cache' => 'cache',
-		'custom' => 'custom',
 		'database' => 'database',
 		'extensions' => 'vendor',
 		'log' => 'log',
 		'templates' => 'templates'
 	],
 	'url' => [
+		'app' => '/',
 		'assets' => '/assets/',
 		'cache' => '/cache/',
-		'custom' => '/',
 		'database' => '/',
 		'extensions' => '/',
 		'log' => '/',
@@ -64,6 +64,24 @@ $default = [
 	'api' => [
 		'name' => 'api',
 		'url' => '/api/'
+	],
+	'router' => [
+		'folders' => [
+			'convert' => null,
+			'index' => null,
+			'extension' => null
+		],
+		'files' => [
+			'convert' => null,
+			'index' => null,
+			'extension' => null
+		],
+		'convert' => [
+			'from' => null,
+			'to' => null
+		],
+		'index' => null,
+		'reload' => null
 	]
 ];
 

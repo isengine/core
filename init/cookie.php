@@ -18,6 +18,7 @@ if (Sessions::getCookie('isENGINE')) {
 	$state -> set('cookie', true);
 } else {
 	$state -> set('cookie', false);
+	$time = new \DateTime();
 	Sessions::setCookie('isENGINE', $time -> getTimestamp());
 }
 

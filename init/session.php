@@ -6,7 +6,7 @@ namespace is;
 
 use is\Helpers\System;
 use is\Helpers\Sessions;
-use is\Model\Globals\Session;
+use is\Model\Components\Session;
 use is\Model\Components\Config;
 use is\Model\Components\Content;
 use is\Model\Components\Display;

@@ -8,7 +8,7 @@ use is\Helpers\Objects;
 use is\Helpers\Strings;
 use is\Helpers\Sessions;
 use is\Helpers\Url;
-use is\Model\Globals\Session;
+use is\Model\Components\Session;
 use is\Model\Components\Config;
 use is\Model\Components\State;
 use is\Model\Components\Content;
@@ -42,7 +42,7 @@ if (
 	
 	if ($secure) {
 		
-		$data = new Content();
+		$data = new Content('config');
 		$data -> setFile('referrer.' . $secure . '.ini');
 		$data -> readContent();
 		$content = $data -> getContent();

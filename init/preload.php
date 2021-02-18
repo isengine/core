@@ -17,8 +17,8 @@ use is\Helpers\Ip;
 // для RAM 1 GB это около 2000 одновременных запросов
 // на локальной машине время обработки этих запросов составляет 0.700 сек
 
-$mode = file_get_contents( DR . 'ip.mode.ini' );
-$list = file_get_contents( DR . 'ip.' . $mode . '.ini' );
+$mode = file_get_contents( DR . 'config' . DS . 'ip.mode.ini' );
+$list = file_get_contents( DR . 'config' . DS . 'ip.' . $mode . '.ini' );
 $list = json_decode($list, true);
 $block = null;
 
