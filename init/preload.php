@@ -48,4 +48,6 @@ if ($block) {
 	exit;
 }
 
+unset($mode, $list, $list, $block);
+
 ?>
