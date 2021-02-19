@@ -30,7 +30,6 @@ $scheme = $config -> get('default:scheme');
 
 if ($scheme && $scheme !== $uri -> scheme) {
 	$uri -> scheme = $scheme;
-	$uri -> reload = 'scheme';
 }
 
 unset($scheme);
@@ -43,12 +42,10 @@ if (
 	$www && !$uri -> www
 ) {
 	$uri -> host = 'www.' . $uri -> host;
-	$uri -> reload = 'www required';
 } elseif (
 	!$www && $uri -> www
 ) {
 	$uri -> host = substr($uri -> host, 4);
-	$uri -> reload = 'www not required';
 }
 
 unset($www);
@@ -64,7 +61,6 @@ if (
 ) {
 	$uri -> path['array'] = Objects::unfirst($uri -> path['array']);
 	$uri -> setFromArray();
-	$uri -> reload = 'url with default lang';
 }
 
 unset($lang);

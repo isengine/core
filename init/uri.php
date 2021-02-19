@@ -31,92 +31,49 @@ $uri -> setInit();
 // загружаем последовательность инициализации
 
 $path = new Path(__DIR__ . DS . DP);
-$path -> include('uri:base');
 
 // set error and api
+$path -> include('uri:error');
 
-$error = $config -> get('error:url');
-$api = $config -> get('api:url');
+// если есть ошибка, нет смысла что-либо разбирать
 
-// error and api
-
-if (
-	Strings::match('/' . $uri -> path['string'], $error) ||
-	Strings::match($uri -> query['string'], $error)
-) {
-	$state -> set('error', true);
-} elseif (
-	Strings::match('/' . $uri -> path['string'], $api) ||
-	Strings::match($uri -> query['string'], $api)
-) {
-	$state -> set('api', true);
-} else {
+if (!$state -> get('error')) {
+	
+	$path -> include('uri:api');
+	$path -> include('uri:base');
 	$path -> include('uri:path');
+	
+	// сравниваем урлы и разрешаем релоад
+	// только если не была установлена ошибка
+	// только если задан в настройках
+	
+	if (
+		$uri -> url !== $uri -> original &&
+		$config -> get('router:reload')
+	) {
+		Sessions::reload($uri -> url, 301);
+	}
+	
 }
-
-// правильное отображение
-
-// слеш на конце
-//   папка со слешем на конце - правильно
-//   папка без слеша на конце - неправильно
-//   файл со слешем на конце - неправильно
-//   файл без слеша на конце - правильно
-// файл index
-// файл .html или другое расширение
 
 // предыдущая страница через куки
 
-if (Sessions::getCookie('current-url') !== $uri -> path['string']) {
-	
-	$current = Sessions::getCookie('current-url');
-	$current = Prepare::clear($current);
-	$current = Prepare::script($current);
-	$current = Prepare::stripTags($current);
-	$current = Prepare::urldecode($current);
-	
-	Sessions::setCookie('previous-url', $current);
-	
-	unset($current);
-	
-	//Sessions::setCookie('previous-url', System::clear(System::cookie('current-url', true), 'urldecode simpleurl'));
-	
-}
+$path -> include('uri:previous');
 
-if (
-	!$uri -> reload &&
-	!Strings::match('/' . $uri -> path['string'], $error) &&
-	!Strings::match($uri -> query['string'], $error) &&
-	!Strings::match('/' . $uri -> path['string'], $api) &&
-	!Strings::match($uri -> query['string'], $api)
-) {
-	Sessions::setCookie('current-url', $uri -> path['string']);
-}
+// устанавливаем заголовок
 
-// unset error and api
-
-unset($error, $api);
-
-$uri -> previous = Sessions::getCookie('previous-url');
-
-// reload
-
-if ($uri -> reload) {
-	
-	if ($config -> get('default:mode') === 'develop') {
-		$log = Log::getInstance();
-		$log -> data[] = 'system will be redirected from incorrect [' . $uri -> reload . '] request';
-		$log -> summary();
-		$log -> close();
-	}
-	
-	Sessions::reload($uri -> url, 301);
-	
+if ($state -> get('error')) {
+	Sessions::setHeaderCode($state -> get('error'));
 } else {
 	Sessions::setHeaderCode(200);
 }
 
+echo print_r($_SERVER, 1) . '<br>';
+echo print_r($state, 1) . '<br>';
+
 $print = Display::getInstance();
 $print -> dump($uri);
-//echo print_r($uri, 1);
+
+exit;
 
 ?>

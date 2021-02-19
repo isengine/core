@@ -64,6 +64,22 @@ $path -> include('init:cookie');
 
 $path -> include('init:uri');
 
+// Launch user
+// Запускаем инициализацию пользователя
+
+$path -> include('init:user');
+
+//старый порядок
+//init('users', 'first');
+//init('drivers', 'first');
+//init('users', 'second');
+//init('core', 'languages');
+//init('processor', 'first');
+//init('core', 'structure');
+//init('templates', 'first');
+//init('templates', 'router');
+//init('templates', 'second');
+
 // Launch display buffer
 // Запускаем буфер вывода на экран
 

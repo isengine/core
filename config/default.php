@@ -56,14 +56,20 @@ $default = [
 		'url' => '/error/',
 		'prefix' => '',
 		'postfix' => ''
-	],
-	'filter' => [
-		'name' => 'filter',
-		'url' => '/filter/'
+		
+		//'url' => '/',
+		//'prefix' => 'e',
+		//'postfix' => '.html'
+		
+		//'url' => '/',
+		//'prefix' => '?error=',
+		//'postfix' => ''
 	],
 	'api' => [
 		'name' => 'api',
-		'url' => '/api/'
+		'url' => '/api/',
+		'prefix' => '',
+		'postfix' => ''
 	],
 	'router' => [
 		'folders' => [
@@ -81,7 +87,7 @@ $default = [
 			'to' => null
 		],
 		'index' => null,
-		'reload' => null
+		'reload' => true
 	]
 ];
 

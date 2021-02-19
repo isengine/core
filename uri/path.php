@@ -18,11 +18,13 @@ use is\Model\Components\Config;
 use is\Model\Components\Content;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
+use is\Model\Components\Error;
 
 // читаем uri
 
 $config = Config::getInstance();
 $state = State::getInstance();
+$error = Error::getInstance();
 $uri = Uri::getInstance();
 
 // ссылки для удобства работы с кодом
@@ -101,13 +103,6 @@ $convert_from = Parser::fromString($convert_fr, ['clear' => true, 'simple' => tr
 $index_file = $config -> get('router:index');
 if (!$index_file) { $index_file = 'index'; }
 
-// ОБНОВЛЕНИЕ И РЕДИРЕКТ
-// поведение - если урл получил исправления, разрешает редирект на исправленный урл
-// обратное поведение - запрещает редирект, исправленный урл остается, а код продолжает выполняться
-
-$reload = $config -> get('router:reload');
-$reload = true;
-
 // СТАНДАРТНЫЕ ШАБЛОНЫ ПОВЕДЕНИЙ:
 // 1. Все папки преобразуются в файлы
 // 1.1. в файлы php
@@ -178,7 +173,7 @@ if ($file && $file['extension'] === 'php') {
 	// таким образом, мы сократили число проверок и убрали вложенные проверки
 	
 	// триггер ошибки
-	$error = true;
+	$err = true;
 	
 	if (Objects::match($files_extension, 'php')) {
 		// есть массив расширений, с которыми будет проводится обработка,
@@ -190,18 +185,18 @@ if ($file && $file['extension'] === 'php') {
 			// обработка файлов, в том числе индексных, разрешена
 			// это значит, что все они будут преобразованы
 			// и ошибку выводить не нужно
-			$error = null;
+			$err = null;
 		} elseif ($files_convert && !$files_index && $file['name'] !== $index_file) {
 			// обработка файлов разрешена,
 			// но запрещена обработка индексных файлов
 			// а если файл не индексный, он будет обработан и ошибку выводить не нужно
-			$error = null;
+			$err = null;
 		} elseif (!$files_convert && $files_index && $file['name'] === $index_file) {
 			// обработка файлов все еще запрещена
 			// но теперь разрешена обработка индексных файлов
 			// это значит, что нужно проверить, индексный ли это файл
 			// и если файл индексный, он будет обработан и ошибку выводить не нужно
-			$error = null;
+			$err = null;
 		}
 		
 	}
@@ -213,21 +208,29 @@ if ($file && $file['extension'] === 'php') {
 		if ($file['name'] !== $index_file) {
 			// если наш файл не индексный
 			// все в порядке, ошибок здесь нет
-			$error = null;
+			$err = null;
 		} elseif ($folders_index && $file['name'] === $index_file) {
 			// если же файл индексный
 			// и при этом обработка папок идет как раз в индексный файл
 			// тоже все в порядке, тоже нет ошибки
-			$error = null;
+			$err = null;
 		}
 		
 	}
 	
 	// во всех остальных случаях нужно выводить ошибку
 	
-	if ($error) {
+	if ($err) {
 		// перенаправление на страницу ошибки
-		echo '<span style="color: red">ERROR</span>';
+		//$error -> code = 404;
+		//$error -> reload();
+		//echo '<span style="color: red">ERROR</span>';
+		
+		// здесь не должно быть перенаправления на страницу ошибки
+		// здесь нужно задать код и вывести состояние ошибки, не делая редирект
+		// чтобы клиент понимал, что код принадлежит текущей страницы
+		// иначе получится так, что текущая страница перенаправляет на страницу ошибки
+		$error -> setError(404);
 	}
 	
 }
@@ -298,23 +301,15 @@ if ($folders_convert) {
 
 $uri -> setFromArray();
 
-// сравниваем урлы и разрешаем релоад
-// только если задан в настройках
-
-if ($uri -> url !== $uri -> original && $reload) {
-	$uri -> reload = true;
-}
-
 // обновляем путь для роутинга
 // но только если нет релоада, иначе зачем тратить ресурсы
 
-if (!$uri -> reload && !$error) {
-	$uri -> setRoute();
-	if ($file) {
-		$uri -> route = Objects::unlast($uri -> route);
-		if ($folders_convert && !$folders_index && $file['extension'] === $folders_extension) {
-			$uri -> addRoute($file['name']);
-		}
+$uri -> setRoute();
+
+if ($file) {
+	$uri -> route = Objects::unlast($uri -> route);
+	if ($folders_convert && !$folders_index && $file['extension'] === $folders_extension) {
+		$uri -> addRoute($file['name']);
 	}
 }
 
