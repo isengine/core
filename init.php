@@ -34,6 +34,11 @@ $path = new Model\Components\Path(__DIR__);
 
 $path -> include('init:config');
 
+// Launch error page settings
+// Запускаем настройку страницы ошибок
+
+$path -> include('init:error');
+
 // Launch logs
 // Запускаем логи
 
@@ -43,11 +48,6 @@ $path -> include('init:log');
 // Запускаем установку и проверку сессии
 
 $path -> include('init:session');
-
-// Launch error page settings
-// Запускаем настройку страницы ошибок
-
-$path -> include('init:error');
 
 // Launch check query
 // Запускаем проверку качества запроса
@@ -64,10 +64,15 @@ $path -> include('init:cookie');
 
 $path -> include('init:uri');
 
+// Launch driver db
+// Запускаем инициализацию драйвера базы данных
+
+$path -> include('init:driver');
+
 // Launch user
 // Запускаем инициализацию пользователя
 
-$path -> include('init:user');
+//$path -> include('init:user');
 
 //старый порядок
 //init('users', 'first');

@@ -68,12 +68,12 @@ if ($state -> get('error')) {
 	Sessions::setHeaderCode(200);
 }
 
-echo print_r($_SERVER, 1) . '<br>';
-echo print_r($state, 1) . '<br>';
-
-$print = Display::getInstance();
-$print -> dump($uri);
-
-exit;
+//echo print_r($_SERVER, 1) . '<br>';
+//echo print_r($state, 1) . '<br>';
+//
+//$print = Display::getInstance();
+//$print -> dump($uri);
+//
+//exit;
 
 ?>
