@@ -76,7 +76,7 @@ $files_ext     = $config -> get('router:files:extension');
 //$files_ext     = $_GET['f_ext'];
 
 if (!$files_ext) { $files_ext = 'php'; }
-$files_extension = Parser::fromString($files_ext, ['clear' => true, 'simple' => true]);
+$files_extension = Parser::fromString($files_ext, ['clear' => true]);
 
 // ?f_conv=&f_idx=&f_ext=
 
@@ -92,7 +92,7 @@ $convert_to = $config -> get('router:convert:to');
 //$convert_fr = $_GET['c_from'];
 //$convert_to = $_GET['c_to'];
 
-$convert_from = Parser::fromString($convert_fr, ['clear' => true, 'simple' => true]);
+$convert_from = Parser::fromString($convert_fr, ['clear' => true]);
 
 // ?c_from=&c_to=
 
