@@ -29,6 +29,7 @@ foreach ($dbset as $key => &$item) {
 }
 unset($key, $item);
 
+/*
 $db = Database::getInstance();
 $db -> init($dbset);
 $db -> cache($config -> get('path:cache') . 'db_' . $config -> get('db:name') . DS);
@@ -36,16 +37,29 @@ $db -> cache($config -> get('path:cache') . 'db_' . $config -> get('db:name') . 
 $db -> collection('content');
 $db -> query('read');
 
-$db -> filter('name', 'one:+two:-three:*four:10,5_');
-$db -> filter('type', '');
+//$db -> filter('name', 'one:+two:-three:*four:10,5_');
+//$db -> filter('type', '');
 $db -> filter('parents', 'news');
-$db -> filter('data:price', 'news');
-$db -> filter('data:type', '');
-
-$db -> filter('data:price', 'news'); // field(:data=true/false), values=one:two...(+-*_)
-
+//$db -> filter('data:price', 'news');
+//$db -> filter('data:type', '');
+//$db -> filter('data:price', 'news'); // field(:data=true/false), values=one:two...(+-*_)
 //$db -> filter([]); // full array filter как в инструкции
 
+$db -> launch();
+$db -> data -> sortByEntry('id');
+*/
+
+//$dbset['driver'] = 'ExcelDB';
+$dbset['driver'] = 'TableDB';
+$dbset['rowkeys'] = '0';
+$dbset['rowskip'] = '1';
+$dbset['encoding'] = 'CP1251';
+
+$db = Database::getInstance();
+$db -> init($dbset);
+$db -> collection('catalog');
+$db -> query('read');
+$db -> cache($config -> get('path:cache') . 'db_' . $config -> get('db:name') . DS);
 $db -> launch();
 
 // ТОЛЬКО ДЛЯ ОТЛАДКИ !!!
@@ -53,6 +67,7 @@ $db -> launch();
 
 $print = Display::getInstance();
 //$print -> dump($dbset);
+//$print -> dump($pdb);
 $print -> dump($db);
 
 exit;

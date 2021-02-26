@@ -22,7 +22,14 @@ use is\Model\Components\Log;
 // читаем uri
 
 $config = Config::getInstance();
+$state = State::getInstance();
 $uri = Uri::getInstance();
+
+// ini
+
+if ($uri -> file['extension'] === 'ini') {
+	$state -> set('error', 404);
+}
 
 // scheme
 
