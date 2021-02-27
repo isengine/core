@@ -29,6 +29,7 @@ foreach ($dbset as $key => &$item) {
 }
 unset($key, $item);
 
+
 /*
 $db = Database::getInstance();
 $db -> init($dbset);
@@ -49,17 +50,21 @@ $db -> launch();
 $db -> data -> sortByEntry('id');
 */
 
-//$dbset['driver'] = 'ExcelDB';
-$dbset['driver'] = 'TableDB';
+$dbset['driver'] = 'ExcelDB';
+//$dbset['driver'] = 'TableDB';
 $dbset['rowkeys'] = '0';
 $dbset['rowskip'] = '1';
-$dbset['encoding'] = 'CP1251';
+//$dbset['encoding'] = 'CP1251';
 
 $db = Database::getInstance();
 $db -> init($dbset);
 $db -> collection('catalog');
 $db -> query('read');
+$db -> rights(true);
 $db -> cache($config -> get('path:cache') . 'db_' . $config -> get('db:name') . DS);
+
+//$driver = &$db -> driver;
+
 $db -> launch();
 
 // ТОЛЬКО ДЛЯ ОТЛАДКИ !!!
@@ -70,6 +75,6 @@ $print = Display::getInstance();
 //$print -> dump($pdb);
 $print -> dump($db);
 
-exit;
+//exit;
 
 ?>
