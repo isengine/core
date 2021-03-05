@@ -61,7 +61,27 @@ $db -> init($dbset);
 $db -> collection('catalog');
 $db -> query('read');
 $db -> rights(true);
-$db -> cache($config -> get('path:cache') . 'db_' . $config -> get('db:name') . DS);
+//$db -> cache($config -> get('path:cache') . 'db_' . $config -> get('db:name') . DS);
+
+$db -> driver -> fields('articul', [
+	'exclude' => true
+]);
+$db -> driver -> fields('price', [
+	'convert' => 'array'
+]);
+$db -> driver -> fields('size', [
+	'default' => 'no size'
+]);
+$db -> driver -> fields('resize', [
+	'default' => 'no resize<p>123</p>',
+	'prepare' => [
+		'notags'
+	],
+	'match' => [
+		'type' => 'len',
+		'data' => '1:5'
+	]
+]);
 
 //$driver = &$db -> driver;
 
@@ -73,6 +93,7 @@ $db -> launch();
 $print = Display::getInstance();
 //$print -> dump($dbset);
 //$print -> dump($pdb);
+//$print -> dump($db);
 $print -> dump($db);
 
 //exit;
