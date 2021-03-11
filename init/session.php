@@ -26,13 +26,13 @@ if (
 ) {
 	
 	session_start();
-	$state -> set('allow', true);
+	$state -> set('session', true);
 	
 } else {
 	
 	// объявить константы здесь - обязательно,
 	// так как это защищает от возможности изменить их в дальнейшем коде
-	$state -> set('allow', false);
+	$state -> set('session', false);
 	
 }
 
@@ -41,17 +41,16 @@ $session -> init();
 
 // проверяем сессию
 
-if ($state -> get('allow')) {
+if ($state -> get('session')) {
 	
 	$config = Config::getInstance();
-	$session_time = $config -> get('secure:sessiontime');
 	$session_time = $config -> get('secure:sessiontime');
 	
 	$error = Error::getInstance();
 	
 	if (
-		Sessions::getCookie('SID') !== $session -> id ||
-		Sessions::getCookie('UID') !== $session -> uid ||
+		Sessions::getCookie('SID') !== $session -> getSession('id') ||
+		Sessions::getCookie('UID') !== $session -> getSession('uid') ||
 		$state -> get('origin')
 	) {
 		
@@ -65,9 +64,11 @@ if ($state -> get('allow')) {
 	
 	if ($session_time) {
 		
+		$time = time();
+		
 		if (
-			time() > Prepare::decrypt($session -> token, true) + (int) $session_time ||
-			time() < Prepare::decrypt($session -> token, true)
+			$time > Prepare::decrypt($session -> token, true) + (int) $session_time ||
+			$time < Prepare::decrypt($session -> token, true)
 		) {
 			
 			// удаляем пользователя из базы данных / удаляем файл и записываем нового
@@ -88,12 +89,15 @@ if ($state -> get('allow')) {
 			session_regenerate_id(true);
 			$_SESSION['token'] = null;
 			
-			$session -> reset();
+			$session -> init();
 			
 			Sessions::setCookie('SID', session_id());
 			Sessions::setCookie('UID', $session -> uid);
 			
 		}
+		
+		unset($time);
+		
 	}
 	
 }

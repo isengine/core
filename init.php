@@ -72,12 +72,30 @@ $path -> include('init:driver');
 // Launch user
 // Запускаем инициализацию пользователя
 
-//$path -> include('init:user');
+$path -> include('init:user');
+
+// Launch language initialization
+// Запускаем инициализацию языков
+
+$path -> include('init:language');
+// возможно, здесь не хватает инициализации языкового модуля и библиотек
+
+// Launch api
+// Запускаем api
+
+//$path -> include('init:api');
+//init('processor', 'first');
+
+// Launch structure
+// Запускаем разбор структуры сайта
+
+//$path -> include('init:structure');
+//init('processor', 'first');
+// возможно, здесь понадобятся правила роутинга
+// возможно также, это лучше объединить с языками
+
 
 //старый порядок
-//init('users', 'first');
-//init('drivers', 'first');
-//init('users', 'second');
 //init('core', 'languages');
 //init('processor', 'first');
 //init('core', 'structure');

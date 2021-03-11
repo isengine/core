@@ -63,11 +63,15 @@ $lang = $config -> get('default:lang');
 
 if (
 	$lang &&
-	!empty($uri -> path['array']) &&
-	$lang === Objects::first($uri -> path['array'], 'value')
+	!empty($uri -> path['array'])
 ) {
-	$uri -> path['array'] = Objects::unfirst($uri -> path['array']);
-	$uri -> setFromArray();
+	if ($lang === Objects::first($uri -> path['array'], 'value')) {
+		$uri -> path['array'] = Objects::unfirst($uri -> path['array']);
+		$uri -> setFromArray();
+	} elseif ($lang === Objects::n($uri -> path['array'], 1, 'value')) {
+		$uri -> path['array'] = Objects::unn($uri -> path['array'], 1);
+		$uri -> setFromArray();
+	}
 }
 
 unset($lang);
