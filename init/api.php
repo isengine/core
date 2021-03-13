@@ -20,8 +20,8 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
 use is\Model\Components\Language;
-use is\Model\Database\Database;
-use is\Model\Database\Datasheet;
+use is\Model\Databases\Database;
+use is\Model\Databases\Datasheet;
 
 // читаем api
 
@@ -33,8 +33,22 @@ $session = Session::getInstance();
 $lang = Language::getInstance();
 
 
+//$dbset = $config -> getArray('db', true);
+//$db = new Datasheet;
+//$db -> init($dbset);
+//$db -> query('read');
+//$db -> rights(true);
+//$db -> collection('languages');
+//$db -> driver -> addFilter('type', 'settings');
+//$db -> driver -> addFilter('name', 'default');
+//$db -> launch();
+//$a = $db -> data -> getFirstData();
+//$db -> clear();
+
+
 echo '<pre>';
 //echo print_r($uri, 1);
+echo print_r($a, 1);
 echo '</pre>';
 
 ?>
