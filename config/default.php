@@ -26,47 +26,45 @@ $default = [
 		'core' => $core,
 		
 		'app' => $base . 'app' . DS,
-		'assets' => $site . 'assets' . DS,
-		'cache' => $site . 'cache' . DS,
+		'cache' => $base . 'cache' . DS,
 		'extensions' => $base . 'vendor' . DS,
 		'log' => $base . 'log' . DS,
 		'templates' => $base . 'templates' . DS
 	],
-	'name' => [
-		'app' => 'app',
-		'assets' => 'assets',
-		'cache' => 'cache',
-		'extensions' => 'vendor',
-		'log' => 'log',
-		'templates' => 'templates'
-	],
 	'url' => [
-		'app' => '/',
-		'assets' => '/assets/',
-		'cache' => '/cache/',
-		'extensions' => '/',
-		'log' => '/',
-		'templates' => '/'
-	],
-	'error' => [
-		'name' => 'error',
-		'url' => '/error/',
-		'prefix' => '',
-		'postfix' => ''
-		
-		//'url' => '/',
-		//'prefix' => 'e',
-		//'postfix' => '.html'
-		
-		//'url' => '/',
-		//'prefix' => '?error=',
-		//'postfix' => ''
-	],
-	'api' => [
-		'name' => 'api',
-		'url' => '/api/',
-		'prefix' => '',
-		'postfix' => ''
+		'api' => [
+			'url' => '/api/',
+			'prefix' => '',
+			'postfix' => '',
+			'path' => true,
+			'query' => true
+		],
+		'assets' => [
+			'url' => '/assets/'
+		],
+		'error' => [
+			'url' => '/error/',
+			'prefix' => '',
+			'postfix' => '',
+			'template' => 'error',
+			'path' => true,
+			'query' => true
+			
+			//'url' => '/',
+			//'prefix' => 'e',
+			//'postfix' => '.html'
+			
+			//'url' => '/',
+			//'prefix' => '?error=',
+			//'postfix' => ''
+		],
+		'filter' => [
+			'url' => '/filter/',
+			'prefix' => '',
+			'postfix' => '',
+			'path' => true,
+			'query' => true
+		]
 	],
 	'router' => [
 		'folders' => [

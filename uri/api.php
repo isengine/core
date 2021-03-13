@@ -8,7 +8,6 @@ use is\Helpers\System;
 use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Sessions;
-use is\Helpers\Url;
 use is\Helpers\Prepare;
 use is\Model\Components\Path;
 use is\Model\Components\Session;
@@ -27,9 +26,9 @@ $state = State::getInstance();
 $uri = Uri::getInstance();
 
 $api = Api::getInstance();
-$api -> init($config -> get('api:url'));
-$api -> prefix = $config -> get('api:prefix');
-$api -> postfix = $config -> get('api:postfix');
+$api -> init($config -> get('url:api:url'));
+$api -> prefix = $config -> get('url:api:prefix');
+$api -> postfix = $config -> get('url:api:postfix');
 
 // читаем uri
 

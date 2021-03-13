@@ -12,9 +12,9 @@ use is\Model\Components\Error;
 $config = Config::getInstance();
 
 $error = Error::getInstance();
-$error -> init($config -> get('error:url'));
-$error -> prefix = $config -> get('error:prefix');
-$error -> postfix = $config -> get('error:postfix');
+$error -> init($config -> get('url:error:url'));
+$error -> prefix = $config -> get('url:error:prefix');
+$error -> postfix = $config -> get('url:error:postfix');
 
 //use is\Model\Components\Error;
 //$error = Error::getInstance();

@@ -7,7 +7,7 @@ namespace is;
 use is\Helpers\Objects;
 use is\Helpers\Strings;
 use is\Helpers\Sessions;
-use is\Helpers\Url;
+use is\Helpers\Paths;
 use is\Model\Components\Session;
 use is\Model\Components\Config;
 use is\Model\Components\State;
@@ -50,7 +50,7 @@ if (
 		if ($content) {
 			$match = Objects::match(
 				$content,
-				Url::parse($referrer, 'host')
+				Paths::parseUrl($referrer, 'host')
 			);
 			
 			if (

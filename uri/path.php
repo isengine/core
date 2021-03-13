@@ -9,7 +9,6 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Parser;
 use is\Helpers\Sessions;
-use is\Helpers\Url;
 use is\Helpers\Prepare;
 use is\Model\Components\Session;
 use is\Model\Components\Uri;
