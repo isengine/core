@@ -19,7 +19,7 @@ use is\Model\Components\Content;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
-use is\Controller\Database;
+use is\Model\Database\Database;
 
 // читаем user
 
@@ -41,7 +41,7 @@ if ($sur) {
 	
 	$sur = [];
 	$array = ['default'];
-	$parents = $user -> data -> getEntryKey('parent');
+	$parents = $user -> data -> getEntryKey('parents');
 	
 	if ($parents) {
 		$array = Objects::add(['default'], $parents);

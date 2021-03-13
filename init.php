@@ -83,7 +83,7 @@ $path -> include('init:language');
 // Launch api
 // Запускаем api
 
-//$path -> include('init:api');
+$path -> include('init:api');
 //init('processor', 'first');
 
 // Launch structure

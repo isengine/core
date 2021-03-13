@@ -4,8 +4,8 @@
 
 namespace is;
 
-use is\Controller\Database;
-use is\Controller\Drivers;
+use is\Model\Database\Database;
+use is\Model\Database\Drivers;
 use is\Model\Components\State;
 use is\Model\Components\Config;
 use is\Model\Components\Display;

@@ -20,7 +20,7 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
 use is\Model\Components\Language;
-use is\Controller\Database;
+use is\Model\Database\Database;
 
 // читаем user
 
