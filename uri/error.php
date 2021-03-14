@@ -20,10 +20,17 @@ use is\Model\Components\Log;
 use is\Model\Components\Error;
 
 // читаем uri
+
+$config = Config::getInstance();
 $state = State::getInstance();
 $uri = Uri::getInstance();
 
+// инициализация
+
 $error = Error::getInstance();
+$error -> init($config -> get('url:error:url'));
+$error -> prefix = $config -> get('url:error:prefix');
+$error -> postfix = $config -> get('url:error:postfix');
 
 $epath = $error -> path . $error -> prefix;
 $efind = '/' . $uri -> path['string'] . $uri -> query['string'];

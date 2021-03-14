@@ -17,13 +17,11 @@ use is\Model\Components\Config;
 use is\Model\Components\Content;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
-use is\Model\Components\Error;
 
 // читаем uri
 
 $config = Config::getInstance();
 $state = State::getInstance();
-$error = Error::getInstance();
 $uri = Uri::getInstance();
 
 // ссылки для удобства работы с кодом
@@ -220,16 +218,11 @@ if ($file && $file['extension'] === 'php') {
 	// во всех остальных случаях нужно выводить ошибку
 	
 	if ($err) {
-		// перенаправление на страницу ошибки
-		//$error -> code = 404;
-		//$error -> reload();
-		//echo '<span style="color: red">ERROR</span>';
-		
 		// здесь не должно быть перенаправления на страницу ошибки
 		// здесь нужно задать код и вывести состояние ошибки, не делая редирект
-		// чтобы клиент понимал, что код принадлежит текущей страницы
+		// чтобы клиент понимал, что код принадлежит текущей странице
 		// иначе получится так, что текущая страница перенаправляет на страницу ошибки
-		$error -> setError(404);
+		$state -> set('error', 404);
 	}
 	
 }
@@ -300,25 +293,12 @@ if ($folders_convert) {
 
 $uri -> setFromArray();
 
-// обновляем путь для роутинга
-// но только если нет релоада, иначе зачем тратить ресурсы
-
-$uri -> setRoute();
-
-if ($file) {
-	$uri -> route = Objects::unlast($uri -> route);
-	if ($folders_convert && !$folders_index && $file['extension'] === $folders_extension) {
-		$uri -> addRoute($file['name']);
-	}
-}
-
 /*
 echo '<br>path : '   . str_replace(['Array', '[base] => '], null, print_r($uri -> path, 1));
 echo '<br>file : '   . str_replace('Array', null, print_r($uri -> file, 1));
 echo '<br>' . ($uri -> folder ? '<span style="color: green">' : null) . 'folder : '  . str_replace('Array', null, print_r($uri -> folder, 1)) . ($uri -> folder ? '</span>' : null);
 echo '<br>ori : '    . str_replace('Array', null, print_r($uri -> original, 1));
 echo '<br>url : '    . str_replace('Array', null, print_r($uri -> url, 1));
-echo '<br>route : '  . str_replace('Array', null, print_r($uri -> route, 1));
 echo '<br>' . ($uri -> reload ? '<span style="color: red">' : null) . 'reload : ' . str_replace('Array', null, print_r($uri -> reload, 1)) . ($uri -> reload ? '</span>' : null);
 
 exit;

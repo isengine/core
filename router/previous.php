@@ -24,7 +24,7 @@ $config = Config::getInstance();
 $state = State::getInstance();
 $uri = Uri::getInstance();
 
-if (Sessions::getCookie('current-url') !== $uri -> path['string']) {
+if (Sessions::getCookie('current-url') !== $uri -> url) {
 	
 	$current = Sessions::getCookie('current-url');
 	$current = Prepare::clear($current);
@@ -42,7 +42,7 @@ if (
 	!$state -> get('error') &&
 	!$state -> get('api')
 ) {
-	Sessions::setCookie('current-url', $uri -> path['string']);
+	Sessions::setCookie('current-url', $uri -> url);
 }
 
 $uri -> previous = Sessions::getCookie('previous-url');

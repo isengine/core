@@ -42,29 +42,6 @@ if (!$state -> get('error')) {
 	$path -> include('uri:base');
 	$path -> include('uri:path');
 	
-	// сравниваем урлы и разрешаем релоад
-	// только если не была установлена ошибка
-	// только если задан в настройках
-	
-	if (
-		$uri -> url !== $uri -> original &&
-		$config -> get('router:reload')
-	) {
-		Sessions::reload($uri -> url, 301);
-	}
-	
-}
-
-// предыдущая страница через куки
-
-$path -> include('uri:previous');
-
-// устанавливаем заголовок
-
-if ($state -> get('error')) {
-	Sessions::setHeaderCode($state -> get('error'));
-} else {
-	Sessions::setHeaderCode(200);
 }
 
 //echo print_r($_SERVER, 1) . '<br>';

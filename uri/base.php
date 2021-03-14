@@ -58,6 +58,7 @@ unset($www);
 
 // lang
 
+/*
 $lang = $config -> get('default:lang');
 
 if (
@@ -74,5 +75,6 @@ if (
 }
 
 unset($lang);
+*/
 
 ?>

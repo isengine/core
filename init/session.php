@@ -46,8 +46,6 @@ if ($state -> get('session')) {
 	$config = Config::getInstance();
 	$session_time = $config -> get('secure:sessiontime');
 	
-	$error = Error::getInstance();
-	
 	if (
 		Sessions::getCookie('SID') !== $session -> getSession('id') ||
 		Sessions::getCookie('UID') !== $session -> getSession('uid') ||
@@ -56,13 +54,10 @@ if ($state -> get('session')) {
 		
 		$session -> reset();
 		
-		$error -> code = 403;
-		$error -> reason = 'bad SID or UID or not is origin, see php session configuration and maybe session or cookies were stolen';
-		$error -> reload();
+		$state -> set('error', 403);
+		$state -> set('reason', 'bad SID or UID or not is origin, see php session configuration and maybe session or cookies were stolen');
 		
-	}
-	
-	if ($session_time) {
+	} elseif ($session_time) {
 		
 		$time = time();
 		
@@ -80,16 +75,12 @@ if ($state -> get('session')) {
 				
 				$session -> reset();
 				
-				$error -> code = 403;
-				$error -> reason = 'wrong session when it was regenerate, maybe session or cookies were stolen';
-				$error -> reload();
+				$state -> set('error', 403);
+				$state -> set('reason', 'wrong session when it was regenerate, maybe session or cookies were stolen');
 				
 			}
 			
-			session_regenerate_id(true);
-			$_SESSION['token'] = null;
-			
-			$session -> init();
+			$session -> reinit();
 			
 			Sessions::setCookie('SID', session_id());
 			Sessions::setCookie('UID', $session -> uid);

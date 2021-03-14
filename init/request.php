@@ -13,7 +13,6 @@ use is\Model\Components\Config;
 use is\Model\Components\State;
 use is\Model\Components\Content;
 use is\Model\Components\Path;
-use is\Model\Components\Error;
 
 // читаем сессию
 
@@ -89,10 +88,8 @@ if (
 // Определяем плохие запросы - запрещенные и из сторонних источников
 
 if (!$state -> get('request') && !$state -> get('origin')) {
-	$error = Error::getInstance();
-	$error -> code = 403;
-	$error -> reason = 'not isREQUEST and not isORIGIN, it was a forbidden request';
-	$error -> reload();
+	$state -> set('error', 403);
+	$state -> set('reason', 'not isREQUEST and not isORIGIN, it was a forbidden request');
 }
 
 // Вы можете ограничить запросы следующим способом

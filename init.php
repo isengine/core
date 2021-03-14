@@ -22,7 +22,7 @@ unset($autoload, $framework);
 // Pre-check for blocking by ip
 // Предварительная проверка на блокировку по ip
 
-require_once 'init' . DS . 'preload.php';
+require_once 'init' . DS . 'blockip.php';
 
 // Create including components
 // Создаем подключение компонентов
@@ -33,11 +33,6 @@ $path = new Model\Components\Path(__DIR__);
 // Запускаем конфигурацию системы
 
 $path -> include('init:config');
-
-// Launch error page settings
-// Запускаем настройку страницы ошибок
-
-$path -> include('init:error');
 
 // Launch logs
 // Запускаем логи
@@ -90,9 +85,11 @@ $path -> include('init:api');
 // Запускаем разбор структуры сайта
 
 //$path -> include('init:structure');
-//init('processor', 'first');
-// возможно, здесь понадобятся правила роутинга
-// возможно также, это лучше объединить с языками
+
+// Launch routing
+// Запускаем правила роутинга
+
+$path -> include('init:router');
 
 
 //старый порядок

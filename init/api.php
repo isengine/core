@@ -10,6 +10,7 @@ use is\Helpers\Objects;
 use is\Helpers\Sessions;
 use is\Helpers\Prepare;
 use is\Helpers\Paths;
+use is\Model\Components\Error;
 use is\Model\Components\Session;
 use is\Model\Components\Uri;
 use is\Model\Components\State;
@@ -27,6 +28,7 @@ use is\Model\Databases\Datasheet;
 // читаем api
 
 $api = Api::getInstance();
+$error = Error::getInstance();
 $config = Config::getInstance();
 $state = State::getInstance();
 $user = User::getInstance();
@@ -46,11 +48,12 @@ $lang = Language::getInstance();
 //$a = $db -> data -> getFirstData();
 //$db -> clear();
 
-$a = Paths::relativeReal(':');
+//$a = $state -> get('error');
+//$a = $state -> get('api');
 
-echo '<pre>';
-echo print_r($a, 1) . '<br>';
-echo print_r($api, 1);
-echo '</pre>';
+//echo '<pre>';
+//echo print_r($a, 1) . '<br>';
+//echo print_r($api, 1);
+//echo '</pre>';
 
 ?>

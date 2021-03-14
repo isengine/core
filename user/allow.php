@@ -42,10 +42,8 @@ if ($user -> getFieldsBySpecial('allow')) {
 	
 	$session -> reset();
 	
-	$error = Error::getInstance();
-	$error -> code = 403;
-	$error -> reason = 'security user verification - user are banned';
-	$error -> reload();
+	$state -> set('error', 403);
+	$state -> set('reason', 'security user verification - user are banned');
 	
 } else {
 	

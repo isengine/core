@@ -40,10 +40,8 @@ if ($su) {
 	$session = Session::getInstance();
 	$session -> reset();
 	
-	$error = Error::getInstance();
-	$error -> code = 403;
-	$error -> reason = 'user data or user name not set in session and cannot be read from database';
-	$error -> reload();
+	$state -> set('error', 403);
+	$state -> set('reason', 'user data or user name not set in session and cannot be read from database');
 	
 }
 

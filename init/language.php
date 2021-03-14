@@ -40,6 +40,13 @@ $db -> launch();
 
 $lang -> setSettings( $db -> data -> getFirstData() );
 
+foreach ($lang -> settings as $key => $item) {
+	$lang -> addList($key);
+	$lang -> addList($key, $item['alias']);
+	$lang -> addCode($key, $item['code']);
+}
+unset($key, $item);
+
 $db -> clear();
 
 // задаем массив возможных значений языка по приоритету
@@ -50,8 +57,8 @@ $array = [
 	'cookie' => Sessions::getCookie('lang'),
 	'user' => $user -> getFieldsBySpecial('language'),
 	'config' => $config_lang,
-	'uri_first' => Objects::first($uri -> path['array'], 'value'),
-	'uri_second' => Objects::n($uri -> path['array'], 1, 'value')
+	'uri_first' => $uri -> getPathArray(0),
+	'uri_second' => $uri -> getPathArray(1)
 ];
 
 // проверяем язык из конфига
@@ -65,14 +72,18 @@ if (!$array['config'] || $array['config'] === true) {
 $array['uri_first'] = $lang -> mergeLang($array['uri_first']);
 $array['uri_second'] = $lang -> mergeLang($array['uri_second']);
 
-if ($array['uri_first']) {
-	$array['uri'] = $array['uri_first'];
-	$uri -> route = Objects::reset( Objects::unfirst($uri -> route) );
-	$uri -> path['array'] = Objects::reset( Objects::unfirst($uri -> path['array']) );
-} elseif ($array['uri_second']) {
-	$array['uri'] = $array['uri_second'];
-	$uri -> route = Objects::reset( Objects::unn($uri -> route, 1) );
-	$uri -> path['array'] = Objects::reset( Objects::unn($uri -> path['array'], 1) );
+if (
+	$array['uri_first'] ||
+	$array['uri_second']
+) {
+	if ($array['uri_first']) {
+		$array['uri'] = $array['uri_first'];
+		$uri -> unPathArray(0);
+	} elseif ($array['uri_second']) {
+		$array['uri'] = $array['uri_second'];
+		$uri -> unPathArray(1);
+	}
+	$uri -> language = $array['uri'];
 }
 
 unset($array['uri_first'], $array['uri_second']);
@@ -89,11 +100,17 @@ Sessions::setCookie('lang', $lang -> lang);
 
 if (
 	System::type($config_lang, 'string') &&
-	$lang -> lang !== $config_lang
+	$config_lang !== $lang -> lang
 ) {
-	$uri -> path['array'] = Objects::add($lang -> lang, $uri -> path['array']);
-	$uri -> setFromArray();
+	$uri -> language = $lang -> lang;
+} elseif (
+	!$config_lang ||
+	$config_lang === $uri -> language
+) {
+	$uri -> language = null;
 }
+
+$uri -> setFromArray();
 
 //echo '<pre>';
 //echo print_r($lang, 1);
