@@ -39,6 +39,11 @@ $path -> include('init:config');
 
 $path -> include('init:log');
 
+// Launch error
+// Запускаем компонент ошибки
+
+$path -> include('init:error');
+
 // Launch session set and check
 // Запускаем установку и проверку сессии
 
@@ -54,10 +59,10 @@ $path -> include('init:request');
 
 $path -> include('init:cookie');
 
-// Launch uri
-// Запускаем разбор uri
-
-$path -> include('init:uri');
+// если есть ошибка, нет смысла что-либо разбирать
+//$state = Model\Components\State::getInstance();
+//if (!$state -> get('error')) {
+//}
 
 // Launch driver db
 // Запускаем инициализацию драйвера базы данных
@@ -68,6 +73,12 @@ $path -> include('init:driver');
 // Запускаем инициализацию пользователя
 
 $path -> include('init:user');
+
+
+// Launch uri
+// Запускаем разбор uri
+
+$path -> include('init:uri');
 
 // Launch language initialization
 // Запускаем инициализацию языков

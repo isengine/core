@@ -4,6 +4,7 @@
 
 namespace is;
 
+use is\Helpers\System;
 use is\Model\Components\Config;
 use is\Model\Components\Path;
 use is\Model\Components\Content;
@@ -32,7 +33,7 @@ $data -> readContent();
 
 // Читаем настройки для запуска на локальной машине
 
-if ($_SERVER['REMOTE_ADDR'] === $config -> get('system:local')) {
+if (System::server('ip') === $config -> get('system:local')) {
 	$data -> setFile('configuration.local.ini');
 	$data -> readContent();
 }

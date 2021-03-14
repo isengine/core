@@ -8,6 +8,7 @@ use is\Helpers\Objects;
 use is\Helpers\Strings;
 use is\Helpers\Sessions;
 use is\Helpers\Paths;
+use is\Helpers\System;
 use is\Model\Components\Session;
 use is\Model\Components\Config;
 use is\Model\Components\State;
@@ -22,7 +23,7 @@ $state = State::getInstance();
 
 $referrer = $session -> get('referrer');
 $origin = $session -> get('origin');
-$server = '//' . $_SERVER['SERVER_NAME'];
+$server = '//' . System::server('host');
 
 $secure = $config -> get('secure:referrer');
 

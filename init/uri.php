@@ -31,22 +31,9 @@ $uri -> setInit();
 
 $path = new Path(__DIR__ . DS . DP);
 
-// set error and api
-$path -> include('uri:error');
+$path -> include('uri:base');
+$path -> include('uri:path');
 
-// если есть ошибка, нет смысла что-либо разбирать
-
-if (!$state -> get('error')) {
-	
-	$path -> include('uri:api');
-	$path -> include('uri:base');
-	$path -> include('uri:path');
-	
-}
-
-//echo print_r($_SERVER, 1) . '<br>';
-//echo print_r($state, 1) . '<br>';
-//
 //$print = Display::getInstance();
 //$print -> dump($uri);
 //

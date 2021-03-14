@@ -1,6 +1,12 @@
 <?php
 
-$site = realpath($_SERVER['DOCUMENT_ROOT']) . DS;
+// Рабочее пространство имен
+
+namespace is;
+
+use is\Helpers\System;
+
+$site = System::server('root');
 $base = DR;
 $core = realpath(__DIR__ . DS . DP) . DS;
 
