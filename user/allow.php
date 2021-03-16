@@ -40,7 +40,7 @@ if ($user -> getFieldsBySpecial('allow')) {
 	
 	// проверка на бан
 	
-	$session -> reset();
+	$session -> close();
 	
 	$state -> set('error', 403);
 	$state -> set('reason', 'security user verification - user are banned');
@@ -53,7 +53,7 @@ if ($user -> getFieldsBySpecial('allow')) {
 		'user_ip' => $user -> getFieldsBySpecial('allowip'),
 		'user_agent' => $user -> getFieldsBySpecial('allowagent'),
 		'session_ip' => $session -> getSession('ip'),
-		'session_agent' => md5($session -> getSession('agent')),
+		'session_agent' => $session -> getSession('agent'),
 	];
 	
 	// проверка на присутствие текущего ip в списке разрешенных

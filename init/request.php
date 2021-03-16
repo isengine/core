@@ -9,6 +9,7 @@ use is\Helpers\Strings;
 use is\Helpers\Sessions;
 use is\Helpers\Paths;
 use is\Helpers\System;
+use is\Helpers\Match;
 use is\Model\Components\Session;
 use is\Model\Components\Config;
 use is\Model\Components\State;
@@ -21,22 +22,14 @@ $config = Config::getInstance();
 $session = Session::getInstance();
 $state = State::getInstance();
 
-$referrer = $session -> get('referrer');
 $origin = $session -> get('origin');
+$referrer = $origin ? $origin : $session -> get('referrer');
 $server = '//' . System::server('host');
-
 $secure = $config -> get('secure:referrer');
 
-$isorigin = true;
+$isreferrer = true;
 
-if (
-	!$session -> get('agent') ||
-	($origin && !Strings::match($origin, $server))
-) {
-	
-	$isorigin = false;
-	
-} elseif ($referrer && !Strings::match($referrer, $server)) {
+if ($referrer && !Strings::match($referrer, $server)) {
 	
 	// проверяем запросы по списку
 	
@@ -48,49 +41,47 @@ if (
 		$content = $data -> getContent();
 		
 		if ($content) {
-			$match = Objects::match(
+			
+			$match = Match::maskOf(
+				Paths::parseUrl($referrer, 'host'),
 				$content,
-				Paths::parseUrl($referrer, 'host')
+				false
 			);
 			
 			if (
 				($secure === 'blacklist' && $match) ||
 				($secure === 'whitelist' && !$match)
 			) {
-				$isorigin = false;
+				$isreferrer = false;
 			}
+			
 		}
 		
 	} else {
-		$isorigin = false;
+		$isreferrer = false;
 	}
 	
+} elseif (!$session -> get('agent')) {
+	$isreferrer = false;
 }
-
-$state -> set('origin', $isorigin);
 
 // Проверяем разрешения на запросы с других сайтов
 
 $request = $config -> get('secure:request');
 $method = $session -> get('request');
 
-if (
-	// разрешено все
-	$config -> get('secure:request') === true ||
-	// разрешено то, что указано
-	Strings::match($request, $method) !== false
-) {
-	$state -> set('request', true);
-} else {
-	// не разрешено
-	$state -> set('request', false);
-}
+// разрешено все или разрешено то, что указано
 
-// Определяем плохие запросы - запрещенные и из сторонних источников
+$isrequest = $config -> get('secure:request') === true || Strings::match($request, $method);
 
-if (!$state -> get('request') && !$state -> get('origin')) {
+// определяем, хороший или плохой запрос
+// плохие запросы - запрещенные и из сторонних источников
+
+$state -> set('request', $isrequest || $isreferrer);
+
+if (!$state -> get('request')) {
 	$state -> set('error', 403);
-	$state -> set('reason', 'not isREQUEST and not isORIGIN, it was a forbidden request');
+	$state -> set('reason', 'it was a forbidden request - not allowed method or from not allowed referrer');
 }
 
 // Вы можете ограничить запросы следующим способом

@@ -17,81 +17,71 @@ use is\Model\Components\Error;
 // базовые установки
 
 $state = State::getInstance();
+$session = Session::getInstance();
 
 // читаем сессию
+// объявить константы здесь - обязательно,
+// так как это защищает от возможности изменить их в дальнейшем коде
 
-if (
-	Sessions::getCookie('SID', true) ||
-	Sessions::getCookie('UID', true)
-) {
-	
-	session_start();
+if (Sessions::getCookie('session')) {
+	$session -> open();
 	$state -> set('session', true);
-	
 } else {
-	
-	// объявить константы здесь - обязательно,
-	// так как это защищает от возможности изменить их в дальнейшем коде
 	$state -> set('session', false);
-	
 }
 
-$session = Session::getInstance();
 $session -> init();
+
+// для инициализации пользователя типа
+// user -> session() : {
+// $session = Session::getInstance();
+// $session -> open();
+// $session -> setValue('user', json_encode($user));
+// Sessions::setCookie('session', $session -> getSession('token'));
+// }
 
 // проверяем сессию
 
 if ($state -> get('session')) {
 	
+	$time = time();
 	$config = Config::getInstance();
-	$session_time = $config -> get('secure:sessiontime');
+	$session_time = (int) $config -> get('secure:sessiontime');
+	
+	$token = $session -> getSession('token');
+	$token_array = json_decode(Prepare::decode($token), true);
+	$token_time = $token_array['time'];
+	$token_verify = true;
+	
+	foreach (['id', 'ip', 'agent'] as $item) {
+		if (!$token_array[$item] || $token_array[$item] !== $session -> getSession($item)) {
+			$token_verify = null;
+			break;
+		}
+	}
+	unset($item);
 	
 	if (
-		Sessions::getCookie('SID') !== $session -> getSession('id') ||
-		Sessions::getCookie('UID') !== $session -> getSession('uid') ||
-		$state -> get('origin')
+		!$state -> get('request') ||
+		Sessions::getCookie('session') !== $token ||
+		$token_time > $time ||
+		!$token_verify
 	) {
 		
-		$session -> reset();
+		$session -> close();
 		
 		$state -> set('error', 403);
-		$state -> set('reason', 'bad SID or UID or not is origin, see php session configuration and maybe session or cookies were stolen');
+		$state -> set('reason', 'bad session token or not is origin, see php session configuration and maybe session or cookies were stolen');
 		
-	} elseif ($session_time) {
+	} elseif ($session_time && ($token_time < $time - $session_time)) {
 		
-		$time = time();
+		// если время токена слишком устарело
+		// обновляем сессию
 		
-		if (
-			$time > Prepare::decrypt($session -> token, true) + (int) $session_time ||
-			$time < Prepare::decrypt($session -> token, true)
-		) {
-			
-			// удаляем пользователя из базы данных / удаляем файл и записываем нового
-			// но для этого нужно подключить функцию записи/удаления из базы
-			// еще будет идти проверка на существование пользователя (по id/name) в базе данных,
-			// и если такого нет, любой запрос будет отвергнут
-			
-			if (!$_SESSION['secure']) {
-				
-				$session -> reset();
-				
-				$state -> set('error', 403);
-				$state -> set('reason', 'wrong session when it was regenerate, maybe session or cookies were stolen');
-				
-			}
-			
-			$session -> reinit();
-			
-			Sessions::setCookie('SID', session_id());
-			Sessions::setCookie('UID', $session -> uid);
-			
-		}
-		
-		unset($time);
+		$session -> reinit();
 		
 	}
 	
 }
-
 
 ?>

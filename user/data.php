@@ -38,7 +38,7 @@ if ($su) {
 	// либо так, либо будет подгружаться пользователь по-умолчанию
 	
 	$session = Session::getInstance();
-	$session -> reset();
+	$session -> close();
 	
 	$state -> set('error', 403);
 	$state -> set('reason', 'user data or user name not set in session and cannot be read from database');

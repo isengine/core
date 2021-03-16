@@ -39,11 +39,9 @@ $default = [
 	],
 	'url' => [
 		'api' => [
-			'url' => '/api/',
-			'prefix' => '',
-			'postfix' => '',
-			'path' => true,
-			'query' => true
+			'name' => 'api',
+			'key' => 'key',
+			'token' => 'token'
 		],
 		'assets' => [
 			'url' => '/assets/'
@@ -52,9 +50,7 @@ $default = [
 			'url' => '/error/',
 			'prefix' => '',
 			'postfix' => '',
-			'template' => 'error',
-			'path' => true,
-			'query' => true
+			'template' => 'error'
 			
 			//'url' => '/',
 			//'prefix' => 'e',
@@ -64,10 +60,8 @@ $default = [
 			//'prefix' => '?error=',
 			//'postfix' => ''
 		],
-		'filter' => [
-			'url' => '/filter/',
-			'prefix' => '',
-			'postfix' => '',
+		'data' => [
+			'name' => 'data',
 			'path' => true,
 			'query' => true
 		]

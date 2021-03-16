@@ -24,6 +24,7 @@ use is\Model\Databases\Database;
 
 $user = User::getInstance();
 $session = Session::getInstance();
+$db = Database::getInstance();
 
 // проверяем сессию на наличие прав пользователя
 
@@ -46,7 +47,6 @@ if ($sur) {
 		$array = Objects::add(['default'], $parents);
 	}
 	
-	$db = Database::getInstance();
 	$db -> collection('rights');
 	$db -> driver -> methodFilter('or');
 	
@@ -95,7 +95,6 @@ $user -> setRights($sur);
 
 // переназначаем права для базы данных
 
-$db = Database::getInstance();
 $db -> rights( $sur );
 
 unset($sur);

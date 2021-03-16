@@ -33,6 +33,7 @@ $path = new Path(__DIR__ . DS . DP);
 
 $path -> include('uri:base');
 $path -> include('uri:path');
+$path -> include('uri:data');
 
 //$print = Display::getInstance();
 //$print -> dump($uri);
