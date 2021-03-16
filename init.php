@@ -64,33 +64,32 @@ $path -> include('init:cookie');
 //if (!$state -> get('error')) {
 //}
 
-// Launch driver db
-// Запускаем инициализацию драйвера базы данных
-
-$path -> include('init:driver');
-
-// Launch user
-// Запускаем инициализацию пользователя
-
-$path -> include('init:user');
-
-
 // Launch uri
 // Запускаем разбор uri
 
 $path -> include('init:uri');
 
-// Launch language initialization
-// Запускаем инициализацию языков
+// Launch driver db
+// Запускаем инициализацию драйвера базы данных
 
-$path -> include('init:language');
-// возможно, здесь не хватает инициализации языкового модуля и библиотек
+$path -> include('init:driver');
 
 // Launch api
 // Запускаем api
 
 $path -> include('init:api');
 //init('processor', 'first');
+
+// Launch user
+// Запускаем инициализацию пользователя
+
+$path -> include('init:user');
+
+// Launch language initialization
+// Запускаем инициализацию языков
+
+$path -> include('init:language');
+// возможно, здесь не хватает инициализации языкового модуля и библиотек
 
 // Launch structure
 // Запускаем разбор структуры сайта
@@ -100,8 +99,7 @@ $path -> include('init:api');
 // Launch routing
 // Запускаем правила роутинга
 
-$path -> include('init:router');
-
+//$path -> include('init:router');
 
 //старый порядок
 //init('core', 'languages');

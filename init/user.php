@@ -30,16 +30,24 @@ $user -> init();
 
 // если сессия была открыта и доступ был разрешен
 
-if ($state -> get('session')) {
+if (
+	$state -> get('session') ||
+	$state -> get('api')
+) {
 	
 	// загружаем последовательность инициализации
 	$path = new Path(__DIR__ . DS . DP);
 	
-	// инициализация пользователя со всеми данными
-	$path -> include('user:data');
-	
 	// читаем настройки полей пользователя
 	$path -> include('user:settings');
+	
+	// инициализация пользователя из данных апи
+	if ($state -> get('api')) {
+		$path -> include('user:initfromapikey');
+	}
+	
+	// инициализация пользователя со всеми данными
+	$path -> include('user:data');
 	
 	if ($config -> get('secure:users')) {
 		// более глубокая проверка пользователя по базе данных

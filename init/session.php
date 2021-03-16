@@ -27,6 +27,8 @@ if (Sessions::getCookie('session')) {
 	$session -> open();
 	$state -> set('session', true);
 } else {
+	// удалить строку ниже!!!!
+	//$session -> open();
 	$state -> set('session', false);
 }
 
@@ -80,6 +82,10 @@ if ($state -> get('session')) {
 		
 		$session -> reinit();
 		
+	}
+	
+	if ($config -> get('secure:csrf')) {
+		$session -> setCsrf();
 	}
 	
 }

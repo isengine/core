@@ -95,7 +95,7 @@ $user -> setRights($sur);
 
 // переназначаем права для базы данных
 
-$db -> rights( $sur );
+$db -> rights( $sur, $user -> data -> getEntryKey('name') );
 
 unset($sur);
 
