@@ -28,26 +28,20 @@ $uri = Uri::getInstance();
 
 $path = new Path(__DIR__ . DS . DP);
 
-//$path -> include('uri:error');
+// вызов метода апи
+
+if ($state -> get('api')) {
+	$path -> include('router:api');
+}
 
 // правила роутинга
 
 if (
 	!$state -> get('error') &&
-	!$state -> get('api')
+	!$state -> get('api') &&
+	$config -> get('router:reload')
 ) {
-	
-	// сравниваем урлы и разрешаем релоад
-	// только если не была установлена ошибка
-	// и только если релоад задан в настройках
-	
-	if (
-		$uri -> url !== $uri -> original &&
-		$config -> get('router:reload')
-	) {
-		Sessions::reload($uri -> url, 301);
-	}
-	
+	$path -> include('router:reload');
 }
 
 // предыдущая страница через куки
@@ -56,13 +50,7 @@ $path -> include('router:previous');
 
 // устанавливаем заголовок
 
-Sessions::setHeaderCode($state -> get('error') ? $state -> get('error') : 200);
-
-echo '<pre>';
-//echo print_r($a, 1) . '<br>';
-//echo print_r($api, 1);
-echo print_r($uri, 1);
-echo '</pre>';
+$path -> include('router:headers');
 
 //$print = Display::getInstance();
 //$print -> dump($uri);

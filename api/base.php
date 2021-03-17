@@ -35,6 +35,4 @@ unset($apiset['data'][ $config -> get('url:api:key') ]);
 $api = Api::getInstance();
 $api -> init($apiset);
 
-$state -> set('api', System::set($api -> key));
-
 ?>

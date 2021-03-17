@@ -94,12 +94,12 @@ $path -> include('init:language');
 // Launch structure
 // Запускаем разбор структуры сайта
 
-//$path -> include('init:structure');
+$path -> include('init:structure');
 
 // Launch routing
 // Запускаем правила роутинга
 
-//$path -> include('init:router');
+$path -> include('init:router');
 
 //старый порядок
 //init('core', 'languages');

@@ -14,16 +14,20 @@ use is\Model\Components\Config;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Uri;
+use is\Model\Components\State;
 use is\Model\Apis\Api;
 
 // инициализация
 
 $config = Config::getInstance();
 $uri = Uri::getInstance();
+$state = State::getInstance();
 
 $api_name = $config -> get('url:api:name');
 
 if ($api_name && $uri -> getPathArray(0) === $api_name) {
+	
+	$state -> set('api', true);
 	
 	// загружаем последовательность инициализации
 	
@@ -33,6 +37,8 @@ if ($api_name && $uri -> getPathArray(0) === $api_name) {
 	$path -> include('api:settings');
 	$path -> include('api:data');
 	
+} else {
+	$state -> set('api', false);
 }
 
 unset($api_name);

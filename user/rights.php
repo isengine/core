@@ -31,7 +31,6 @@ $db = Database::getInstance();
 $sur = $session -> getValue('rights');
 
 if ($sur) {
-	
 	$sur = json_decode($sur, true);
 	
 } else {
