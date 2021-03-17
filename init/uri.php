@@ -25,7 +25,6 @@ $state = State::getInstance();
 
 $uri = Uri::getInstance();
 $uri -> init();
-$uri -> setInit();
 
 // загружаем последовательность инициализации
 

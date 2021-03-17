@@ -18,7 +18,6 @@ use is\Model\Components\Content;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
-use is\Model\Databases\Database;
 
 // читаем user
 
@@ -41,11 +40,6 @@ if (
 	// читаем настройки полей пользователя
 	$path -> include('user:settings');
 	
-	// инициализация пользователя из данных апи
-	if ($state -> get('api')) {
-		$path -> include('user:initfromapikey');
-	}
-	
 	// инициализация пользователя со всеми данными
 	$path -> include('user:data');
 	
@@ -63,7 +57,7 @@ if (
 }
 
 //$print = Display::getInstance();
-//$print -> dump($user);
+//$print -> dump($user -> getData());
 //echo '<hr>';
 //$print -> dump($db);
 //$print -> dump($state);

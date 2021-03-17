@@ -19,23 +19,57 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
 use is\Model\Databases\Database;
+use is\Model\Apis\Api;
 
 // читаем user
 
 $user = User::getInstance();
 $session = Session::getInstance();
+$state = State::getInstance();
 
 // проверяем сессию на наличие данных пользователя
 
 $su = $session -> getValue('user');
-
 if ($su) {
-	
 	$user -> data -> setEntry( json_decode($su, true) );
+}
+unset($su);
+
+// подгружаем данные пользователя из апи
+
+if ($state -> get('api')) {
 	
-} else {
+	$api = Api::getInstance();
 	
-	// либо так, либо будет подгружаться пользователь по-умолчанию
+	$field = $user -> getFieldsNameBySpecial('apikey');
+	$uname = $api -> key['name'];
+	$ukey = $api -> key['password'];
+	
+	if (
+		!$user -> data -> getData() ||
+		$uname !== $user -> data -> getEntryKey('name') ||
+		$ukey !== $user -> data -> getData($field)
+	) {
+		
+		$session -> close();
+		
+		$db = Database::getInstance();
+		$db -> collection('users');
+		$db -> driver -> addFilter('name', $uname);
+		$db -> driver -> addFilter('data:' . $field, $ukey);
+		$db -> launch();
+		
+		$user -> data -> setEntry( $db -> data -> getFirst() );
+		
+		$db -> clear();
+		
+	}
+	
+}
+
+// если пользователь не обнаружен, закрываем сессию и вызываем ошибку
+
+if (!$user -> data -> getData()) {
 	
 	$session = Session::getInstance();
 	$session -> close();
@@ -44,8 +78,6 @@ if ($su) {
 	$state -> set('reason', 'user data or user name not set in session and cannot be read from database');
 	
 }
-
-unset($su);
 
 /*
 это все нафиг не нужно, по большому счету
