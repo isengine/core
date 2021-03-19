@@ -27,15 +27,15 @@ $user = User::getInstance();
 
 $user -> init();
 
+// загружаем последовательность инициализации
+$path = new Path(__DIR__ . DS . DP);
+
 // если сессия была открыта и доступ был разрешен
 
 if (
 	$state -> get('session') ||
 	$state -> get('api')
 ) {
-	
-	// загружаем последовательность инициализации
-	$path = new Path(__DIR__ . DS . DP);
 	
 	// читаем настройки полей пользователя
 	$path -> include('user:settings');
@@ -49,11 +49,11 @@ if (
 		$path -> include('user:allow');
 	}
 	
-	if ($config -> get('secure:rights')) {
-		// читаем права пользователя
-		$path -> include('user:rights');
-	}
-	
+}
+
+// читаем права пользователя
+if ($config -> get('secure:rights')) {
+	$path -> include('user:rights');
 }
 
 //$print = Display::getInstance();

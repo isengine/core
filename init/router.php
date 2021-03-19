@@ -32,13 +32,17 @@ $path = new Path(__DIR__ . DS . DP);
 
 if ($state -> get('api')) {
 	$path -> include('router:api');
+} else {
+	// Запускаем разбор структуры сайта
+	$path -> include('router:structure');
+	// Запускаем базовый роутинг
+	$path -> include('router:base');
 }
 
 // правила роутинга
 
 if (
 	!$state -> get('error') &&
-	!$state -> get('api') &&
 	$config -> get('router:reload')
 ) {
 	$path -> include('router:reload');

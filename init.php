@@ -78,7 +78,6 @@ $path -> include('init:driver');
 // Запускаем api
 
 $path -> include('init:api');
-//init('processor', 'first');
 
 // Launch user
 // Запускаем инициализацию пользователя
@@ -91,23 +90,10 @@ $path -> include('init:user');
 $path -> include('init:language');
 // возможно, здесь не хватает инициализации языкового модуля и библиотек
 
-// Launch structure
-// Запускаем разбор структуры сайта
-
-$path -> include('init:structure');
-
 // Launch routing
 // Запускаем правила роутинга
 
 $path -> include('init:router');
-
-//старый порядок
-//init('core', 'languages');
-//init('processor', 'first');
-//init('core', 'structure');
-//init('templates', 'first');
-//init('templates', 'router');
-//init('templates', 'second');
 
 // Launch display buffer
 // Запускаем буфер вывода на экран
