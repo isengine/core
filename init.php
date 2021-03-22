@@ -100,9 +100,17 @@ $path -> include('init:router');
 
 $path -> include('init:display');
 
+// Include view
+// Подключаем вид, шаблонизатор
+
+$path -> include('init:view');
 
 
+
+// test set
 
 echo '<hr><p>END OF TESTS<br>' . number_format(memory_get_usage() / 1024, 3, '.', ' ') . ' KB total / ' . number_format(memory_get_peak_usage() / 1024, 3, '.', ' ') . ' KB in peak<br>' . number_format(microtime(true) - isENGINE, 3, null, null) . ' sec is speed</p>';
+
+exit;
 
 ?>
