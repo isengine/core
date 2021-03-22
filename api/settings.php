@@ -31,9 +31,9 @@ $session = Session::getInstance();
 
 $db = Database::getInstance();
 $db -> collection('api');
-$db -> driver -> addFilter('parents', $api -> class);
-$db -> driver -> addFilter('name', $api -> method);
-$db -> driver -> addFilter('type', '-settings');
+$db -> driver -> filter -> addFilter('parents', $api -> class);
+$db -> driver -> filter -> addFilter('name', $api -> method);
+$db -> driver -> filter -> addFilter('type', '-settings');
 $db -> launch();
 
 $api -> setSettings( $db -> data -> getFirstData() );

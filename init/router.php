@@ -48,6 +48,10 @@ if (
 	$path -> include('router:reload');
 }
 
+// определяем шаблон
+
+$path -> include('router:template');
+
 // предыдущая страница через куки
 
 $path -> include('router:previous');

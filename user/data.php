@@ -55,8 +55,8 @@ if ($state -> get('api')) {
 		
 		$db = Database::getInstance();
 		$db -> collection('users');
-		$db -> driver -> addFilter('name', $uname);
-		$db -> driver -> addFilter('data:' . $field, $ukey);
+		$db -> driver -> filter -> addFilter('name', $uname);
+		$db -> driver -> filter -> addFilter('data:' . $field, $ukey);
 		$db -> launch();
 		
 		$user -> data -> setEntry( $db -> data -> getFirst() );

@@ -34,8 +34,8 @@ $lang -> init();
 
 $db = Database::getInstance();
 $db -> collection('languages');
-$db -> driver -> addFilter('type', 'settings');
-$db -> driver -> addFilter('name', 'default');
+$db -> driver -> filter -> addFilter('type', 'settings');
+$db -> driver -> filter -> addFilter('name', 'default');
 $db -> launch();
 
 $lang -> setSettings( $db -> data -> getFirstData() );

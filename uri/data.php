@@ -22,7 +22,7 @@ $data = [];
 $path_array = $uri -> getPathArray();
 $find = Objects::find($path_array, $config -> get('url:data:name'));
 
-if ($config -> get('url:data:path') && $find) {
+if ($config -> get('url:data:path') && System::set($find)) {
 	$array = Objects::get($path_array, $find + 1);
 	if ($array) {
 		$data = Objects::merge($data, Objects::pairs($array));

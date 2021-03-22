@@ -48,10 +48,10 @@ if ($sur) {
 	}
 	
 	$db -> collection('rights');
-	$db -> driver -> methodFilter('or');
+	$db -> driver -> filter -> methodFilter('or');
 	
 	foreach ($array as $item) {
-		$db -> driver -> addFilter('name', $item);
+		$db -> driver -> filter -> addFilter('name', $item);
 	}
 	unset($item);
 	
