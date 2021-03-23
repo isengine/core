@@ -75,8 +75,6 @@ if ($structure) {
 
 unset($structure);
 
-$router -> setHome();
-
 //echo '<pre>';
 //echo print_r($router, 1);
 //echo '</pre>';

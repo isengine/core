@@ -53,8 +53,6 @@ if (System::typeIterable($path_array)) {
 		$state -> set('reason', 'page not found in structure');
 	}
 	
-} else {
-	$router -> current = $router -> structure -> getByName( $router -> getHome() );
 }
 
 unset($path_array);

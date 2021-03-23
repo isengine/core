@@ -94,14 +94,19 @@ if ($array['section'] && $array['error']) {
 	} else {
 		
 		$templates = Local::list($config -> get('path:templates') . $array['section'] . DS . 'sections' . DS, ['return' => 'folders']);
-		foreach ($templates['folders'] as $item) {
-			$templates['array'][] = $item['name'];
+		if (System::typeIterable($templates)) {
+			foreach ($templates['folders'] as $item) {
+				$templates['array'][] = $item['name'];
+			}
+			unset($item);
+			$templates = $templates['array'];
+		} else {
+			$templates = [];
 		}
-		unset($item);
-		$templates = $templates['array'];
 		
 		if (Objects::match($templates, 'default')) {
-			$array['section'] .= ':default';
+			$router -> template['section'] = 'default';
+			//$array['section'] .= ':default';
 		} else {
 			$array['section'] = null;
 		}
@@ -117,7 +122,11 @@ if ($array['section'] && $array['error']) {
 //echo print_r($array, 1);
 //echo '</pre>';
 
-$router -> template = Objects::first( Objects::clear($array), 'value' );
+$router -> template['name'] = Objects::first( Objects::clear($array), 'value' );
+
+if ($router -> template['name'] === $array['route']) {
+	$router -> route = Objects::unfirst($router -> route);
+}
 
 unset($array, $templates);
 

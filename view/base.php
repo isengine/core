@@ -40,7 +40,7 @@ $print = Display::getInstance();
 //$print -> dump($user -> getData());
 //echo '<hr>';
 //$print -> dump($db);
-$print -> dump($state);
+//$print -> dump($state);
 $print -> dump($router);
 //
 //exit;
