@@ -32,9 +32,19 @@ $config = Config::getInstance();
 $state = State::getInstance();
 $router = Router::getInstance();
 
+// читаем массив шаблонов
+
+$templates = Local::list($config -> get('path:templates'), ['return' => 'folders']);
+foreach ($templates['folders'] as $item) {
+	$templates['array'][] = $item['name'];
+}
+unset($item);
+$templates = $templates['array'];
+
 // задаем массив возможных значений шаблона по приоритету
 
 $array = [
+	'section' => $state -> get('section'),
 	'error' => $state -> get('error') ? $config -> get('url:error:template') : null,
 	'settings' => $router -> current -> data['template'],
 	'parents' => null,
@@ -44,43 +54,72 @@ $array = [
 
 // проверяем шаблон из родителей
 
-$parents = [];
-$p = null;
-foreach ($router -> current -> parents as $item) {
-	$p .= ($p ? ':' : null) . $item;
-	$parents[] = $p;
-}
-unset($item);
-unset($p);
-$parents = Objects::reverse($parents);
-foreach ($parents as $item) {
-	$data = $router -> structure -> getDataByName($item);
-	if ($data['template']) {
-		$array['parents'] = $data['template'];
-		break;
+if (System::typeIterable($router -> current -> parents)) {
+	$parents = [];
+	$p = null;
+	foreach ($router -> current -> parents as $item) {
+		$p .= ($p ? ':' : null) . $item;
+		$parents[] = $p;
 	}
+	unset($item);
+	unset($p);
+	$parents = Objects::reverse($parents);
+	foreach ($parents as $item) {
+		$data = $router -> structure -> getDataByName($item);
+		if ($data['template']) {
+			$array['parents'] = $data['template'];
+			break;
+		}
+	}
+	unset($item);
+	unset($parents);
 }
-unset($item);
-unset($parents);
 
 // проверяем шаблон из первого урла
 
-$template = Objects::first($router -> route, 'value');
-$t = Local::list($config -> get('path:templates'), ['return' => 'folders']);
-foreach ($t['folders'] as $item) {
-	if ($item['name'] === $template) {
+if (System::typeIterable($router -> route)) {
+	$template = Objects::first($router -> route, 'value');
+	if (Objects::match($templates, $template)) {
 		$array['route'] = $template;
-		break;
 	}
+	unset($template);
 }
-unset($item);
-unset($t, $template);
+
+// проверяем секцию
+
+if ($array['section'] && $array['error']) {
+	
+	if (!Objects::match($templates, $array['section'])) {
+		$array['section'] = null;
+	} else {
+		
+		$templates = Local::list($config -> get('path:templates') . $array['section'] . DS . 'sections' . DS, ['return' => 'folders']);
+		foreach ($templates['folders'] as $item) {
+			$templates['array'][] = $item['name'];
+		}
+		unset($item);
+		$templates = $templates['array'];
+		
+		if (Objects::match($templates, 'default')) {
+			$array['section'] .= ':default';
+		} else {
+			$array['section'] = null;
+		}
+		
+	}
+	
+}
 
 // устанавливаем шаблон
 
+//echo '<pre>';
+//echo print_r($templates, 1);
+//echo print_r($array, 1);
+//echo '</pre>';
+
 $router -> template = Objects::first( Objects::clear($array), 'value' );
 
-unset($array);
+unset($array, $templates);
 
 //echo '<pre>';
 //echo print_r($router, 1);

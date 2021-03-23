@@ -64,26 +64,36 @@ unset($path_array);
 // сохраняя при этом параметры строки
 
 $link = $router -> current -> data['link'];
-$path = $uri -> path['string'];
+$path = $uri -> path['string'] ? '/' . $uri -> path['string'] : null;
 
-if ($link && $path && !Strings::find($path, $link, 0)) {
-	if (System::typeIterable($uri -> data)) {
-		if (
-			$config -> get('url:data:path') &&
-			$config -> get('url:data:name')
-		) {
-			$string = Objects::add(
-				[$config -> get('url:data:name')],
-				Objects::unpairs($uri -> data)
-			);
-			$link .= Strings::join($string, '/');
-		} elseif (
-			$config -> get('url:data:query')
-		) {
-			$uri -> setQueryString( Objects::merge($uri -> query['array'], $uri -> data) );
-		}
-	}
-	$uri -> url = Paths::absoluteUrl($link) . $uri -> query['string'];
+if ($path && !Strings::find($path, $link, 0)) {
+	$state = State::getInstance();
+	$state -> set('error', 404);
+	$state -> set('reason', 'page not found in structure');
+	$state -> set('section', Objects::first($router -> route, 'value'));
+	
+	//if (System::typeIterable($uri -> data)) {
+	//	$f = Strings::find($link, '#');
+	//	if ($f) {
+	//		$fragment = Strings::get($link, $f);
+	//		$link = Strings::get($link, 0, $f);
+	//	}
+	//	if (
+	//		$config -> get('url:data:path') &&
+	//		$config -> get('url:data:name')
+	//	) {
+	//		$string = Objects::add(
+	//			[$config -> get('url:data:name')],
+	//			Objects::unpairs($uri -> data)
+	//		);
+	//		$link .= Strings::join($string, '/');
+	//	} elseif (
+	//		$config -> get('url:data:query')
+	//	) {
+	//		$uri -> setQueryString( Objects::merge($uri -> query['array'], $uri -> data) );
+	//	}
+	//}
+	//$uri -> url = Paths::absoluteUrl($link) . $uri -> query['string'] . $fragment;
 }
 
 // во-первых, мы должны разобрать урл, определить, где в структуре мы находимся
@@ -118,6 +128,8 @@ if ($link && $path && !Strings::find($path, $link, 0)) {
 // и установки, переноса из одного проекта в другой
 
 //echo '<pre>';
+//echo print_r($uri -> url, 1) . '<br>';
+//echo print_r($uri -> original, 1) . '<br>';
 //echo print_r($uri, 1);
 //echo print_r($router, 1);
 //echo '</pre>';
