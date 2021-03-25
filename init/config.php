@@ -31,7 +31,7 @@ unset($file, $data);
 
 // Читаем настройки для запуска на локальной машине
 
-if (System::server('ip') === $config -> get('system:local')) {
+if (System::server('ip') === $config -> getData('system')['local']) {
 	$file = $folder . 'configuration.local.ini';
 	$data = Parser::fromJson( Local::readFile($file) );
 	$config -> mergeData($data, true);
