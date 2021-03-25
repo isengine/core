@@ -10,11 +10,10 @@ use is\Helpers\Sessions;
 use is\Helpers\Paths;
 use is\Helpers\System;
 use is\Helpers\Match;
+use is\Helpers\Local;
 use is\Model\Components\Session;
 use is\Model\Components\Config;
 use is\Model\Components\State;
-use is\Model\Components\Content;
-use is\Model\Components\Path;
 
 // читаем сессию
 
@@ -35,10 +34,12 @@ if ($referrer && !Strings::match($referrer, $server)) {
 	
 	if ($secure) {
 		
-		$data = new Content('config');
-		$data -> setFile('referrer.' . $secure . '.ini');
-		$data -> readContent();
-		$content = $data -> getContent();
+		$file = DR . 'config' . DS . 'referrer.' . $secure . '.ini';
+		echo $file;
+		
+		$content = Local::readFile($file);
+		$content = Parser::fromJson($content);
+		//$this -> mergeData(['content' => $this -> content], true);
 		
 		if ($content) {
 			

@@ -9,13 +9,11 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Sessions;
 use is\Helpers\Prepare;
-use is\Helpers\Math;
-use is\Model\Components\Path;
+use is\Helpers\Paths;
 use is\Model\Components\Session;
 use is\Model\Components\Uri;
 use is\Model\Components\State;
 use is\Model\Components\Config;
-use is\Model\Components\Content;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
@@ -28,6 +26,7 @@ $config = Config::getInstance();
 $state = State::getInstance();
 $router = Router::getInstance();
 $uri = Uri::getInstance();
+$session = Session::getInstance();
 
 // согласно конфигу, мы должны инициализировать шаблонизатор
 // пока что будет только системный шаблон
@@ -62,8 +61,9 @@ $template -> launch();
 //echo print_r($template -> view -> getPagePath(), 1) . '<br>';
 //echo print_r($template -> view -> getCachePage(), 1) . '<br>';
 //echo print_r($template -> view -> getBlockPath('home'), 1) . '<br>';
-echo print_r($template -> view -> setCachePages(true), 1) . '<br>';
-echo print_r($template -> view -> include('home'), 1) . '<br>';
+
+//echo print_r($template -> view -> setCachePages(true), 1) . '<br>';
+//echo print_r($template -> view -> include('home'), 1) . '<br>';
 
 $print = Display::getInstance();
 //$print -> dump($user -> getData());

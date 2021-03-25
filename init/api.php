@@ -9,7 +9,6 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Prepare;
 use is\Helpers\Match;
-use is\Model\Components\Path;
 use is\Model\Components\Config;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
@@ -31,11 +30,11 @@ if ($api_name && $uri -> getPathArray(0) === $api_name) {
 	
 	// загружаем последовательность инициализации
 	
-	$path = new Path(__DIR__ . DS . DP);
+	$path = __DIR__ . DS . DP;
 	
-	$path -> include('api:base');
-	$path -> include('api:settings');
-	$path -> include('api:data');
+	System::include('api:base', $path);
+	System::include('api:settings', $path);
+	System::include('api:data', $path);
 	
 } else {
 	$state -> set('api', false);

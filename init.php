@@ -4,6 +4,8 @@
 
 namespace is;
 
+use is\Helpers\System;
+
 // Базовые константы
 
 if (!defined('isENGINE')) { define('isENGINE', microtime(true)); }
@@ -27,37 +29,37 @@ require_once 'init' . DS . 'blockip.php';
 // Create including components
 // Создаем подключение компонентов
 
-$path = new Model\Components\Path(__DIR__);
+$path = __DIR__;
 
 // Launch system configuration
 // Запускаем конфигурацию системы
 
-$path -> include('init:config');
+System::include('init:config', $path);
 
 // Launch logs
 // Запускаем логи
 
-$path -> include('init:log');
+System::include('init:log', $path);
 
 // Launch error
 // Запускаем компонент ошибки
 
-$path -> include('init:error');
+System::include('init:error', $path);
 
 // Launch session set and check
 // Запускаем установку и проверку сессии
 
-$path -> include('init:session');
+System::include('init:session', $path);
 
 // Launch check query
 // Запускаем проверку качества запроса
 
-$path -> include('init:request');
+System::include('init:request', $path);
 
 // Launch check cookie
 // Запускаем проверку работы куки
 
-$path -> include('init:cookie');
+System::include('init:cookie', $path);
 
 // если есть ошибка, нет смысла что-либо разбирать
 //$state = Model\Components\State::getInstance();
@@ -67,43 +69,44 @@ $path -> include('init:cookie');
 // Launch uri
 // Запускаем разбор uri
 
-$path -> include('init:uri');
+System::include('init:uri', $path);
 
 // Launch driver db
 // Запускаем инициализацию драйвера базы данных
 
-$path -> include('init:driver');
+System::include('init:driver', $path);
 
 // Launch api
 // Запускаем api
 
-$path -> include('init:api');
+System::include('init:api', $path);
 
 // Launch user
 // Запускаем инициализацию пользователя
 
-$path -> include('init:user');
+System::include('init:user', $path);
 
 // Launch language initialization
 // Запускаем инициализацию языков
 
-$path -> include('init:language');
+System::include('init:language', $path);
+
 // возможно, здесь не хватает инициализации языкового модуля и библиотек
 
 // Launch routing
 // Запускаем правила роутинга
 
-$path -> include('init:router');
+System::include('init:router', $path);
 
 // Launch display buffer
 // Запускаем буфер вывода на экран
 
-$path -> include('init:display');
+System::include('init:display', $path);
 
 // Include view
 // Подключаем вид, шаблонизатор
 
-$path -> include('init:view');
+System::include('init:view', $path);
 
 // test set
 

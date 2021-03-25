@@ -14,7 +14,6 @@ use is\Model\Components\Session;
 use is\Model\Components\Uri;
 use is\Model\Components\State;
 use is\Model\Components\Config;
-use is\Model\Components\Content;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 

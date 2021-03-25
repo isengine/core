@@ -5,52 +5,51 @@
 namespace is;
 
 use is\Helpers\System;
+use is\Helpers\Parser;
+use is\Helpers\Objects;
+use is\Helpers\Local;
 use is\Model\Components\Config;
-use is\Model\Components\Path;
-use is\Model\Components\Content;
 
 // Подготавливаем конфигурацию
 
-$data = new Content('config');
 $config = Config::getInstance();
-
-$path = new Path(__DIR__ . DS . DP);
+$folder = DR . 'config' . DS;
+$path = __DIR__ . DS . DP;
 
 // Читаем настройки системы по-умолчанию
 
-$default = $path -> include('config:default', 'default');
-$data -> addContent($default);
-unset($default);
-
-// Создаем конфигурацию из констант
-//$config -> data = $data -> getData();
-//$config -> init();
+$data = System::include('config:default', $path, 'default');
+$config -> setData($data);
+unset($data);
 
 // Читаем пользовательские настройки
 
-$data -> setFile('configuration.ini');
-$data -> readContent();
+$file = $folder . 'configuration.ini';
+$data = Parser::fromJson( Local::readFile($file) );
+$config -> mergeData($data, true);
+unset($file, $data);
 
 // Читаем настройки для запуска на локальной машине
 
 if (System::server('ip') === $config -> get('system:local')) {
-	$data -> setFile('configuration.local.ini');
-	$data -> readContent();
+	$file = $folder . 'configuration.local.ini';
+	$data = Parser::fromJson( Local::readFile($file) );
+	$config -> mergeData($data, true);
+	unset($file, $data);
 }
 
 // Создаем конфигурацию из констант
 
-$config -> data = $data -> getContent();
 $config -> init();
 
 // Задаем оставшиеся системные настройки
 
-$path -> include('config:system');
+System::include('config:system', $path);
 
 // Делаем проверку системы, но только в режиме разработки
 
 if ($config -> get('default:mode') === 'develop') {
-	$path -> include('config:check');
+	System::include('config:check', $path);
 }
 
 // ТОЛЬКО ДЛЯ ОТЛАДКИ !!!

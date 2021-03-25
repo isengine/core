@@ -9,13 +9,10 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Sessions;
 use is\Helpers\Prepare;
-use is\Helpers\Paths;
-use is\Model\Components\Path;
 use is\Model\Components\Session;
 use is\Model\Components\Uri;
 use is\Model\Components\State;
 use is\Model\Components\Config;
-use is\Model\Components\Content;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
@@ -69,29 +66,6 @@ if ($path && !Strings::find($path, $link, 0)) {
 	$state -> set('error', 404);
 	$state -> set('reason', 'page not found in structure');
 	$state -> set('section', Objects::first($router -> route, 'value'));
-	
-	//if (System::typeIterable($uri -> data)) {
-	//	$f = Strings::find($link, '#');
-	//	if ($f) {
-	//		$fragment = Strings::get($link, $f);
-	//		$link = Strings::get($link, 0, $f);
-	//	}
-	//	if (
-	//		$config -> get('url:data:path') &&
-	//		$config -> get('url:data:name')
-	//	) {
-	//		$string = Objects::add(
-	//			[$config -> get('url:data:name')],
-	//			Objects::unpairs($uri -> data)
-	//		);
-	//		$link .= Strings::join($string, '/');
-	//	} elseif (
-	//		$config -> get('url:data:query')
-	//	) {
-	//		$uri -> setQueryString( Objects::merge($uri -> query['array'], $uri -> data) );
-	//	}
-	//}
-	//$uri -> url = Paths::absoluteUrl($link) . $uri -> query['string'] . $fragment;
 }
 
 // во-первых, мы должны разобрать урл, определить, где в структуре мы находимся

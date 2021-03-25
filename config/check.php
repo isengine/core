@@ -12,8 +12,6 @@ use is\Model\Components\Config;
 use is\Model\Components\Log;
 use is\Model\Components\Display;
 use is\Model\Components\Session;
-use is\Model\Components\Path;
-use is\Model\Components\Local;
 
 // задаем конфигурацию php
 

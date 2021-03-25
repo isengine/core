@@ -9,12 +9,10 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Sessions;
 use is\Helpers\Prepare;
-use is\Model\Components\Path;
 use is\Model\Components\Session;
 use is\Model\Components\Uri;
 use is\Model\Components\State;
 use is\Model\Components\Config;
-use is\Model\Components\Content;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
@@ -28,7 +26,7 @@ $user = User::getInstance();
 $user -> init();
 
 // загружаем последовательность инициализации
-$path = new Path(__DIR__ . DS . DP);
+$path = __DIR__ . DS . DP;
 
 // если сессия была открыта и доступ был разрешен
 
@@ -38,22 +36,22 @@ if (
 ) {
 	
 	// читаем настройки полей пользователя
-	$path -> include('user:settings');
+	System::include('user:settings', $path);
 	
 	// инициализация пользователя со всеми данными
-	$path -> include('user:data');
+	System::include('user:data', $path);
 	
 	if ($config -> get('secure:users')) {
 		// более глубокая проверка пользователя по базе данных
 		// инициализация пользователя по базе данных - смотрим привязки к браузерам и ip
-		$path -> include('user:allow');
+		System::include('user:allow', $path);
 	}
 	
 }
 
 // читаем права пользователя
 if ($config -> get('secure:rights')) {
-	$path -> include('user:rights');
+	System::include('user:rights', $path);
 }
 
 //$print = Display::getInstance();

@@ -9,12 +9,10 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Sessions;
 use is\Helpers\Prepare;
-use is\Model\Components\Path;
 use is\Model\Components\Session;
 use is\Model\Components\Uri;
 use is\Model\Components\State;
 use is\Model\Components\Config;
-use is\Model\Components\Content;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 
@@ -26,17 +24,17 @@ $uri = Uri::getInstance();
 
 // загружаем последовательность инициализации
 
-$path = new Path(__DIR__ . DS . DP);
+$path = __DIR__ . DS . DP;
 
 // вызов метода апи
 
 if ($state -> get('api')) {
-	$path -> include('router:api');
+	System::include('router:api', $path);
 } else {
 	// Запускаем разбор структуры сайта
-	$path -> include('router:structure');
+	System::include('router:structure', $path);
 	// Запускаем базовый роутинг
-	$path -> include('router:base');
+	System::include('router:base', $path);
 }
 
 // правила роутинга
@@ -45,20 +43,20 @@ if (
 	!$state -> get('error') &&
 	$config -> get('router:reload')
 ) {
-	$path -> include('router:reload');
+	System::include('router:reload', $path);
 }
 
 // определяем шаблон
 
-$path -> include('router:template');
+System::include('router:template', $path);
 
 // предыдущая страница через куки
 
-$path -> include('router:previous');
+System::include('router:previous', $path);
 
 // устанавливаем заголовок
 
-$path -> include('router:headers');
+System::include('router:headers', $path);
 
 //$print = Display::getInstance();
 //$print -> dump($uri);
