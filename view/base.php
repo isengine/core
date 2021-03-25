@@ -43,27 +43,36 @@ $uri = Uri::getInstance();
 //	'data' => $uri -> getData()
 //];
 
-$view = $config -> get('default:view');
-$path = $config -> get('path:templates') . $router -> template['name'] . DS;
+$settings = [
+	'view' => $config -> get('default:view'),
+	'path' => $config -> get('path:templates') . $router -> template['name'] . DS,
+	'cache' => $config -> get('path:cache') . 'templates' . DS
+];
 
 $template = Template::getInstance();
-$template -> init($view, $path);
+$template -> init($settings);
+$template -> launch();
 
 //echo 'title::' . $template -> lang('title') . '<br>';
 //echo 'info::' . $template -> lang('information') . '<br>';
 //echo 'info-ver::' . $template -> lang('information:version') . '<br>';
 //echo 'info-ph-0::' . $template -> lang('information:phone:0') . '<br>';
+//echo print_r($template -> getRealPath(), 1) . '<br>';
 
-echo print_r($p, 1) . '<br>';
-echo print_r($template -> getRealPath(), 1) . '<br>';
+//echo print_r($template -> view -> getPagePath(), 1) . '<br>';
+//echo print_r($template -> view -> getCachePage(), 1) . '<br>';
+//echo print_r($template -> view -> getBlockPath('home'), 1) . '<br>';
+echo print_r($template -> view -> setCachePages(true), 1) . '<br>';
+echo print_r($template -> view -> include('home'), 1) . '<br>';
 
 $print = Display::getInstance();
 //$print -> dump($user -> getData());
 //echo '<hr>';
 //$print -> dump($db);
+//$print -> dump($uri);
 //$print -> dump($state);
 //$print -> dump($template);
-$print -> dump($router);
+//$print -> dump($router);
 //
 //exit;
 
