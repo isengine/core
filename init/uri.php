@@ -28,9 +28,9 @@ $uri -> init();
 
 $path = __DIR__ . DS . DP;
 
-System::include('uri:base', $path);
-System::include('uri:path', $path);
-System::include('uri:data', $path);
+System::includes('uri:base', $path);
+System::includes('uri:path', $path);
+System::includes('uri:data', $path);
 
 //$print = Display::getInstance();
 //$print -> dump($uri);

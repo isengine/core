@@ -30,7 +30,7 @@ $config = Config::getInstance();
 
 $path = __DIR__ . DS . DP;
 
-System::include('view:base', $path);
+System::includes('view:base', $path);
 
 
 

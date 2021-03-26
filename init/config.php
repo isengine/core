@@ -18,7 +18,7 @@ $path = __DIR__ . DS . DP;
 
 // Читаем настройки системы по-умолчанию
 
-$data = System::include('config:default', $path, 'default');
+$data = System::includes('config:default', $path, 'default');
 $config -> setData($data);
 unset($data);
 
@@ -44,12 +44,12 @@ $config -> init();
 
 // Задаем оставшиеся системные настройки
 
-System::include('config:system', $path);
+System::includes('config:system', $path);
 
 // Делаем проверку системы, но только в режиме разработки
 
 if ($config -> get('default:mode') === 'develop') {
-	System::include('config:check', $path);
+	System::includes('config:check', $path);
 }
 
 // ТОЛЬКО ДЛЯ ОТЛАДКИ !!!

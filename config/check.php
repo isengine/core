@@ -73,7 +73,7 @@ if ($log -> data) {
 	
 	$print = Display::getInstance();
 	$print -> splitter = '<br>';
-	$print -> print($log -> data);
+	$print -> render($log -> data);
 	
 	$log -> summary();
 	$log -> close();

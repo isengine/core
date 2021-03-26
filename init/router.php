@@ -29,12 +29,12 @@ $path = __DIR__ . DS . DP;
 // вызов метода апи
 
 if ($state -> get('api')) {
-	System::include('router:api', $path);
+	System::includes('router:api', $path);
 } else {
 	// Запускаем разбор структуры сайта
-	System::include('router:structure', $path);
+	System::includes('router:structure', $path);
 	// Запускаем базовый роутинг
-	System::include('router:base', $path);
+	System::includes('router:base', $path);
 }
 
 // правила роутинга
@@ -43,20 +43,20 @@ if (
 	!$state -> get('error') &&
 	$config -> get('router:reload')
 ) {
-	System::include('router:reload', $path);
+	System::includes('router:reload', $path);
 }
 
 // определяем шаблон
 
-System::include('router:template', $path);
+System::includes('router:template', $path);
 
 // предыдущая страница через куки
 
-System::include('router:previous', $path);
+System::includes('router:previous', $path);
 
 // устанавливаем заголовок
 
-System::include('router:headers', $path);
+System::includes('router:headers', $path);
 
 //$print = Display::getInstance();
 //$print -> dump($uri);

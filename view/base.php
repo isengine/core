@@ -63,7 +63,7 @@ $template -> launch();
 //echo print_r($template -> view -> getBlockPath('home'), 1) . '<br>';
 
 //echo print_r($template -> view -> setCachePages(true), 1) . '<br>';
-//echo print_r($template -> view -> include('home'), 1) . '<br>';
+//echo print_r($template -> view -> includes('home'), 1) . '<br>';
 
 $print = Display::getInstance();
 //$print -> dump($user -> getData());

@@ -34,32 +34,32 @@ $path = __DIR__;
 // Launch system configuration
 // Запускаем конфигурацию системы
 
-System::include('init:config', $path);
+System::includes('init:config', $path);
 
 // Launch logs
 // Запускаем логи
 
-System::include('init:log', $path);
+System::includes('init:log', $path);
 
 // Launch error
 // Запускаем компонент ошибки
 
-System::include('init:error', $path);
+System::includes('init:error', $path);
 
 // Launch session set and check
 // Запускаем установку и проверку сессии
 
-System::include('init:session', $path);
+System::includes('init:session', $path);
 
 // Launch check query
 // Запускаем проверку качества запроса
 
-System::include('init:request', $path);
+System::includes('init:request', $path);
 
 // Launch check cookie
 // Запускаем проверку работы куки
 
-System::include('init:cookie', $path);
+System::includes('init:cookie', $path);
 
 // если есть ошибка, нет смысла что-либо разбирать
 //$state = Model\Components\State::getInstance();
@@ -69,44 +69,44 @@ System::include('init:cookie', $path);
 // Launch uri
 // Запускаем разбор uri
 
-System::include('init:uri', $path);
+System::includes('init:uri', $path);
 
 // Launch driver db
 // Запускаем инициализацию драйвера базы данных
 
-System::include('init:driver', $path);
+System::includes('init:driver', $path);
 
 // Launch api
 // Запускаем api
 
-System::include('init:api', $path);
+System::includes('init:api', $path);
 
 // Launch user
 // Запускаем инициализацию пользователя
 
-System::include('init:user', $path);
+System::includes('init:user', $path);
 
 // Launch language initialization
 // Запускаем инициализацию языков
 
-System::include('init:language', $path);
+System::includes('init:language', $path);
 
 // возможно, здесь не хватает инициализации языкового модуля и библиотек
 
 // Launch routing
 // Запускаем правила роутинга
 
-System::include('init:router', $path);
+System::includes('init:router', $path);
 
 // Launch display buffer
 // Запускаем буфер вывода на экран
 
-System::include('init:display', $path);
+System::includes('init:display', $path);
 
 // Include view
 // Подключаем вид, шаблонизатор
 
-System::include('init:view', $path);
+System::includes('init:view', $path);
 
 // test set
 

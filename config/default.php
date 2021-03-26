@@ -12,7 +12,7 @@ $core = realpath(__DIR__ . DS . DP) . DS;
 
 $default = [
 	'system' => [
-		'php' => '7.0',
+		'php' => '5.6',
 		'session' => 'SID',
 		'charset' => 'UTF-8',
 		'local' => '127.0.0.1',

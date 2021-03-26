@@ -32,9 +32,9 @@ if ($api_name && $uri -> getPathArray(0) === $api_name) {
 	
 	$path = __DIR__ . DS . DP;
 	
-	System::include('api:base', $path);
-	System::include('api:settings', $path);
-	System::include('api:data', $path);
+	System::includes('api:base', $path);
+	System::includes('api:settings', $path);
+	System::includes('api:data', $path);
 	
 } else {
 	$state -> set('api', false);

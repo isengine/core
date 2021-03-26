@@ -36,22 +36,22 @@ if (
 ) {
 	
 	// читаем настройки полей пользователя
-	System::include('user:settings', $path);
+	System::includes('user:settings', $path);
 	
 	// инициализация пользователя со всеми данными
-	System::include('user:data', $path);
+	System::includes('user:data', $path);
 	
 	if ($config -> get('secure:users')) {
 		// более глубокая проверка пользователя по базе данных
 		// инициализация пользователя по базе данных - смотрим привязки к браузерам и ip
-		System::include('user:allow', $path);
+		System::includes('user:allow', $path);
 	}
 	
 }
 
 // читаем права пользователя
 if ($config -> get('secure:rights')) {
-	System::include('user:rights', $path);
+	System::includes('user:rights', $path);
 }
 
 //$print = Display::getInstance();

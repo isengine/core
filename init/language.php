@@ -14,7 +14,7 @@ use is\Model\Components\Log;
 
 $path = __DIR__ . DS . DP;
 
-System::include('language:base', $path);
-System::include('language:data', $path);
+System::includes('language:base', $path);
+System::includes('language:data', $path);
 
 ?>
