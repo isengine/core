@@ -31,6 +31,8 @@ $config = Config::getInstance();
 $path = __DIR__ . DS . DP;
 
 System::includes('view:base', $path);
+System::includes('view:data', $path);
+System::includes('view:seo', $path);
 
 
 

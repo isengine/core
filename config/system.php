@@ -23,7 +23,7 @@ if ($config -> get('default:mode') === 'develop') {
 	if ($config -> get('log:mode') === 'panic') {
 		ini_set('error_reporting', E_ALL);
 	} else {
-		ini_set('error_reporting', E_ALL & ~E_NOTICE);
+		ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT);
 	}
 } else {
 	ini_set('display_errors', 'off');
