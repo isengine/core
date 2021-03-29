@@ -11,9 +11,9 @@ use is\Helpers\System;
 use is\Helpers\Match;
 use is\Helpers\Paths;
 
-use \Less_Parser;
+//use \MatthiasMullie\Minify;
 
-class Less {
+class Css {
 	
 	public $render;
 	
@@ -24,36 +24,39 @@ class Less {
 		
 		$render = &$this -> render;
 		
-		$from = $render -> getPrepare('from', $folder, $name . '.less');
+		$from = $render -> getPrepare('from', $folder, $name . '.css');
 		$to = $render -> getPrepare('to', $folder, $name . '.css');
 		$url = $render -> getPrepare('url', $folder, $name . '.css');
-		$url_folder = $render -> getPrepare('url', $folder);
 		
 		$render -> init($from, $to);
 		$render -> setHash();
 		
 		if (!$render -> matchHash()) {
-			$data = $this -> rendering($from, $url_folder);
-			if ($data) {
-				$render -> write($data);
+			if ($this -> rendering($from, $to)) {
 				$render -> writeHash();
 			}
-			unset($data);
 		}
 		
 		return '<link rel="stylesheet" rev="stylesheet" type="text/css" href="' . $url . $render -> modificator() . '" />';
 		
 	}
 	
-	public function rendering($from, $url) {
+	public function rendering($from, $to) {
 		
 		// рендеринг
 		// from - real путь, где лежит исходний файл
-		// url - url-путь, абсолютный или относительный, для ссылки на файл
+		// to - real путь, где будет лежать готовый файл
 		
-		$less = new Less_Parser(['compress' => true]);
-		$less -> parseFile($from, $url);
-		return $less -> getCss();
+		//$from = Paths::realToRelativeUrl($from);
+		//$minifier = new Minify\CSS($from);
+		//$minifier = new Minify\JS($from);
+		//$minifier -> minify($to);
+		
+		if (!file_exists($from)) {
+			return null;
+		}
+		Local::createFile($to);
+		return Local::copyFile($from, $to);
 		
 	}
 	

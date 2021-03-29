@@ -11,9 +11,10 @@ use is\Helpers\System;
 use is\Helpers\Match;
 use is\Helpers\Paths;
 
-use \Less_Parser;
+use \ScssPhp\ScssPhp\Compiler;
+use \ScssPhp\ScssPhp\OutputStyle;
 
-class Less {
+class Scss {
 	
 	public $render;
 	
@@ -24,7 +25,8 @@ class Less {
 		
 		$render = &$this -> render;
 		
-		$from = $render -> getPrepare('from', $folder, $name . '.less');
+		$from = $render -> getPrepare('from', $folder, $name . '.scss');
+		$from_folder = $render -> getPrepare('from', $folder);
 		$to = $render -> getPrepare('to', $folder, $name . '.css');
 		$url = $render -> getPrepare('url', $folder, $name . '.css');
 		$url_folder = $render -> getPrepare('url', $folder);
@@ -33,7 +35,7 @@ class Less {
 		$render -> setHash();
 		
 		if (!$render -> matchHash()) {
-			$data = $this -> rendering($from, $url_folder);
+			$data = $this -> rendering($from_folder, $name);
 			if ($data) {
 				$render -> write($data);
 				$render -> writeHash();
@@ -45,15 +47,14 @@ class Less {
 		
 	}
 	
-	public function rendering($from, $url) {
+	public function rendering($path, $name) {
 		
 		// рендеринг
-		// from - real путь, где лежит исходний файл
-		// url - url-путь, абсолютный или относительный, для ссылки на файл
-		
-		$less = new Less_Parser(['compress' => true]);
-		$less -> parseFile($from, $url);
-		return $less -> getCss();
+		$scss = new Compiler();
+		$scss -> setImportPaths($path);
+		$scss -> setFormatter('\ScssPhp\ScssPhp\Formatter\Expanded');
+		$scss -> setOutputStyle(OutputStyle::COMPRESSED);
+		return $scss -> compile('@import "' . $name . '.scss";');
 		
 	}
 	

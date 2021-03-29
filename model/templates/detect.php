@@ -35,16 +35,12 @@ class Detect {
 		
 	}
 	
-	public function match($name = null, $compare = null) {
-		
-		if (!$name) {
-			return $this;
-		}
-		
-		$result = $this -> $name;
-		
-		return $compare ? $result === $compare : $result;
-		
+	public function get($name = null) {
+		return $name ? $this -> $name : $this;
+	}
+	
+	public function match($name, $compare) {
+		return $compare && $this -> $name === $compare;
 	}
 	
 }
