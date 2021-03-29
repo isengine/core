@@ -26,7 +26,7 @@ if (!$composer) {
 	require_once 'model' . DS . 'model.php';
 }
 
-unset($autoload, $framework);
+unset($autoload, $framework, $composer);
 
 // Include core controller
 // Подключаем контроллер ядра
