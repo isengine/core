@@ -16,10 +16,7 @@ if (!defined('DR')) { define('DR', realpath(__DIR__ . DS . DP . DP . DP) . DS); 
 // Include framework
 // Подключаем фреймворк
 
-$autoload = DR . 'vendor' . DS . 'autoload.php';
-$framework = DR . 'vendor' . DS . 'isengine' . DS . 'framework' . DS . 'php' . DS . 'init.php';
-require_once file_exists($autoload) ? $autoload : $framework;
-unset($autoload, $framework);
+require_once 'autoload.php';
 
 // Pre-check for blocking by ip
 // Предварительная проверка на блокировку по ip

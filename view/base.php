@@ -43,6 +43,19 @@ $template -> launch();
 //echo print_r($template -> view -> setCachePages(true), 1) . '<br>';
 //echo print_r($template -> view -> includes('home'), 1) . '<br>';
 
+$template -> view -> detect -> init();
+echo print_r($template -> view -> detect -> match(), 1) . '<br>';
+
+$from = $config -> get('path:templates') . $router -> template['name'] . DS;
+$to = $config -> get('path:site') . 'assets' . DS;
+
+$template -> view -> initLess($from . 'less', $to . 'less');
+echo print_r($template -> view -> less(), 1) . '<br>';
+
+$template -> view -> render -> init($from . 'less' . DS . 'temp.less', $to . 'less' . '\\' . 'temp.css');
+$template -> view -> render -> setHash();
+echo print_r($template -> view -> render, 1) . '<br>';
+
 //$print = Display::getInstance();
 //$print -> dump($user -> getData());
 //echo '<hr>';
