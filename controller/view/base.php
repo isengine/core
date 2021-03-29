@@ -49,8 +49,8 @@ echo print_r($template -> view -> detect -> match(), 1) . '<br>';
 $from = $config -> get('path:templates') . $router -> template['name'] . DS;
 $to = $config -> get('path:site') . 'assets' . DS;
 
-$template -> view -> initLess($from . 'less', $to . 'less');
-echo print_r($template -> view -> less(), 1) . '<br>';
+//$template -> view -> less -> init($from . 'less', $to . 'less');
+//echo print_r($template -> view -> less -> less(), 1) . '<br>';
 
 $template -> view -> render -> init($from . 'less' . DS . 'temp.less', $to . 'less' . '\\' . 'temp.css');
 $template -> view -> render -> setHash();
