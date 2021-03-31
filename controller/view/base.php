@@ -31,22 +31,14 @@ $template = Template::getInstance();
 $template -> init($settings);
 $template -> launch();
 
-//echo 'title::' . $template -> lang('title') . '<br>';
-//echo 'info::' . $template -> lang('information') . '<br>';
-//echo 'info-ver::' . $template -> lang('information:version') . '<br>';
-//echo 'info-ph-0::' . $template -> view -> lang('information:phone:0') . '<br>';
+// задаем кэширование блоков
+// и запрещаем кэширование страниц
+//$template -> view -> setCachePages(false);
+//$template -> view -> setCacheBlocks(true);
+// НЕ ЗАБЫТЬ УБРАТЬ КОММЕНТАРИИ !!!!!!!!
 
-//echo print_r($template -> getRealPath(), 1) . '<br>';
-//echo print_r($template -> view -> getPagePath(), 1) . '<br>';
-//echo print_r($template -> view -> getCachePage(), 1) . '<br>';
-//echo print_r($template -> view -> getBlockPath('home'), 1) . '<br>';
-
-//echo print_r($template -> view -> setCachePages(true), 1) . '<br>';
-//echo print_r($template -> view -> setCacheBlocks(true), 1) . '<br>';
-echo print_r($template -> view -> includes('home'), 1) . '<br>';
-
+// запускаем обнаружение устройств
 $template -> view -> detect -> init();
-//echo print_r($template -> view -> detect -> match('type', 'desktop'), 1) . '<br>';
 
 // Задаем пути для рендеринга
 
@@ -67,6 +59,9 @@ $template -> view -> prepare($from, $to, $url);
 
 unset($from, $to, $url);
 
+/*
+// примеры рендера
+
 // осуществляем рендеринг less файла
 $result = $template -> view -> less('template', 'less');
 echo $result;
@@ -85,13 +80,7 @@ echo $result;
 
 // сброс рендера
 $template -> view -> render -> reset();
-
-//$template -> view -> less -> init($from . 'less', $to . 'less');
-//echo print_r($template -> view -> less -> less(), 1) . '<br>';
-
-//$template -> view -> render -> init($from . 'less' . DS . 'temp.less', $to . 'less' . '\\' . 'temp.css');
-//$template -> view -> render -> setHash();
-//echo print_r($template -> view -> render, 1) . '<br>';
+*/
 
 //$print = Display::getInstance();
 //$print -> dump($user -> getData());

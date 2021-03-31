@@ -26,6 +26,7 @@ $template -> seo -> setData( $db -> data -> getFirstData() );
 $db -> clear();
 
 $page = $template -> view -> page();
+
 if ($page) {
 	$db -> driver -> filter -> addFilter('name', $template -> view -> page());
 	$db -> launch();

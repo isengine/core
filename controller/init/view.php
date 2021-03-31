@@ -32,8 +32,6 @@ $path = __DIR__ . DS . DP;
 
 System::includes('view:base', $path);
 System::includes('view:data', $path);
-System::includes('view:cache', $path);
-System::includes('view:render', $path);
 System::includes('view:seo', $path);
 System::includes('view:launch', $path);
 

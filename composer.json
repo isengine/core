@@ -15,6 +15,7 @@
 	"require": {
 		"php" : "^5.6|^7.0|^8.0",
 		"isengine/framework": "*",
+		"beelab/bowerphp" : "^0.5",
 		"shuchkin/simplexlsx": "^0.8.21",
 		"mobiledetect/mobiledetectlib": "^2.8.0",
 		"chrisjean/php-ico": "^1.0.0",
