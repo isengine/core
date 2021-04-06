@@ -26,11 +26,12 @@ $uri -> init();
 
 // загружаем последовательность инициализации
 
-$path = __DIR__ . DS . DP;
+$path = __DIR__;
 
-System::includes('uri:base', $path);
-System::includes('uri:path', $path);
-System::includes('uri:data', $path);
+System::includes('base', $path);
+System::includes('path', $path);
+System::includes('data', $path);
+System::includes('api', $path);
 
 //$print = Display::getInstance();
 //$print -> dump($uri);

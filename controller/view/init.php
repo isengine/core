@@ -28,12 +28,12 @@ $config = Config::getInstance();
 
 // загружаем последовательность инициализации
 
-$path = __DIR__ . DS . DP;
+$path = __DIR__;
 
-System::includes('view:base', $path);
-System::includes('view:data', $path);
-System::includes('view:seo', $path);
-System::includes('view:launch', $path);
+System::includes('base', $path);
+System::includes('data', $path);
+System::includes('seo', $path);
+System::includes('launch', $path);
 
 //$print = Display::getInstance();
 //$print -> dump($user -> getData());

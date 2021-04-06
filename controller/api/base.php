@@ -22,17 +22,21 @@ $uri = Uri::getInstance();
 
 // инициализируем апи с параметрами
 
+$index = Objects::find($uri -> getPathArray(), $config -> get('url:api:name'));
+
 $apiset = [
-	'class' => $uri -> getPathArray(1),
-	'method' => $uri -> getPathArray(2),
-	'key' => $uri -> getData( $config -> get('url:api:key') ),
+	'class' => $uri -> getPathArray( $index + 1 ),
+	'method' => $uri -> getPathArray( $index + 2),
+	'key' => $state -> get('api'),
 	'token' => $uri -> getData( $config -> get('url:api:token') ),
 	'data' => $uri -> getData()
 ];
 
-unset($apiset['data'][ $config -> get('url:api:key') ]);
-
 $api = Api::getInstance();
 $api -> init($apiset);
+
+unset($apiset, $index);
+
+//echo print_r($api, 1);
 
 ?>

@@ -22,24 +22,28 @@ $config = Config::getInstance();
 $state = State::getInstance();
 $uri = Uri::getInstance();
 
-if (Sessions::getCookie('current-url') !== $uri -> url) {
+// загружаем последовательность инициализации
+
+$path = __DIR__ . DS . DP;
+
+// создаем развилку
+
+if ($state -> get('api')) {
 	
-	$current = Sessions::getCookie('current-url');
-	$current = Prepare::clear($current);
-	$current = Prepare::script($current);
-	$current = Prepare::stripTags($current);
-	$current = Prepare::urldecode($current);
+	System::includes('api:init', $path);
 	
-	Sessions::setCookie('previous-url', $current);
+} else {
 	
-	unset($current);
+	// Launch routing
+	// Запускаем правила роутинга
+	
+	System::includes('router:init', $path);
+	
+	// Include view
+	// Подключаем вид, шаблонизатор
+	
+	System::includes('view:init', $path);
 	
 }
-
-if (!$state -> get('error')) {
-	Sessions::setCookie('current-url', $uri -> url);
-}
-
-$uri -> previous = Sessions::getCookie('previous-url');
 
 ?>

@@ -17,7 +17,6 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
 use is\Model\Databases\Database;
-use is\Model\Apis\Api;
 
 // читаем user
 
@@ -37,23 +36,24 @@ unset($su);
 
 if ($state -> get('api')) {
 	
-	$api = Api::getInstance();
-	
 	$field = $user -> getFieldsNameBySpecial('apikey');
-	$uname = $api -> key['name'];
-	$ukey = $api -> key['password'];
+	
+	$key = json_decode(Prepare::decode( $state -> get('api') ), true);
+	//eyJwYXNzd29yZCI6InBhc3N3b3JkIiwibmFtZSI6ImNvbW1vbiJ9
+	
+	$uname = $key['name'];
+	$ukey = $key['password'];
 	
 	if (
-		!$user -> data -> getData() ||
-		$uname !== $user -> data -> getEntryKey('name') ||
-		$ukey !== $user -> data -> getData($field)
+		$uname && $uname !== $user -> data -> getEntryKey('name') ||
+		$ukey && $ukey !== $user -> data -> getData($field)
 	) {
 		
 		$session -> close();
 		
 		$db = Database::getInstance();
 		$db -> collection('users');
-		$db -> driver -> filter -> addFilter('name', $uname);
+		$db -> driver -> filter -> addFilter('name', '+' . $uname);
 		$db -> driver -> filter -> addFilter('data:' . $field, $ukey);
 		$db -> launch();
 		

@@ -26,7 +26,7 @@ $user = User::getInstance();
 $user -> init();
 
 // загружаем последовательность инициализации
-$path = __DIR__ . DS . DP;
+$path = __DIR__;
 
 // если сессия была открыта и доступ был разрешен
 
@@ -36,22 +36,22 @@ if (
 ) {
 	
 	// читаем настройки полей пользователя
-	System::includes('user:settings', $path);
+	System::includes('settings', $path);
 	
 	// инициализация пользователя со всеми данными
-	System::includes('user:data', $path);
+	System::includes('data', $path);
 	
 	if ($config -> get('secure:users')) {
 		// более глубокая проверка пользователя по базе данных
 		// инициализация пользователя по базе данных - смотрим привязки к браузерам и ip
-		System::includes('user:allow', $path);
+		System::includes('allow', $path);
 	}
 	
 }
 
 // читаем права пользователя
 if ($config -> get('secure:rights')) {
-	System::includes('user:rights', $path);
+	System::includes('rights', $path);
 }
 
 //$print = Display::getInstance();

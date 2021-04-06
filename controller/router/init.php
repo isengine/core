@@ -24,18 +24,15 @@ $uri = Uri::getInstance();
 
 // загружаем последовательность инициализации
 
-$path = __DIR__ . DS . DP;
+$path = __DIR__;
 
 // вызов метода апи
 
-if ($state -> get('api')) {
-	System::includes('router:api', $path);
-} else {
-	// Запускаем разбор структуры сайта
-	System::includes('router:structure', $path);
-	// Запускаем базовый роутинг
-	System::includes('router:base', $path);
-}
+// Запускаем разбор структуры сайта
+System::includes('structure', $path);
+
+// Запускаем базовый роутинг
+System::includes('base', $path);
 
 // правила роутинга
 
@@ -43,20 +40,20 @@ if (
 	!$state -> get('error') &&
 	$config -> get('router:reload')
 ) {
-	System::includes('router:reload', $path);
+	System::includes('reload', $path);
 }
 
 // определяем шаблон
 
-System::includes('router:template', $path);
+System::includes('template', $path);
 
 // предыдущая страница через куки
 
-System::includes('router:previous', $path);
+System::includes('previous', $path);
 
 // устанавливаем заголовок
 
-System::includes('router:headers', $path);
+System::includes('headers', $path);
 
 //$print = Display::getInstance();
 //$print -> dump($uri);

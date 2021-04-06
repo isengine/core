@@ -12,9 +12,9 @@ use is\Model\Components\Log;
 
 // загружаем последовательность инициализации
 
-$path = __DIR__ . DS . DP;
+$path = __DIR__;
 
-System::includes('language:base', $path);
-System::includes('language:data', $path);
+System::includes('base', $path);
+System::includes('data', $path);
 
 ?>

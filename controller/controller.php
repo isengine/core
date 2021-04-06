@@ -46,51 +46,31 @@ System::includes('init:request', $path);
 
 System::includes('init:cookie', $path);
 
-// если есть ошибка, нет смысла что-либо разбирать
-//$state = Model\Components\State::getInstance();
-//if (!$state -> get('error')) {
-//}
-
 // Launch uri
 // Запускаем разбор uri
 
-System::includes('init:uri', $path);
+System::includes('uri:init', $path);
 
 // Launch driver db
 // Запускаем инициализацию драйвера базы данных
 
-System::includes('init:driver', $path);
-
-// Launch api
-// Запускаем api
-
-System::includes('init:api', $path);
+System::includes('driver:init', $path);
 
 // Launch user
 // Запускаем инициализацию пользователя
 
-System::includes('init:user', $path);
+System::includes('user:init', $path);
 
 // Launch language initialization
 // Запускаем инициализацию языков
 
-System::includes('init:language', $path);
+System::includes('language:init', $path);
 
 // возможно, здесь не хватает инициализации языкового модуля и библиотек
 
-// Launch routing
-// Запускаем правила роутинга
+// Launch fork
+// Запускаем правила развилки
 
-System::includes('init:router', $path);
-
-// Launch display buffer
-// Запускаем буфер вывода на экран
-
-System::includes('init:display', $path);
-
-// Include view
-// Подключаем вид, шаблонизатор
-
-System::includes('init:view', $path);
+System::includes('init:fork', $path);
 
 ?>

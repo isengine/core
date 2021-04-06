@@ -39,6 +39,7 @@ $default = [
 	],
 	'url' => [
 		'api' => [
+			'server' => null,
 			'name' => 'api',
 			'key' => 'key',
 			'token' => 'token'
