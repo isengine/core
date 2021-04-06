@@ -21,8 +21,8 @@ $config = Config::getInstance();
 $session = Session::getInstance();
 $state = State::getInstance();
 
-$origin = $session -> get('origin', 'class');
-$referrer = $origin ? $origin : $session -> get('referrer', 'class');
+$origin = $session -> get('origin', 'key');
+$referrer = $origin ? $origin : $session -> get('referrer', 'key');
 $server = '//' . System::server('host');
 $secure = $config -> get('secure:referrer');
 
@@ -62,14 +62,14 @@ if ($referrer && !Strings::match($referrer, $server)) {
 		$isreferrer = false;
 	}
 	
-} elseif (!$session -> get('agent', 'class')) {
+} elseif (!$session -> get('agent', 'key')) {
 	$isreferrer = false;
 }
 
 // Проверяем разрешения на запросы с других сайтов
 
 $request = $config -> get('secure:request');
-$method = $session -> get('request', 'class');
+$method = $session -> get('request', 'key');
 
 // разрешено все или разрешено то, что указано
 

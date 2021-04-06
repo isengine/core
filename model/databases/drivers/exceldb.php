@@ -2,7 +2,6 @@
 
 namespace is\Model\Databases\Drivers;
 
-use is\Model\Databases\Driver;
 use is\Helpers\Sessions;
 use is\Helpers\Parser;
 use is\Helpers\Objects;
@@ -12,7 +11,7 @@ use is\Helpers\System;
 use is\Helpers\Match;
 use \SimpleXLSX;
 
-class ExcelDB extends Driver {
+class ExcelDB extends Master {
 	
 	protected $path;
 	

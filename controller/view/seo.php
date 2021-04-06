@@ -22,15 +22,19 @@ $db -> collection('seo');
 $db -> driver -> filter -> addFilter('name', 'default');
 $db -> driver -> filter -> addFilter('type', 'settings');
 $db -> launch();
+
 $template -> seo -> setData( $db -> data -> getFirstData() );
+
 $db -> clear();
 
-$page = $template -> view -> page();
+$page = $template -> get('page');
 
 if ($page) {
-	$db -> driver -> filter -> addFilter('name', $template -> view -> page());
+	$db -> driver -> filter -> addFilter('name', $page);
 	$db -> launch();
+	
 	$template -> seo -> mergeData( $db -> data -> getFirstData() );
+	
 	$db -> clear();
 }
 

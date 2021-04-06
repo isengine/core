@@ -31,8 +31,10 @@ $config = Config::getInstance();
 $path = __DIR__;
 
 System::includes('base', $path);
+System::includes('settings', $path);
 System::includes('data', $path);
 System::includes('seo', $path);
+System::includes('views', $path);
 System::includes('launch', $path);
 
 //$print = Display::getInstance();

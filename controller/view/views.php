@@ -18,39 +18,17 @@ use is\Model\Templates\Template;
 // читаем конфиг
 
 $config = Config::getInstance();
-$router = Router::getInstance();
-
-// инициализируем шаблонизатор с параметрами
-
 $template = Template::getInstance();
-$template -> init([
-	//'view' => $config -> get('default:view'),
-	'path' => $config -> get('path:templates') . $router -> template['name'] . DS,
-	'cache' => $config -> get('path:cache') . 'templates' . DS,
-	'render' => [
-		'from' => [
-			$config -> get('path:templates') . $router -> template['name'] . DS,
-			DS
-		],
-		'url' => [
-			'/' . Paths::clearSlashes($config -> get('url:assets')) . '/',
-			'/' . $router -> template['name'] . '/'
-		],
-		'to' => [
-			$config -> get('path:site') . Paths::toReal(Paths::clearSlashes($config -> get('url:assets'))) . DS,
-			DS . Paths::toReal($router -> template['name']) . DS
-		]
-	]
-]);
 
 // задаем кэширование блоков
 // и запрещаем кэширование страниц
-//$template -> view -> setCachePages(false);
-//$template -> view -> setCacheBlocks(true);
-// НЕ ЗАБЫТЬ УБРАТЬ КОММЕНТАРИИ !!!!!!!!
+
+$template -> view -> add('pages', false);
+$template -> view -> add('blocks', true);
 
 // запускаем обнаружение устройств
-//$template -> view -> detect -> init();
+
+$template -> view -> add('detect');
 
 // пример рендеринга css файла
 //$result = $template -> render('css', 'filename');

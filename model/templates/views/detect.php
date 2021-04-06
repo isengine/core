@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Templates;
+namespace is\Model\Templates\Views;
 
 use is\Helpers\Sessions;
 use is\Helpers\Parser;
@@ -11,7 +11,9 @@ use is\Helpers\System;
 use is\Helpers\Match;
 use is\Helpers\Paths;
 
-class Detect {
+use is\Model\Parents\Data;
+
+class Detect extends Data {
 	
 	public $type;
 	public $os;
@@ -33,10 +35,6 @@ class Detect {
 		
 		unset($mobiledetect);
 		
-	}
-	
-	public function get($name = null) {
-		return $name ? $this -> $name : $this;
 	}
 	
 	public function match($name, $compare) {

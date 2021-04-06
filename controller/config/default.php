@@ -37,33 +37,30 @@ $default = [
 		'log' => $base . 'log' . DS,
 		'templates' => $base . 'templates' . DS
 	],
+	'api' => [
+		'server' => null,
+		'name' => 'api',
+		'key' => 'key',
+		'token' => 'token'
+	],
+	'error' => [
+		'url' => '/error/',
+		'prefix' => '',
+		'postfix' => '',
+		'template' => 'error'
+		
+		//'url' => '/',
+		//'prefix' => 'e',
+		//'postfix' => '.html'
+		
+		//'url' => '/',
+		//'prefix' => '?error=',
+		//'postfix' => ''
+	],
 	'url' => [
-		'api' => [
-			'server' => null,
-			'name' => 'api',
-			'key' => 'key',
-			'token' => 'token'
-		],
-		'assets' => [
-			'url' => '/assets/'
-		],
-		'error' => [
-			'url' => '/error/',
-			'prefix' => '',
-			'postfix' => '',
-			'template' => 'error'
-			
-			//'url' => '/',
-			//'prefix' => 'e',
-			//'postfix' => '.html'
-			
-			//'url' => '/',
-			//'prefix' => '?error=',
-			//'postfix' => ''
-		],
+		'assets' => '/assets/',
 		'data' => [
-			'name' => 'data',
-			'path' => true,
+			'rest' => 'data',
 			'query' => true
 		]
 	],

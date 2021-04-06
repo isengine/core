@@ -43,7 +43,7 @@ $templates = $templates['array'];
 
 $array = [
 	'section' => $state -> get('section'),
-	'error' => $state -> get('error') ? $config -> get('url:error:template') : null,
+	'error' => $state -> get('error') ? $config -> get('error:template') : null,
 	'settings' => $router -> current -> data['template'],
 	'parents' => null,
 	'route' => null,
@@ -91,7 +91,8 @@ if ($array['section'] && $array['error']) {
 		$array['section'] = null;
 	} else {
 		
-		$templates = Local::search($config -> get('path:templates') . $array['section'] . DS . 'sections' . DS, ['return' => 'folders']);
+		$templates = Local::search($config -> get('path:templates') . $array['section'] . DS . 'html' . DS . 'sections' . DS, ['return' => 'folders']);
+		
 		if (System::typeIterable($templates)) {
 			foreach ($templates['folders'] as $item) {
 				$templates['array'][] = $item['name'];

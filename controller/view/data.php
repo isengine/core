@@ -7,29 +7,66 @@ namespace is;
 use is\Helpers\System;
 use is\Helpers\Strings;
 use is\Helpers\Objects;
+use is\Helpers\Paths;
 use is\Model\Components\Config;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
-use is\Model\Databases\Database;
+use is\Model\Components\Router;
+use is\Model\Components\Uri;
+use is\Model\Components\Language;
 use is\Model\Templates\Template;
 
-// читаем
+// читаем конфиг
 
-$template = Template::getInstance();
 $config = Config::getInstance();
+$router = Router::getInstance();
+$uri = Uri::getInstance();
+$lang = Language::getInstance();
+$template = Template::getInstance();
 
-$db = Database::getInstance();
+// настройки вида
 
-$db -> collection('templates');
-$db -> driver -> filter -> addFilter('name', $template -> view -> template());
-$db -> launch();
+$entry = System::typeClass($router -> current, 'entry');
 
-$template -> view -> setData( $db -> data -> getFirstData() );
+$data = [
+	'template' => $router -> template['name'],
+	'section' => $router -> template['section'],
+	'page' => $entry ? $router -> current -> getEntryData('name') : null,
+	'parents' => $entry ? $router -> current -> getEntryKey('parents') : null,
+	'type' => $entry ? $router -> current -> getEntryKey('type') : null,
+	'route' => $router -> route,
+	
+	'url' => $uri -> url,
+	'domain' => $uri -> domain,
+	'home' => !System::typeIterable($uri -> getPathArray()),
+	
+	'lang' => []
+];
 
-$db -> clear();
+$data['lang']['page'] = $data['page'] ? $lang -> get('menu:' . $data['page']) : null;
 
-//echo '<pre>';
-//echo print_r($template -> view -> getData(), 1);
-//echo '</pre>';
+$parents = $data['parents'];
+if (System::typeIterable($parents)) {
+	foreach ($parents as $item) {
+		$name = $lang -> get('menu:' . $item);
+		$data['lang']['parents'][] = $name ? $name : $item;
+	}
+	unset($item);
+}
+unset($parents);
+
+$route = $data['route'];
+if (System::typeIterable($route)) {
+	foreach ($route as $item) {
+		$name = $lang -> get('menu:' . $item);
+		$data['lang']['route'][] = $name ? $name : $item;
+	}
+	unset($item);
+}
+unset($route);
+
+$template -> setData($data);
+
+unset($data);
 
 ?>

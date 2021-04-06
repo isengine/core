@@ -21,11 +21,11 @@ $config = Config::getInstance();
 $uri = Uri::getInstance();
 $state = State::getInstance();
 
-$api_name = $config -> get('url:api:name');
-$api_key = $config -> get('url:api:key');
+$api_name = $config -> get('api:name');
+$api_key = $config -> get('api:key');
 
 if (
-	$config -> get('url:api:server') ||
+	$config -> get('api:server') ||
 	$api_name && (
 		$uri -> getPathArray(0) === $api_name ||
 		$uri -> getPathArray(1) === $api_name

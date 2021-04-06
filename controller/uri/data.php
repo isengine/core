@@ -20,9 +20,9 @@ $uri = Uri::getInstance();
 $data = [];
 
 $path_array = $uri -> getPathArray();
-$find = Objects::find($path_array, $config -> get('url:data:name'));
+$find = Objects::find($path_array, $config -> get('url:data:rest'));
 
-if ($config -> get('url:data:path') && System::set($find)) {
+if (System::set($find)) {
 	$array = Objects::get($path_array, $find + 1);
 	if ($array) {
 		$data = Objects::merge($data, Objects::pairs($array));

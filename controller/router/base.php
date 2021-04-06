@@ -36,8 +36,8 @@ $path_array = $uri -> path['array'];
 
 if (System::typeIterable($path_array)) {
 	
-	$find = Objects::find($path_array, $config -> get('url:data:name'));
-	$router -> route = Objects::get($path_array, 0, $find);
+	$find = Objects::find($path_array, $config -> get('url:data:rest'));
+	$router -> route = System::set($find) ? Objects::get($path_array, 0, $find) : $path_array;
 	unset($find);
 	
 	$route = Strings::join($router -> route, ':');

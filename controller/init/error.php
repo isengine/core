@@ -21,9 +21,9 @@ $state = State::getInstance();
 // инициализация
 
 $error = Error::getInstance();
-$error -> init($config -> get('url:error:url'));
-$error -> prefix = $config -> get('url:error:prefix');
-$error -> postfix = $config -> get('url:error:postfix');
+$error -> init($config -> get('error:url'));
+$error -> prefix = $config -> get('error:prefix');
+$error -> postfix = $config -> get('error:postfix');
 
 $path = $error -> path . $error -> prefix;
 $find = System::server('request');

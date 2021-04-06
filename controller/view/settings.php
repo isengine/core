@@ -8,29 +8,28 @@ use is\Helpers\System;
 use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Model\Components\Config;
-use is\Model\Components\State;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
-use is\Model\Components\Router;
 use is\Model\Databases\Database;
 use is\Model\Templates\Template;
 
 // читаем
 
 $template = Template::getInstance();
-$state = State::getInstance();
 $config = Config::getInstance();
-$router = Router::getInstance();
 
-$section = $state -> get('section') ? 'sections:' . $router -> template['section'] . ':' : null;
+$db = Database::getInstance();
 
-System::includes(
-	'html:' . $section . 'template',
-	$config -> get('path:templates') . $template -> get('template')
-);
+$db -> collection('templates');
+$db -> driver -> filter -> addFilter('name', $template -> get('template'));
+$db -> launch();
+
+$template -> settings -> setData( $db -> data -> getFirstData() );
+
+$db -> clear();
 
 //echo '<pre>';
-//echo print_r($path, 1);
+//echo print_r($template -> getData(), 1);
 //echo '</pre>';
 
 ?>
