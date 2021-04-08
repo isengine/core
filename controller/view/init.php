@@ -16,7 +16,6 @@ use is\Model\Components\Config;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
-use is\View;
 
 // читаем конфиг
 
@@ -30,10 +29,6 @@ $config = Config::getInstance();
 
 $path = __DIR__;
 
-System::includes('base', $path);
-System::includes('settings', $path);
-System::includes('data', $path);
-System::includes('seo', $path);
 System::includes('views', $path);
 System::includes('launch', $path);
 

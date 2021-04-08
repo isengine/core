@@ -13,22 +13,69 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Router;
 use is\Model\Components\Language;
-use is\Model\Templates\Template;
+use is\Model\Views\View;
 
 // читаем конфиг
 
 $config = Config::getInstance();
-$template = Template::getInstance();
+$router = Router::getInstance();
+$view = View::getInstance();
+
+// читаем базовые состояния
+
+$view -> add('state');
+
+// читаем настройки шаблона
+
+$view -> add('template');
+
+// читаем настройки seo
+
+$view -> add('seo');
+
+// запускаем языки
+
+$view -> add('lang');
+
+// задаем рендеринг
+
+$view -> add('render');
+
+$from = [
+	$config -> get('path:templates') . $router -> template['name'] . DS,
+	DS
+];
+$to = [
+	$config -> get('path:site') . Paths::toReal(Paths::clearSlashes($config -> get('url:assets'))) . DS,
+	DS . Paths::toReal($router -> template['name']) . DS
+];
+$url = [
+	'/' . Paths::clearSlashes($config -> get('url:assets')) . '/',
+	'/' . $router -> template['name'] . '/'
+];
+
+$view -> get('render') -> init($from, $to, $url);
+
+// запускаем обнаружение устройств
+
+$view -> add('detect');
+
+// запускаем обнаружение устройств
+
+$view -> add('call');
+
+// инициализируем шаблонизатор с параметрами
 
 // задаем кэширование блоков
 // и запрещаем кэширование страниц
 
-$template -> view -> add('pages', false);
-$template -> view -> add('blocks', true);
+$path = $config -> get('path:templates') . $router -> template['name'] . DS;
+$cache = $config -> get('path:cache') . 'templates' . DS;
 
-// запускаем обнаружение устройств
+$view -> add('layout');
 
-$template -> view -> add('detect');
+$view -> get('layout') -> init('pages', $path, $cache, false);
+$view -> get('layout') -> init('blocks', $path, $cache, true);
 
 // пример рендеринга css файла
 //$result = $template -> render('css', 'filename');

@@ -13,11 +13,9 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Router;
 use is\Model\Databases\Database;
-use is\Model\Templates\Template;
 
 // читаем
 
-$template = Template::getInstance();
 $state = State::getInstance();
 $config = Config::getInstance();
 $router = Router::getInstance();
@@ -26,7 +24,7 @@ $section = $state -> get('section') ? 'sections:' . $router -> template['section
 
 System::includes(
 	'html:' . $section . 'template',
-	$config -> get('path:templates') . $template -> get('template')
+	$config -> get('path:templates') . $router -> template['name']
 );
 
 //echo '<pre>';
