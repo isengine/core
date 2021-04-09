@@ -28,10 +28,10 @@ class Seo extends Data {
 		
 		$db -> clear();
 		
-		$page = System::typeClass($router -> current, 'entry') ? $router -> current -> getEntryData('name') : null;
+		$page = System::typeClass($router -> current, 'entry') ? $router -> current -> getEntryData('name') : 'index';
 		
 		if ($page) {
-			$db -> driver -> filter -> addFilter('name', $page);
+			$db -> driver -> filter -> addFilter('name', '+' . $page);
 			$db -> launch();
 			
 			$this -> mergeData( $db -> data -> getFirstData() );

@@ -35,16 +35,34 @@ class State extends Data {
 			'domain' => $uri -> domain,
 			'home' => !System::typeIterable($uri -> getPathArray()),
 			
-			'lang' => []
+			'lang' => $lang -> lang,
+			'code' => $lang -> code,
+			
+			'langs' => [
+				'list' => Objects::keys($lang -> settings),
+				'codes' => null,
+				'page' => null,
+				'parents' => null,
+				'route' => null
+			]
 		];
 		
-		$data['lang']['page'] = $data['page'] ? $lang -> get('menu:' . $data['page']) : null;
+		$codes = $lang -> settings;
+		if (System::typeIterable($codes)) {
+			foreach ($codes as $key => $item) {
+				$data['langs']['codes'][$key] = $item['code'];
+			}
+			unset($item);
+		}
+		unset($codes);
+		
+		$data['langs']['page'] = $data['page'] ? $lang -> get('menu:' . $data['page']) : null;
 		
 		$parents = $data['parents'];
 		if (System::typeIterable($parents)) {
 			foreach ($parents as $item) {
 				$name = $lang -> get('menu:' . $item);
-				$data['lang']['parents'][] = $name ? $name : $item;
+				$data['langs']['parents'][] = $name ? $name : $item;
 			}
 			unset($item);
 		}
@@ -54,7 +72,7 @@ class State extends Data {
 		if (System::typeIterable($route)) {
 			foreach ($route as $item) {
 				$name = $lang -> get('menu:' . $item);
-				$data['lang']['route'][] = $name ? $name : $item;
+				$data['langs']['route'][] = $name ? $name : $item;
 			}
 			unset($item);
 		}

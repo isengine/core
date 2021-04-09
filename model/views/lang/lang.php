@@ -14,15 +14,18 @@ use is\Model\Components\Language;
 class Lang extends Data {
 	
 	public function __construct() {
-		$lang = Language::getInstance();
-		$this -> setData($lang -> getData());
+		//$lang = Language::getInstance();
+		//$this -> setData($lang -> getData());
+	}
+	
+	public function get($data) {
+		return Language::getInstance() -> get($data);
 	}
 	
 }
 
 //class Lang {
 //	__construct() {
-//		$this = Language::getInstance();
 //	}
 //}
 
