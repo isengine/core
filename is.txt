@@ -1,4 +1,0 @@
-Framework is only model
-Core is controller uses models from framework
-and some self models based on framework models
-but it is custom users models
