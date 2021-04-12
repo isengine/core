@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Views\Call;
+namespace is\Model\Views\Process;
 
 class Mail extends Master {
 	

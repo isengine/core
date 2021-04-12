@@ -52,6 +52,10 @@ if ($config -> get('default:mode') === 'develop') {
 	System::includes('config:check', $path);
 }
 
+// Задаем дату и время
+
+System::includes('config:datetime', $path);
+
 // ТОЛЬКО ДЛЯ ОТЛАДКИ !!!
 // Смотрим итоги
 

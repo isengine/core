@@ -25,7 +25,7 @@ $db = Database::getInstance();
 $db -> init($dbset);
 
 if ($dbset['cache']) {
-	$db -> cache($config -> get('path:cache') . 'db_' . $config -> get('db:name') . DS);
+	$db -> cache($config -> get('path:cache') . 'database' . DS . $config -> get('db:name') . DS);
 }
 
 //$db -> addFilter('name', 'one:+two:-three:*four:10,5_');

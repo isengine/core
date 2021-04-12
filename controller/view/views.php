@@ -32,6 +32,8 @@ $view -> add('template');
 // читаем настройки seo
 
 $view -> add('seo');
+$view -> get('seo') -> title();
+$view -> get('seo') -> keys();
 
 // запускаем языки
 
@@ -62,7 +64,7 @@ $view -> add('detect');
 
 // запускаем обнаружение устройств
 
-$view -> add('call');
+$view -> add('process');
 
 // инициализируем шаблонизатор с параметрами
 
@@ -75,7 +77,7 @@ $cache = $config -> get('path:cache') . 'templates' . DS;
 $view -> add('layout');
 
 $view -> get('layout') -> init('pages', $path, $cache, false);
-$view -> get('layout') -> init('blocks', $path, $cache, true);
+$view -> get('layout') -> init('blocks', $path, $cache, false); // переключить на true
 
 // пример рендеринга css файла
 //$result = $template -> render('css', 'filename');
