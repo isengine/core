@@ -34,7 +34,7 @@ class Render extends Data {
 			$this -> to,
 			$this -> url
 		);
-		$render -> launch($name);
+		return $render -> launch($name);
 	}
 	
 }

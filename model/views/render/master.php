@@ -39,12 +39,11 @@ abstract class Master extends Data {
 		$this -> to = $to;
 		$this -> url = $url;
 		
-		$this -> mtime = file_exists($this -> from) ? filemtime($this -> from) : null;
+		//$this -> mtime = file_exists($this -> from) ? filemtime($this -> from) : null;
 		
 	}
 	
-	abstract public function launch();
-	abstract public function rendering();
+	abstract public function launch($null);
 	
 	public function setPath($middle = null, $last = null) {
 		foreach (['from', 'to', 'url'] as $item) {
@@ -89,8 +88,15 @@ abstract class Master extends Data {
 		Local::writeFile($this -> to, $data, 'replace');
 	}
 	
+	public function setMtime() {
+		$this -> mtime = file_exists($this -> from) ? filemtime($this -> from) : null;
+	}
+	
 	public function setHash() {
 		// создание md5 хэша по времени последнего изменения
+		if (!$this -> mtime) {
+			$this -> setMtime();
+		}
 		$this -> hash = [
 			'file' => $this -> to . '.md5',
 			'from' => null,

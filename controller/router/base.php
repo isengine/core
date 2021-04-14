@@ -30,18 +30,47 @@ $config = Config::getInstance();
 
 // здесь расположен базовый обработчик роутинга
 
+$path_array = $uri -> path['array'];
+$path = $uri -> path['string'] ? '/' . $uri -> path['string'] : null;
+
+// если последний объект - файл, заменяем его на имя без расширения
+
+$ext = $config -> get('router:folders:extension');
+$idx = $config -> get('router:folders:index');
+
+$ext = $ext ? '.' . $ext : '.php';
+$idx = $idx ? ($config -> get('router:index') ? $config -> get('router:index') : 'index') . $ext : null;
+
+if ($ext && System::set($uri -> file)) {
+	$last = Objects::last($path_array);
+	if ($idx === $last['value']) {
+		$path_array = Objects::unlast($path_array);
+		$len = Strings::len($path) - Strings::len($idx);
+		$path = Strings::get($path, 0, $len);
+	} else {
+		$len = Strings::len($last['value']) - Strings::len($ext);
+		$path_array[ $last['key'] ] = Strings::get($last['value'], 0, $len);
+		$len = Strings::len($path) - Strings::len($ext);
+		$path = Strings::get($path, 0, $len) . '/';
+	}
+}
+
+unset($ext, $idx);
+
 // определяем, где в структуре мы находимся
 
-$path_array = $uri -> path['array'];
+// составляем путь
+
+$route = null;
 
 if (System::typeIterable($path_array)) {
-	
 	$find = Objects::find($path_array, $config -> get('url:data:rest'));
 	$router -> route = System::set($find) ? Objects::get($path_array, 0, $find) : $path_array;
 	unset($find);
-	
 	$route = Strings::join($router -> route, ':');
-	
+}
+
+if ($route) {
 	if (Objects::match($router -> structure -> getNames(), $route)) {
 		$router -> current = $router -> structure -> getByName($route);
 	} else {
@@ -49,7 +78,15 @@ if (System::typeIterable($path_array)) {
 		$state -> set('error', 404);
 		$state -> set('reason', 'page not found in structure');
 	}
-	
+} else {
+	// раньше этого условия не было,
+	// но теперь мы избавляемся от определения домашней страницы в структуре
+	// проблема возникает только с определением и разделением:
+	//   домашней страницы сайта,
+	//   главной страницы шаблона
+	//   секции шаблона, к которому нет доступа
+	//$router -> current = null;
+	$router -> current -> data['link'] = '/';
 }
 
 unset($path_array);
@@ -59,7 +96,6 @@ unset($path_array);
 // сохраняя при этом параметры строки
 
 $link = $router -> current -> data['link'];
-$path = $uri -> path['string'] ? '/' . $uri -> path['string'] : null;
 
 if ($path && !Strings::find($path, $link, 0)) {
 	$state = State::getInstance();

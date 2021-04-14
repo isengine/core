@@ -9,6 +9,7 @@ use is\Helpers\Parser;
 use is\Helpers\Prepare;
 use is\Helpers\Paths;
 use is\Model\Parents\Data;
+use is\Model\Components\Config;
 use is\Model\Components\Language;
 use is\Model\Components\Router;
 use is\Model\Components\Uri;
@@ -20,6 +21,7 @@ class State extends Data {
 		$router = Router::getInstance();
 		$uri = Uri::getInstance();
 		$lang = Language::getInstance();
+		$config = Config::getInstance();
 		
 		$entry = System::typeClass($router -> current, 'entry');
 		
@@ -29,28 +31,61 @@ class State extends Data {
 			'page' => $entry ? $router -> current -> getEntryData('name') : null,
 			'parents' => $entry ? $router -> current -> getEntryKey('parents') : null,
 			'type' => $entry ? $router -> current -> getEntryKey('type') : null,
+			
 			'route' => $router -> route,
+			'path' => $router -> route ? Strings::join($router -> route, '/') . '/' : null,
 			
 			'url' => $uri -> url,
 			'domain' => $uri -> domain,
-			'home' => !System::typeIterable($uri -> getPathArray()),
+			'home' => !System::typeIterable($router -> route),
 			
 			'lang' => $lang -> lang,
 			'code' => $lang -> code,
 			
 			'langs' => [
 				'list' => Objects::keys($lang -> settings),
+				'default' => $config -> get('default:lang'),
 				'codes' => null,
+				'others' => null,
 				'page' => null,
 				'parents' => null,
 				'route' => null
 			]
 		];
 		
+		// если последний объект - файл и есть правила роутинга, меняем путь
+		
+		if ($config -> get('router:folders:convert')) {
+			
+			$ext = $config -> get('router:folders:extension');
+			$idx = $config -> get('router:folders:index');
+			
+			$ext = $ext ? '.' . $ext : '.php';
+			$idx = $idx ? ($config -> get('router:index') ? $config -> get('router:index') : 'index') . $ext : null;
+			
+			if ($ext && System::set($uri -> file)) {
+				$last = Objects::last($uri -> path['array'], 'value');
+				if ($idx === $last || !System::set($data['path'])) {
+					$data['path'] .= $idx;
+				} else {
+					$data['path'] = Strings::unlast($data['path']);
+					$data['path'] .= $ext;
+				}
+			}
+			
+			unset($ext, $idx);
+			
+		}
+		
+		// другие преобразования
+		
 		$codes = $lang -> settings;
 		if (System::typeIterable($codes)) {
 			foreach ($codes as $key => $item) {
 				$data['langs']['codes'][$key] = $item['code'];
+				if ($key !== $data['lang'] && $key !== $data['langs']['default']) {
+					$data['langs']['others'][$key] = $item['code'];
+				}
 			}
 			unset($item);
 		}

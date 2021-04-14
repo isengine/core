@@ -110,6 +110,10 @@ if (
 
 $uri -> setFromArray();
 
+if ($uri -> url !== $uri -> original) {
+	$state -> set('reload', 'temporary');
+}
+
 //echo '<pre>';
 //echo print_r($lang, 1);
 //echo '</pre>';
