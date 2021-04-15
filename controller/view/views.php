@@ -9,6 +9,7 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Paths;
 use is\Model\Components\Config;
+use is\Model\Components\State;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Router;
@@ -18,6 +19,7 @@ use is\Model\Views\View;
 // читаем конфиг
 
 $config = Config::getInstance();
+$state = State::getInstance();
 $router = Router::getInstance();
 $view = View::getInstance();
 
@@ -25,10 +27,6 @@ $view = View::getInstance();
 
 $view -> add('state');
 $view -> add('vars');
-
-// читаем настройки шаблона
-
-$view -> add('template');
 
 // читаем настройки seo
 
@@ -70,6 +68,11 @@ $view -> add('detect');
 // запускаем обнаружение устройств
 
 $view -> add('process');
+
+// запускаем специальные группы
+
+$view -> add('special');
+$view -> get('special') -> init( $view -> get('state|settings:special') );
 
 // инициализируем шаблонизатор с параметрами
 

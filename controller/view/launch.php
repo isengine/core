@@ -13,12 +13,19 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Router;
 use is\Model\Databases\Database;
+use is\Model\Views\View;
+use is\Model\Files\File;
 
 // читаем
 
 $state = State::getInstance();
 $config = Config::getInstance();
 $router = Router::getInstance();
+$file = File::getInstance();
+
+if ($file -> exists) {
+	$file -> launch();
+}
 
 $section = $state -> get('section') ? 'sections:' . $router -> template['section'] . ':' : null;
 

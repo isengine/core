@@ -30,32 +30,8 @@ $config = Config::getInstance();
 
 // здесь расположен базовый обработчик роутинга
 
-$path_array = $uri -> path['array'];
+$path_array = $uri -> getRoute();
 $path = $uri -> path['string'] ? '/' . $uri -> path['string'] : null;
-
-// если последний объект - файл, заменяем его на имя без расширения
-
-$ext = $config -> get('router:folders:extension');
-$idx = $config -> get('router:folders:index');
-
-$ext = $ext ? '.' . $ext : '.php';
-$idx = $idx ? ($config -> get('router:index') ? $config -> get('router:index') : 'index') . $ext : null;
-
-if ($ext && System::set($uri -> file)) {
-	$last = Objects::last($path_array);
-	if ($idx === $last['value']) {
-		$path_array = Objects::unlast($path_array);
-		$len = Strings::len($path) - Strings::len($idx);
-		$path = Strings::get($path, 0, $len);
-	} else {
-		$len = Strings::len($last['value']) - Strings::len($ext);
-		$path_array[ $last['key'] ] = Strings::get($last['value'], 0, $len);
-		$len = Strings::len($path) - Strings::len($ext);
-		$path = Strings::get($path, 0, $len) . '/';
-	}
-}
-
-unset($ext, $idx);
 
 // определяем, где в структуре мы находимся
 

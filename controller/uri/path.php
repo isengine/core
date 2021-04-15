@@ -298,15 +298,27 @@ if ($folders_convert) {
 
 $uri -> setFromArray();
 
+// создаем раздел путей для роутинга
+
+$uri -> setRoute();
+
+if (
+	$uri -> getRoute('last') === $uri -> file['file']
+) {
+	$uri -> unRoute('last');
+	if ($folders_convert && !$folders_index && $uri -> file['extension'] === $folders_extension) {
+		$uri -> addRoute( $uri -> file['name'] );
+	}
+}
+
 /*
+echo '<br>' . ($uri -> route ? '<span style="color: green">' : null) . 'route : ' . str_replace(['Array', '[base] => '], null, print_r($uri -> route, 1)) . ($uri -> route ? '</span>' : null);
 echo '<br>path : '   . str_replace(['Array', '[base] => '], null, print_r($uri -> path, 1));
 echo '<br>file : '   . str_replace('Array', null, print_r($uri -> file, 1));
 echo '<br>' . ($uri -> folder ? '<span style="color: green">' : null) . 'folder : '  . str_replace('Array', null, print_r($uri -> folder, 1)) . ($uri -> folder ? '</span>' : null);
-echo '<br>ori : '    . str_replace('Array', null, print_r($uri -> original, 1));
-echo '<br>url : '    . str_replace('Array', null, print_r($uri -> url, 1));
+echo '<br>ori : '    . str_replace('Array', null, print_r(preg_replace('/\?.*$/ui', '?...', $uri -> original), 1));
+echo '<br>url : '    . str_replace('Array', null, print_r(preg_replace('/\?.*$/ui', '?...',$uri -> url), 1));
 echo '<br>' . ($uri -> reload ? '<span style="color: red">' : null) . 'reload : ' . str_replace('Array', null, print_r($uri -> reload, 1)) . ($uri -> reload ? '</span>' : null);
-
 exit;
 */
-
 ?>

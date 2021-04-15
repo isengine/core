@@ -26,6 +26,8 @@ class State extends Data {
 		$entry = System::typeClass($router -> current, 'entry');
 		
 		$data = [
+			'settings' => $router -> getData(),
+			
 			'template' => $router -> template['name'],
 			'section' => $router -> template['section'],
 			'page' => $entry ? $router -> current -> getEntryData('name') : null,
@@ -52,30 +54,6 @@ class State extends Data {
 				'route' => null
 			]
 		];
-		
-		// если последний объект - файл и есть правила роутинга, меняем путь
-		
-		if ($config -> get('router:folders:convert')) {
-			
-			$ext = $config -> get('router:folders:extension');
-			$idx = $config -> get('router:folders:index');
-			
-			$ext = $ext ? '.' . $ext : '.php';
-			$idx = $idx ? ($config -> get('router:index') ? $config -> get('router:index') : 'index') . $ext : null;
-			
-			if ($ext && System::set($uri -> file)) {
-				$last = Objects::last($uri -> path['array'], 'value');
-				if ($idx === $last || !System::set($data['path'])) {
-					$data['path'] .= $idx;
-				} else {
-					$data['path'] = Strings::unlast($data['path']);
-					$data['path'] .= $ext;
-				}
-			}
-			
-			unset($ext, $idx);
-			
-		}
 		
 		// другие преобразования
 		

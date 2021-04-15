@@ -77,9 +77,11 @@ if (
 	if ($array['uri_first']) {
 		$array['uri'] = $array['uri_first'];
 		$uri -> unPathArray(0);
+		$uri -> unRoute(0);
 	} elseif ($array['uri_second']) {
 		$array['uri'] = $array['uri_second'];
 		$uri -> unPathArray(1);
+		$uri -> unRoute(1);
 	}
 	$uri -> language = $array['uri'];
 }

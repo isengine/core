@@ -28,6 +28,9 @@ $path = __DIR__;
 
 // вызов метода апи
 
+// Запускаем инициализацию генератора файлов
+System::includes('files', $path);
+
 // Запускаем разбор структуры сайта
 System::includes('structure', $path);
 
@@ -46,6 +49,19 @@ if (
 // определяем шаблон
 
 System::includes('template', $path);
+
+// загружаем настройки шаблона
+
+System::includes('settings', $path);
+
+// проверка доступа к шаблону
+
+System::includes('secure', $path);
+
+if ($state -> get('blockip')) {
+	System::includes('template', $path, null, null);
+	System::includes('settings', $path, null, null);
+}
 
 // предыдущая страница через куки
 
