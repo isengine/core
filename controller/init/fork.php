@@ -27,8 +27,7 @@ $uri = Uri::getInstance();
 $path = __DIR__ . DS . DP;
 
 // создаем развилку
-
-if ($state -> get('api')) {
+if ($state -> get('api') && $state -> get('api') !== true) {
 	
 	System::includes('api:init', $path);
 	

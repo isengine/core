@@ -22,7 +22,7 @@ use is\Model\Databases\Database;
 
 // читаем user
 
-//$uri = Uri::getInstance();
+$uri = Uri::getInstance();
 //$user = User::getInstance();
 //$session = Session::getInstance();
 
@@ -75,13 +75,15 @@ if (System::typeIterable($router -> current -> parents)) {
 
 // проверяем шаблон из первого урла
 
-if (System::typeIterable($router -> route)) {
-	$template = Objects::first($router -> route, 'value');
+$route = $uri -> getRoute();
+if (System::typeIterable($route)) {
+	$template = Objects::first($route, 'value');
 	if (Objects::match($templates, $template)) {
 		$array['route'] = $template;
 	}
 	unset($template);
 }
+unset($route);
 
 // проверяем секцию
 
@@ -123,9 +125,9 @@ if ($array['section'] && $array['error']) {
 
 $router -> template['name'] = Objects::first( Objects::clear($array), 'value' );
 
-if ($router -> template['name'] === $array['route']) {
-	$router -> route = Objects::unfirst($router -> route);
-}
+//if ($router -> template['name'] === $array['route']) {
+//	$uri -> unRoute('first');
+//}
 
 unset($array, $templates);
 

@@ -9,6 +9,7 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Sessions;
 use is\Helpers\Prepare;
+use is\Helpers\Local;
 use is\Model\Components\Session;
 use is\Model\Components\Uri;
 use is\Model\Components\State;
@@ -24,12 +25,13 @@ use is\Model\Databases\Database;
 $uri = Uri::getInstance();
 //$user = User::getInstance();
 //$session = Session::getInstance();
-//$state = State::getInstance();
+$state = State::getInstance();
 $router = Router::getInstance();
 $config = Config::getInstance();
 
 // здесь расположен базовый обработчик роутинга
 
+$uri -> resetRoute();
 $path_array = $uri -> getRoute();
 $path = $uri -> path['string'] ? '/' . $uri -> path['string'] : null;
 
@@ -41,16 +43,17 @@ $route = null;
 
 if (System::typeIterable($path_array)) {
 	$find = Objects::find($path_array, $config -> get('url:data:rest'));
-	$router -> route = System::set($find) ? Objects::get($path_array, 0, $find) : $path_array;
+	if (System::set($find)) {
+		$uri -> route = Objects::get($path_array, 0, $find);
+	}
 	unset($find);
-	$route = Strings::join($router -> route, ':');
+	$route = Strings::join($uri -> getRoute(), ':');
 }
 
 if ($route) {
 	if (Objects::match($router -> structure -> getNames(), $route)) {
 		$router -> current = $router -> structure -> getByName($route);
 	} else {
-		$state = State::getInstance();
 		$state -> set('error', 404);
 		$state -> set('reason', 'page not found in structure');
 	}
@@ -74,10 +77,20 @@ unset($path_array);
 $link = $router -> current -> data['link'];
 
 if ($path && !Strings::find($path, $link, 0)) {
-	$state = State::getInstance();
 	$state -> set('error', 404);
 	$state -> set('reason', 'page not found in structure');
-	$state -> set('section', Objects::first($router -> route, 'value'));
+}
+
+// секции
+
+if ($state -> get('error') === 404) {
+	$section = Objects::first($uri -> getRoute(), 'value');
+	if (
+		$section &&
+		Local::matchFolder($config -> get('path:templates') . $section)
+	) {
+		$state -> set('section', $section);
+	}
 }
 
 // во-первых, мы должны разобрать урл, определить, где в структуре мы находимся

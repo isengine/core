@@ -24,8 +24,8 @@ class Scss extends Master {
 		$url_folder = $this -> getPathByKey('url', 'scss');
 		
 		$this -> setPathByKey('from', 'scss', $name . '.less');
-		$this -> setPathByKey('to', 'scss', $name . '.сss');
-		$this -> setPathByKey('url', 'scss', $name . '.сss');
+		$this -> setPathByKey('to', 'scss', $name . '.css');
+		$this -> setPathByKey('url', 'scss', $name . '.css');
 		
 		$this -> setHash();
 		

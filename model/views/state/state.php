@@ -25,6 +25,8 @@ class State extends Data {
 		
 		$entry = System::typeClass($router -> current, 'entry');
 		
+		$main = $router -> template['name'] === $config -> get('default:template') ? null : $router -> template['name'];
+		
 		$data = [
 			'settings' => $router -> getData(),
 			
@@ -34,12 +36,22 @@ class State extends Data {
 			'parents' => $entry ? $router -> current -> getEntryKey('parents') : null,
 			'type' => $entry ? $router -> current -> getEntryKey('type') : null,
 			
-			'route' => $router -> route,
-			'path' => $router -> route ? Strings::join($router -> route, '/') . '/' : null,
+			'route' => $uri -> route,
+			'path' => $uri -> route ? Strings::join($uri -> route, '/') . '/' : null,
+			'previous' => $uri -> previous,
+			'real' => $config -> get('path:templates') . $router -> template['name'] . DS,
 			
 			'url' => $uri -> url,
 			'domain' => $uri -> domain,
-			'home' => !System::typeIterable($router -> route),
+			'site' => $uri -> host,
+			'main' => $uri -> domain . ($main ? $main . '/' : null),
+			
+			'match' => [
+				'home' => !System::typeIterable($uri -> route),
+				'main' => !System::typeIterable($uri -> route) || Objects::len($uri -> route) === 1 && Objects::first($uri -> route, 'value') === $main
+			],
+			
+			'mail' => $config -> get('users:email'),
 			
 			'lang' => $lang -> lang,
 			'code' => $lang -> code,
@@ -94,6 +106,7 @@ class State extends Data {
 		$this -> setData($data);
 		
 		unset(
+			$main,
 			$router,
 			$uri,
 			$lang,

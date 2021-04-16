@@ -33,10 +33,6 @@ unset($autoload, $framework, $composer);
 
 require_once 'controller' . DS . 'controller.php';
 
-// test set
-
-echo '<!--noindex--><hr><p>END OF TESTS<br>' . number_format(memory_get_usage() / 1024, 3, '.', ' ') . ' KB total / ' . number_format(memory_get_peak_usage() / 1024, 3, '.', ' ') . ' KB in peak<br>' . number_format(microtime(true) - isENGINE, 3, null, null) . ' sec is speed</p><!--/noindex-->';
-
 exit;
 
 ?>

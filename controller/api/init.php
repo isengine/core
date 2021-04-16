@@ -23,5 +23,6 @@ $path = __DIR__;
 System::includes('base', $path);
 System::includes('settings', $path);
 System::includes('data', $path);
+System::includes('launch', $path);
 	
 ?>

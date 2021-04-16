@@ -27,11 +27,11 @@ class Seo extends Process {
 		$db = Database::getInstance();
 		
 		$db -> collection('seo');
-		$db -> driver -> filter -> addFilter('name', 'default');
+		$db -> driver -> filter -> addFilter('name', '+' . $router -> template['name']);
 		$db -> driver -> filter -> addFilter('type', 'settings');
 		$db -> launch();
 		
-		$this -> setData( $db -> data -> getFirstData() );
+		$this -> setData($db -> data -> getFirstData());
 		
 		$db -> clear();
 		

@@ -31,7 +31,9 @@ if (
 		$uri -> getPathArray(1) === $api_name
 	)
 ) {
-	$state -> set('api', $uri -> getData($api_key));
+	$key = $uri -> getData($api_key);
+	$state -> set('api', $key ? $key : true);
+	unset($key);
 } else {
 	$state -> set('api', false);
 }
