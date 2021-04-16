@@ -36,7 +36,7 @@ class Blocks extends Master {
 	
 	public function setPath($name) {
 		$array = $this -> parsePath($name);
-		$parent = Paths::parent($this -> parent['path']);
+		$parent = Paths::toReal(Paths::parent($this -> parent['path']));
 		$this -> path = $parent . $array[0] . DS . 'html' . DS . 'blocks' . DS . $array[1] . '.php';
 	}
 	

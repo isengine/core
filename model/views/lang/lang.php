@@ -18,7 +18,8 @@ class Lang extends Data {
 		//$this -> setData($lang -> getData());
 	}
 	
-	public function get($data) {
+	public function get($data = null, $null = null) {
+		if (!System::set($data)) { return null; }
 		return Language::getInstance() -> get($data);
 	}
 	
