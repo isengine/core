@@ -12,9 +12,6 @@ use is\Model\Components\State;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Router;
-use is\Model\Components\Uri;
-use is\Model\Databases\Database;
-use is\Model\Views\View;
 use is\Model\Files\File;
 
 // читаем
@@ -23,7 +20,6 @@ $state = State::getInstance();
 $config = Config::getInstance();
 $router = Router::getInstance();
 $file = File::getInstance();
-$uri = Uri::getInstance();
 
 // file generator
 
@@ -34,6 +30,13 @@ if ($file -> exists) {
 // section
 
 $section = $state -> get('section') ? 'sections:' . $router -> template['section'] . ':' : null;
+
+// cache header
+
+if (!$state -> get('error') && !$section) {
+	$path = __DIR__;
+	//System::includes('cache', $path);
+}
 
 // include template
 

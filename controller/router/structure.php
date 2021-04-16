@@ -47,11 +47,12 @@ if ($structure) {
 	$db -> launch();
 	
 	$structure = $db -> data -> getData();
+	
 	$result = [];
 	
 	$db -> clear();
 	
-	if (System::typeOf($structure, 'iterable')) {
+	if (System::typeIterable($structure)) {
 		foreach ($structure as $item) {
 			$data = $item -> getEntryData();
 			if (System::typeOf($data, 'iterable')) {

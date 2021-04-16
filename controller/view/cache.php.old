@@ -1,0 +1,91 @@
+<?php
+
+// Рабочее пространство имен
+
+namespace is;
+
+use is\Helpers\System;
+use is\Helpers\Strings;
+use is\Helpers\Objects;
+use is\Helpers\Parser;
+use is\Helpers\Paths;
+use is\Helpers\Sessions;
+use is\Model\Components\Config;
+use is\Model\Components\Display;
+use is\Model\Components\Log;
+use is\Model\Components\Router;
+
+// читаем
+
+$config = Config::getInstance();
+$router = Router::getInstance();
+
+// browser cache
+
+$cache = Parser::fromString( $config -> get('default:cache') );
+$time = (int) $cache[0] * $config -> get('time:' . $cache[1]);
+
+$page = $router -> current -> name;
+$page = ($page ? Paths::toReal($page) : 'index') . '.php';
+$page = $config -> get('path:templates') . $router -> template['name'] . DS . 'html' . DS . 'inner' . DS . $page;
+$mtime = file_exists($page) ? filemtime($page) : null;
+
+$cache_time = Sessions::getCookie('is-expires');
+if (!$cache_time) {
+	$cache_time = time();
+	Sessions::setCookie('is-expires', $cache_time);
+}
+
+if ($time && $mtime) {
+	
+	// включение кэширования в заголовках
+	
+	$data = [
+		//'Cache-Control' => 'public, max-age=' . $time
+		'Cache-Control' => 'public',
+		'Expires' => gmdate('D, d M Y H:i:s \G\M\T', $cache_time + $time)
+	];
+	
+	Sessions::setHeader($data);
+	
+	// проверка даты последней модификации страницы
+	// если последняя модификация была давно, то вытаскиваем страницу из кэша
+	// если же нет, то читаем страницу заново
+	
+	$cache = [
+		'date' => gmdate('D, d M Y H:i:s \G\M\T', $mtime),
+		'modified' => null
+	];
+	
+	if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+		$cache['modified'] = strtotime(substr($_SERVER['HTTP_IF_MODIFIED_SINCE'], 5));
+	} elseif (isset($_ENV['HTTP_IF_MODIFIED_SINCE'])) {
+		$cache['modified'] = strtotime(substr($_ENV['HTTP_IF_MODIFIED_SINCE'], 5));  
+	}
+	
+	$data = [
+		'is-expi' => $cache_timex,
+		'is-modi' => $cache['modified'],
+		'is-time' => $mtime,
+		'is-date' => $cache['date'],
+	];
+	
+	//echo $cache['modified'] . ' : ' . $cache['time'];
+	//echo '<pre>';
+	//echo print_r($_SERVER, 1);
+	
+	if ($cache['modified'] && $cache['modified'] >= $mtime) {
+		//file_put_contents(DR . time(), print_r($data, 1));
+		// комментирование только на время теста
+		Sessions::setHeaderCode(304);
+		//header($_SERVER['SERVER_PROTOCOL'] . ' 304 Not Modified');
+		exit;
+	} else {
+		header('Last-Modified: '. $cache['date']);
+	}
+	
+}
+
+unset($cache);
+
+?>
