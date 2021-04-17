@@ -14,6 +14,7 @@ use is\Model\Components\Config;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Router;
+use is\Model\Components\Uri;
 
 // читаем
 
@@ -21,7 +22,7 @@ $router = Router::getInstance();
 
 // browser cache
 
-$cache = $router -> current -> getData('cache')['browser'];
+$cache = $router -> current -> data['cache']['browser'];
 
 if (!$cache) { return; }
 
@@ -30,7 +31,7 @@ $config = Config::getInstance();
 if ($cache === 'default') {
 	$cache = Parser::fromString( $config -> get('default:cache') );
 }
-	
+
 $set_time = System::typeIterable($cache) ? (int) $cache[0] * ($cache[1] ? $config -> get('time:' . $cache[1]) : 1) : (int) $cache;
 $now_time = time();
 
@@ -51,19 +52,31 @@ $data = [
 
 Sessions::setHeader($data);
 
-// проверка даты последней модификации страницы
-// если последняя модификация была давно, то вытаскиваем страницу из кэша
-// если же нет, то читаем страницу заново
-//if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
-//	$cache_modified = strtotime(substr($_SERVER['HTTP_IF_MODIFIED_SINCE'], 5));
-//} elseif (isset($_ENV['HTTP_IF_MODIFIED_SINCE'])) {
-//	$cache_modified = strtotime(substr($_ENV['HTTP_IF_MODIFIED_SINCE'], 5));  
-//} else {
-//	$cache_modified = null;
-//}
-// теперь расчет кэша идет по куки
+// время кэша от последнего изменения страницы
 
-if ($cache_time && $cache_time >= $now_time) {
+$start_time = $cache_time - $set_time;
+
+$uri = Uri::getInstance();
+$page = $config -> get('path:templates') . $router -> template['name'] . DS . 'html' . DS . 'inner' . DS . (System::set($uri -> getRoute()) ? Strings::join($uri -> getRoute(), DS) : 'index') . '.php';
+$page_time = file_exists($page) ? filemtime($page) : null;
+
+$template = $config -> get('path:templates') . $router -> template['name'] . DS . 'html' . DS . 'template.php';
+$template_time = file_exists($template) ? filemtime($template) : null;
+
+$settings_time = $router -> getData('mtime');
+
+// расчет кэша идет по куки и по дате последней модификации страницы
+// если время кэширования еще не вышло и
+// последняя модификация страницы была до того времени, когда она была закэширована
+// вытаскиваем страницу из кэша
+
+if (
+	$cache_time &&
+	$cache_time >= $now_time &&
+	$page_time < $start_time &&
+	$template_time < $start_time &&
+	$settings_time < $start_time
+) {
 	Sessions::setHeaderCode(304);
 	exit;
 } else {

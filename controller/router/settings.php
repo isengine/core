@@ -37,11 +37,12 @@ $db -> driver -> filter -> addFilter('name', $router -> template['name']);
 $db -> launch();
 
 $router -> setData( $db -> data -> getFirstData() );
+$router -> addData('mtime', $db -> data -> getFirst() -> getEntryKey('mtime') );
 
 $db -> clear();
 
 //echo '<pre>';
-//echo print_r($router, 1);
+//echo print_r($router -> getData(), 1);
 //echo '</pre>';
 
 ?>
