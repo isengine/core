@@ -4,8 +4,11 @@
 
 namespace is;
 
+use is\Helpers\System;
 use is\Helpers\Sessions;
+use is\Helpers\Paths;
 use is\Model\Components\State;
+use is\Model\Components\Session;
 
 // читаем сессию
 
@@ -15,27 +18,15 @@ if (Sessions::getCookie('isENGINE')) {
 	$state -> set('cookie', true);
 } else {
 	
-	// работа следующего алгоритма более надежна,
-	// но требует больше системных ресурсов
-	
-	session_start();
-	$a = session_id();
-	session_destroy();
-	
-	session_start();
-	$b = session_id();
-	session_destroy();
-	
-	$state -> set('cookie', $a === $b);
-	
-	unset($a, $b);
-	
 	// работа алгоритма ниже достаточно относительна,
 	// т.к. он будет корректно работать только при переинициализации страницы
-	// но он позволяет не делать многократной переинициализации сессии
+	// но он позволяет не делать многократной переинициализации сессии, ajax запросы и т.п.
+	// в дополнение к нему, существует блок check, который срабатывает, если !state/cookie
+	// он пробует проинициализировать куки и скрипты и выводит сообщение об ошибке
 	
-	$time = new \DateTime();
-	Sessions::setCookie('isENGINE', $time -> getTimestamp());
+	$state -> set('cookie', false);
+	$time = (new \DateTime()) -> getTimestamp();
+	Sessions::setCookie('isENGINE', $time);
 	
 }
 

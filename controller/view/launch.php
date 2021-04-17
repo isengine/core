@@ -35,7 +35,7 @@ $section = $state -> get('section') ? 'sections:' . $router -> template['section
 
 if (!$state -> get('error') && !$section) {
 	$path = __DIR__;
-	//System::includes('cache', $path);
+	System::includes('cache', $path);
 }
 
 // include template

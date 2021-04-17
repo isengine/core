@@ -17,17 +17,21 @@ use is\Model\Components\Router;
 
 // читаем
 
-$config = Config::getInstance();
 $router = Router::getInstance();
 
 // browser cache
 
-$cache = Parser::fromString( $config -> get('default:cache') );
-// not from config - now from structure
-// echo '<pre>';
-// echo print_r($router, 1);
+$cache = $router -> current -> getData('cache')['browser'];
 
-$set_time = (int) $cache[0] * $config -> get('time:' . $cache[1]);
+if (!$cache) { return; }
+
+$config = Config::getInstance();
+
+if ($cache === 'default') {
+	$cache = Parser::fromString( $config -> get('default:cache') );
+}
+	
+$set_time = System::typeIterable($cache) ? (int) $cache[0] * ($cache[1] ? $config -> get('time:' . $cache[1]) : 1) : (int) $cache;
 $now_time = time();
 
 if (!$set_time) { return; }
@@ -50,7 +54,6 @@ Sessions::setHeader($data);
 // проверка даты последней модификации страницы
 // если последняя модификация была давно, то вытаскиваем страницу из кэша
 // если же нет, то читаем страницу заново
-
 //if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
 //	$cache_modified = strtotime(substr($_SERVER['HTTP_IF_MODIFIED_SINCE'], 5));
 //} elseif (isset($_ENV['HTTP_IF_MODIFIED_SINCE'])) {
@@ -58,13 +61,7 @@ Sessions::setHeader($data);
 //} else {
 //	$cache_modified = null;
 //}
-//
-//$c = 'now-time   = ' . $now_time . "\r\n" . 
-//	 'set-time   = ' . $set_time . "\r\n" . 
-//	 'cache-time = ' . $cache_time . "\r\n" . 
-//	 'exrires    = ' . $cache_time . "\r\n" . 
-//	 'last-mod   = ' . $now_time . "\r\n";
-//	file_put_contents(DR . $now_time, $c);
+// теперь расчет кэша идет по куки
 
 if ($cache_time && $cache_time >= $now_time) {
 	Sessions::setHeaderCode(304);
