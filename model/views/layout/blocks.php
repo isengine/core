@@ -15,6 +15,8 @@ class Blocks extends Master {
 	
 	// кэширование блоков
 	
+	// если дата изменения файла больше даты изменения кэша, то файл кэшируется заново
+	
 	public function setCache($name) {
 		$array = $this -> parsePath($name);
 		$this -> cache = $this -> parent['cache'] . 'blocks' . DS . $array[0] . DS . $array[1] . '.php';

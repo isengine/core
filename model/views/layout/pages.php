@@ -15,6 +15,8 @@ class Pages extends Master {
 	
 	// кэширование страниц
 	
+	// если дата изменения файла больше даты изменения кэша, то файл кэшируется заново
+	
 	public function setCache($name = null) {
 		
 		$section = $this -> get('section');

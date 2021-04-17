@@ -18,6 +18,7 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
 use is\Model\Components\Router;
+use is\Model\Parents\Entry;
 use is\Model\Databases\Database;
 
 // читаем user
@@ -58,18 +59,14 @@ if ($route) {
 		$state -> set('reason', 'page not found in structure');
 	}
 } else {
-	if (Objects::match($router -> structure -> getNames(), 'index')) {
-		$router -> current = $router -> structure -> getByName('index');
-	} else {
-		// раньше этого условия не было,
-		// но теперь мы избавляемся от определения домашней страницы в структуре
-		// проблема возникает только с определением и разделением:
-		//   домашней страницы сайта,
-		//   главной страницы шаблона
-		//   секции шаблона, к которому нет доступа
-		//$router -> current = null;
-		$router -> current -> data['link'] = '/';
-	}
+	// раньше этого условия не было,
+	// но теперь мы избавляемся от определения домашней страницы в структуре
+	// проблема возникает только с определением и разделением:
+	//   домашней страницы сайта,
+	//   главной страницы шаблона
+	//   секции шаблона, к которому нет доступа
+	$router -> current = new Entry;
+	$router -> current -> addData('link', '/');
 }
 
 unset($path_array);
