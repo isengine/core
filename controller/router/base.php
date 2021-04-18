@@ -77,6 +77,9 @@ unset($path_array);
 
 $link = $router -> current -> data['link'];
 
+//echo $link . '<br>';
+//echo $path . '<br>';
+
 if ($path && !Strings::find($path, $link, 0)) {
 	$state -> set('error', 404);
 	$state -> set('reason', 'page not found in structure');

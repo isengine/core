@@ -80,16 +80,6 @@ class Sitemap extends Master {
 		</sitemapindex>
 		*/
 		
-		// еще нет учета конвертации папок:
-		// а то сейчас папки - site.com/page
-		// а потом нужны файлы - site.com/page.html
-		// хотя, может, ковертация и так работает автоматически, но это не проверено
-		
-		// еще нужно убрать отсюда файлы:
-		// site.com/.ext
-		// но только те, которые не будут .html
-		// или с другим расширением, установленным в config:router
-		
 		// формируем ссылки страниц из структуры
 		
 		if ($router -> structure -> count()) {
@@ -97,10 +87,7 @@ class Sitemap extends Master {
 				
 				$type = $item -> getEntryKey('type');
 				
-				if ($type === 'special') {
-					// по-хорошему, конечно не по типу special, а по назначенному (не автоматическому) пути
-					// для этого, конечно, придется исхитрится, да и не факт, что оно нужно
-					// можно просто исключить ряд ссылок из sitemap через настройки
+				if ($type === 'custom') {
 					continue;
 				}
 				
@@ -124,8 +111,6 @@ class Sitemap extends Master {
 		
 		$this -> data['domain'] -> addData('');
 		
-		// формируем ссылки страниц из шаблонов
-		
 		// здесь должен быть чтение и вывод контента
 		
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -133,7 +118,7 @@ class Sitemap extends Master {
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
 		// теперь просто выводим карту сайта
-
+		
 		Sessions::setHeader(['Content-type' => 'application/xml; charset=utf-8']);
 		
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -141,13 +126,11 @@ class Sitemap extends Master {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <?php
 		foreach ($this -> getData() as $key => $item) {
-			
-			// формирование массива
-			//$item = Objects::clear($item -> getData());
-			$item = Objects::unique($item -> getData());
-			
+		
+		// формирование массива
+		$item = Objects::unique($item -> getData());
+		
 		foreach ($item as $i) {
-			
 ?>
 <url>
 	<loc><?= $domain . $i; ?></loc>
@@ -166,12 +149,10 @@ class Sitemap extends Master {
 	<priority><?= $settings['priority'][$key]; ?></priority>
 </url>
 <?php
-			
 			$counter++;
 			if ((int) $counter >= (int) $settings['counter']) {
 				break;
 			}
-			
 		}
 		unset($i);
 		}

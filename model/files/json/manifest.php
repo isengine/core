@@ -24,6 +24,7 @@ class Manifest extends Master {
 		
 		$webapp = $view -> get('state|settings:webapp');
 		$icons = $view -> get('icon|data');
+		$path = $view -> get('state|domain') . $icons['settings']['path'] . '/';
 		
 		$json = [
 			'name' => html_entity_decode(!empty($webapp['name']) ? $webapp['name'] : $view -> get('lang|title')),
@@ -40,7 +41,7 @@ class Manifest extends Master {
 				foreach ($icons[$key]['sizes'] as $item) {
 					$item = strpos($item, ':') !== false ? str_replace(':', 'x', $item) : $item . 'x' . $item;
 					$json['icons'][] = [
-						'src' => $view -> get('state|domain') . $icons['settings']['path'] . '/' . $icons[$key]['name'] . '-' . $item . '.png',
+						'src' => $path . $icons[$key]['name'] . '-' . $item . '.png',
 						'type' => 'image/png',
 						'sizes' => $item
 					];
@@ -53,7 +54,7 @@ class Manifest extends Master {
 		
 		Sessions::setHeader(['Content-type' => 'application/json; charset=utf-8']);
 		
-		unset($json, $webapp, $icons);
+		unset($json, $webapp, $icons, $path);
 		
 	}
 	

@@ -29,7 +29,35 @@ $path = __DIR__;
 // вызов метода апи
 
 // Запускаем инициализацию генератора файлов
-System::includes('files', $path);
+
+$files = true;
+
+if ($config -> get('router:folders:convert')) {
+	
+	$extension = $config -> get('router:folders:extension');
+	$extension = $extension ? $extension : 'php';
+	
+	$index = $config -> get('router:index');
+	$index = $index ? $index : 'index';
+	
+	$add = $config -> get('router:folders:index');
+	$add = $add ? '/' . $index : null;
+	
+	$state -> set('relast', $add . '.' . $extension);
+	
+	if ($uri -> file['extension'] === $extension) {
+		$files = null;
+	}
+	
+	unset($extension, $index, $add);
+	
+}
+
+if ($files) {
+	System::includes('files', $path);
+}
+
+unset($files);
 
 // Запускаем разбор структуры сайта
 System::includes('structure', $path);

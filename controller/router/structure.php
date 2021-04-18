@@ -63,6 +63,7 @@ if ($structure) {
 	}
 	
 	if (System::typeOf($result, 'iterable')) {
+		$router -> addExtension($state -> get('relast'));
 		$router -> parseStructure($result);
 	}
 	
