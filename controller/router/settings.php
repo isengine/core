@@ -36,8 +36,12 @@ $db -> collection('templates');
 $db -> driver -> filter -> addFilter('name', $router -> template['name']);
 $db -> launch();
 
-$router -> setData( $db -> data -> getFirstData() );
-$router -> addData('mtime', $db -> data -> getFirst() -> getEntryKey('mtime') );
+$data = $db -> data -> getFirstData();
+
+if ($data) {
+	$router -> setData( $data );
+	$router -> addData('mtime', $db -> data -> getFirst() -> getEntryKey('mtime') );
+}
 
 $db -> clear();
 

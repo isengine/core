@@ -12,6 +12,7 @@ use is\Helpers\Match;
 use is\Helpers\Paths;
 use is\Helpers\Prepare;
 use is\Model\Parents\Data;
+use is\Model\Views\View;
 
 class Layout extends Data {
 	
@@ -19,18 +20,22 @@ class Layout extends Data {
 	
 	public $blocks;
 	public $pages;
+	public $template;
 	
 	public function __construct() {
 	}
 	
-	public function init($type, $path, $cache, $caching = 'skip') {
+	public function init($type, $path_base, $path_cache, $caching = 'skip') {
+		
+		$view = View::getInstance();
+		$this -> template = $view -> get('state|template');
 		
 		$name = __NAMESPACE__ . '\\' . (Prepare::upperFirst($type));
 		$this -> $type = new $name;
 		
-		$this -> $type -> parent = [
-			'path' => $path,
-			'cache' => $cache
+		$this -> $type -> paths = [
+			'base' => $path_base,
+			'cache' => $path_cache
 		];
 		
 		if ($caching !== 'skip') {
@@ -39,8 +44,17 @@ class Layout extends Data {
 		
 	}
 	
-	public function launch($type, $name, $cache = 'skip') {
-		$this -> $type -> includes($name, $cache);
+	public function launch($type, $name = null, $caching = 'skip') {
+		
+		$array = Parser::fromString($type);
+		$type = $array[0];
+		$template = $array[1] ? $array[1] : $this -> template;
+		unset($array);
+		
+		$name = $name ? Paths::clearSlashes(Paths::toReal($name)) : 'index';
+		
+		$this -> $type -> includes($name, $template, $caching);
+		
 	}
 	
 	public function clear($type) {

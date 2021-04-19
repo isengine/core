@@ -79,13 +79,16 @@ $view -> get('special') -> init( $view -> get('state|settings:special') );
 // задаем кэширование блоков
 // и запрещаем кэширование страниц
 
-$path = $config -> get('path:templates') . $router -> template['name'] . DS;
+$path = $config -> get('path:templates');
 $cache = $config -> get('path:cache') . 'templates' . DS;
 
 $view -> add('layout');
 
-$view -> get('layout') -> init('pages', $path, $cache, false);
-$view -> get('layout') -> init('blocks', $path, $cache, false); // переключить на true
+$view -> get('layout') -> init('pages', $path, $cache);
+$view -> get('layout') -> init('blocks', $path, $cache); // переключить на true
+
+// не хватает layout-а для остальных страниц, не inner,
+// например, wrapper, common и других
 
 // пример рендеринга css файла
 //$result = $template -> render('css', 'filename');
