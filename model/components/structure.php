@@ -75,7 +75,10 @@ class Structure extends Collection {
 				$i['data']['link'] = $this -> url( $custom ? $item : $parents_string . $name . '/' );
 				
 				$this -> add($i);
-				$this -> addOriginal($name, $parents);
+				
+				if ($name !== 'index') {
+					$this -> addOriginal($name, $parents);
+				}
 				
 			}
 			
