@@ -14,6 +14,7 @@ use is\Model\Components\Collection;
 class Structure extends Collection {
 	
 	public $extension;
+	public $original;
 	
 	public function structure($array = null, $level = 0, $parents = [], $groups = null, $cache = null) {
 		
@@ -74,6 +75,7 @@ class Structure extends Collection {
 				$i['data']['link'] = $this -> url( $custom ? $item : $parents_string . $name . '/' );
 				
 				$this -> add($i);
+				$this -> addOriginal($name, $parents);
 				
 			}
 			
@@ -117,6 +119,24 @@ class Structure extends Collection {
 		}
 		
 		return $data;
+		
+	}
+	
+	public function addOriginal($name, $parents) {
+		
+		$array = &$this -> original;
+		
+		if (System::typeiterable($parents)) {
+			foreach ($parents as $item) {
+				if (!$array[$item]) {
+					$array[$item] = null;
+				}
+				$array = &$array[$item];
+			}
+			unset($item);
+		}
+		
+		$array[$name] = null;
 		
 	}
 	
