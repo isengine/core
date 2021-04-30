@@ -9,6 +9,7 @@ use is\Helpers\Strings;
 use is\Helpers\Sessions;
 use is\Helpers\Paths;
 use is\Helpers\System;
+use is\Helpers\Parser;
 use is\Helpers\Match;
 use is\Helpers\Local;
 use is\Model\Components\Session;
@@ -35,7 +36,7 @@ if ($referrer && !Strings::match($referrer, $server)) {
 	if ($secure) {
 		
 		$file = DR . 'config' . DS . 'referrer.' . $secure . '.ini';
-		echo $file;
+		//echo $file;
 		
 		$content = Local::readFile($file);
 		$content = Parser::fromJson($content);
@@ -56,10 +57,10 @@ if ($referrer && !Strings::match($referrer, $server)) {
 				$isreferrer = false;
 			}
 			
+		} else {
+			$isreferrer = false;
 		}
 		
-	} else {
-		$isreferrer = false;
 	}
 	
 } elseif (!$session -> get('agent', 'key')) {

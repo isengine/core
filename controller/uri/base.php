@@ -54,4 +54,8 @@ if (
 
 unset($www);
 
+// set domain
+
+$uri -> setDomain();
+
 ?>
