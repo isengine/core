@@ -18,6 +18,7 @@ class Router extends Globals {
 	public $structure;
 	public $current;
 	public $template;
+	public $content;
 	
 	public function init() {
 		

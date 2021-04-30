@@ -12,6 +12,8 @@ use is\Model\Components\Config;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 
+use is\Model\Components\Router;
+
 // читаем uri
 
 $config = Config::getInstance();
@@ -28,6 +30,9 @@ System::includes('files', $path);
 
 // Запускаем разбор структуры сайта
 System::includes('structure', $path);
+
+// Запускаем проверку типов
+System::includes('content', $path);
 
 // Запускаем базовый роутинг
 System::includes('base', $path);
@@ -65,10 +70,5 @@ System::includes('previous', $path);
 // устанавливаем заголовок
 
 System::includes('headers', $path);
-
-//$print = Display::getInstance();
-//$print -> dump($uri);
-//
-//exit;
 
 ?>
