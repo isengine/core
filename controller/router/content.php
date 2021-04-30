@@ -25,10 +25,14 @@ use is\Model\Databases\Database;
 
 $uri = Uri::getInstance();
 $router = Router::getInstance();
+$state = State::getInstance();
 
-// если пути нет, то входим из этого разбора
+// если пути нет или была ошибка, то выходим из этого разбора
 
-if (!System::typeIterable($uri -> route)) {
+if (
+	!System::typeIterable($uri -> route) ||
+	$state -> get('error')
+) {
 	return;
 }
 
