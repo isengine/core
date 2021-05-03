@@ -28,6 +28,12 @@ $view = View::getInstance();
 $view -> add('state');
 $view -> add('vars');
 
+// читаем контент
+
+if (System::set($router -> content)) {
+	$view -> add('content');
+}
+
 // читаем настройки seo
 
 $view -> add('seo');
@@ -65,7 +71,7 @@ $view -> get('render') -> init($from, $to, $url);
 
 $view -> add('detect');
 
-// запускаем обнаружение устройств
+// запускаем процессы обработки текстовых переменных
 
 $view -> add('process');
 
@@ -101,7 +107,9 @@ $view -> get('layout') -> init('blocks', $path, $cache); // переключит
 //$print -> dump($uri);
 //$print -> dump($state);
 //$print -> dump($template);
-//$print -> dump($router);
+//$print -> dump($router -> content);
+//$print -> dump($view -> get('content'));
+//$print -> dump($router -> current);
 //
 //exit;
 
