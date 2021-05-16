@@ -1,0 +1,33 @@
+<?php
+
+// Рабочее пространство имен
+
+namespace is;
+
+use is\Helpers\System;
+use is\Helpers\Sessions;
+use is\Helpers\Paths;
+use is\Model\Components\State;
+use is\Model\Components\Session;
+
+// читаем сессию
+
+$state = State::getInstance();
+
+if (Sessions::getCookie('isENGINE')) {
+	$state -> set('cookie', true);
+} else {
+	
+	// работа алгоритма ниже достаточно относительна,
+	// т.к. он будет корректно работать только при переинициализации страницы
+	// но он позволяет не делать многократной переинициализации сессии, ajax запросы и т.п.
+	// в дополнение к нему, существует блок check, который срабатывает, если !state/cookie
+	// он пробует проинициализировать куки и скрипты и выводит сообщение об ошибке
+	
+	$state -> set('cookie', false);
+	$time = (new \DateTime()) -> getTimestamp();
+	Sessions::setCookie('isENGINE', $time);
+	
+}
+
+?>
