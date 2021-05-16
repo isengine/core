@@ -12,14 +12,14 @@ use is\Model\Components\State;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Router;
-use is\Model\Files\File;
+use is\Model\Masters\Generator;
 
 // читаем
 
 $state = State::getInstance();
 $config = Config::getInstance();
 $router = Router::getInstance();
-$file = File::getInstance();
+$file = Generator::getInstance();
 
 // file generator
 

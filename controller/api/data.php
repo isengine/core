@@ -16,8 +16,8 @@ use is\Model\Components\Config;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
-use is\Model\Apis\Api;
-use is\Model\Databases\Database;
+use is\Model\Masters\Api;
+use is\Model\Masters\Database;
 
 // читаем user
 

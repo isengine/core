@@ -56,7 +56,7 @@ if (
 
 // Проверяем существование системных папок
 
-$folders = ['app', 'cache', 'extensions', 'log', 'templates'];
+$folders = ['app', 'cache', 'vendors', 'log', 'templates'];
 
 foreach ($folders as $item) {
 	$path = $config -> get('path:' . $item);

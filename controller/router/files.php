@@ -13,7 +13,8 @@ use is\Model\Components\Config;
 use is\Model\Components\Uri;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
-use is\Model\Files\File;
+use is\Model\Masters\Generator;
+
 
 // читаем user
 
@@ -72,7 +73,7 @@ $data = [
 
 // Сам файл
 
-$file = File::getInstance();
+$file = Generator::getInstance();
 $file -> init($data);
 
 if ($file -> error) {

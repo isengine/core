@@ -19,8 +19,10 @@ $path = __DIR__ . DS . DP;
 // Читаем настройки системы по-умолчанию
 
 $data = System::includes('config:default', $path, 'default');
+$path = System::includes('config:path', $path, 'default');
+$data['path'] = Objects::merge($data['path'], $path);
 $config -> setData($data);
-unset($data);
+unset($data, $path);
 
 // Читаем пользовательские настройки
 

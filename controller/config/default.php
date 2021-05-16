@@ -29,13 +29,14 @@ $default = [
 	'path' => [
 		'site' => $site,
 		'base' => $base,
-		'core' => $core,
-		
+		'core' => $core
+		/*
 		'app' => $base . 'app' . DS,
 		'cache' => $base . 'cache' . DS,
-		'extensions' => $base . 'vendor' . DS,
+		'vendors' => $base . 'vendor' . DS,
 		'log' => $base . 'log' . DS,
 		'templates' => $base . 'templates' . DS
+		*/
 	],
 	'api' => [
 		'server' => null,

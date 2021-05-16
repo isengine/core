@@ -19,7 +19,7 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\User;
 use is\Model\Components\Router;
-use is\Model\Databases\Database;
+use is\Model\Masters\Database;
 
 // читаем user
 

@@ -14,7 +14,7 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Uri;
 use is\Model\Components\State;
-use is\Model\Apis\Api;
+use is\Model\Masters\Api;
 
 // инициализация
 

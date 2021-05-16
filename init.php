@@ -13,20 +13,10 @@ if (!defined('DS')) { define('DS', DIRECTORY_SEPARATOR); }
 if (!defined('DP')) { define('DP', '..' . DIRECTORY_SEPARATOR); }
 if (!defined('DR')) { define('DR', realpath(__DIR__ . DS . DP . DP . DP) . DS); }
 
-// Include framework and core extend
-// Подключаем фреймворк и расширения ядра
+// Include framework, core extend and classes from config
+// Подключаем фреймворк, расширения ядра и классы, вручную прописанные в конфигурации
 
-$autoload = DR . 'vendor' . DS . 'autoload.php';
-$framework = DR . 'vendor' . DS . 'isengine' . DS . 'framework' . DS . 'php' . DS . 'init.php';
-$composer = file_exists($autoload);
-
-require_once $composer ? $autoload : $framework;
-
-if (!$composer) {
-	require_once 'model' . DS . 'model.php';
-}
-
-unset($autoload, $framework, $composer);
+require_once 'controller' . DS . 'autoload.php';
 
 // Include core controller
 // Подключаем контроллер ядра

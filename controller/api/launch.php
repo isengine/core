@@ -15,7 +15,7 @@ use is\Model\Components\State;
 use is\Model\Components\Config;
 use is\Model\Components\Display;
 use is\Model\Components\Log;
-use is\Model\Apis\Api;
+use is\Model\Masters\Api;
 
 // читаем uri
 

@@ -4,7 +4,7 @@
 
 namespace is;
 
-use is\Model\Databases\Database;
+use is\Model\Masters\Database;
 use is\Model\Components\State;
 use is\Model\Components\Config;
 use is\Model\Components\Display;

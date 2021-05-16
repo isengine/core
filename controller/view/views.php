@@ -14,7 +14,7 @@ use is\Model\Components\Display;
 use is\Model\Components\Log;
 use is\Model\Components\Router;
 use is\Model\Components\Language;
-use is\Model\Views\View;
+use is\Model\Masters\View;
 
 // читаем конфиг
 
