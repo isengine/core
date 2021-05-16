@@ -13,15 +13,15 @@ if (!defined('DS')) { define('DS', DIRECTORY_SEPARATOR); }
 if (!defined('DP')) { define('DP', '..' . DIRECTORY_SEPARATOR); }
 if (!defined('DR')) { define('DR', realpath(__DIR__ . DS . DP . DP . DP) . DS); }
 
-// Include framework, core extend and classes from config
-// Подключаем фреймворк, расширения ядра и классы, вручную прописанные в конфигурации
+// Include loading framework, core extend and classes from config
+// Подключаем загрузку фреймворка, расширений ядра и классов, вручную прописанных в конфигурации
 
-require_once 'controller' . DS . 'autoload.php';
+require_once 'Controller' . DS . 'autoload.php';
 
 // Include core controller
 // Подключаем контроллер ядра
 
-require_once 'controller' . DS . 'controller.php';
+require_once 'Controller' . DS . 'controller.php';
 
 exit;
 
