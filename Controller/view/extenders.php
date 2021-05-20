@@ -69,7 +69,7 @@ $view -> get('render') -> init($from, $to, $url);
 
 // запускаем обнаружение устройств
 
-$view -> add('detect');
+$view -> add('device');
 
 // запускаем процессы обработки текстовых переменных
 
@@ -95,6 +95,10 @@ $view -> get('layout') -> init('blocks', $path, $cache); // переключит
 
 // не хватает layout-а для остальных страниц, не inner,
 // например, wrapper, common и других
+
+// запускаем поддержку модулей
+
+//$view -> add('modules');
 
 // пример рендеринга css файла
 //$result = $template -> render('css', 'filename');

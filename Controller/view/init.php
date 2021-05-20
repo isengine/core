@@ -29,7 +29,7 @@ $config = Config::getInstance();
 
 $path = __DIR__;
 
-System::includes('views', $path);
+System::includes('extenders', $path);
 System::includes('launch', $path);
 
 //$print = Display::getInstance();

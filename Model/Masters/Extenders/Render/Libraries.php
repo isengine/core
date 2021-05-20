@@ -10,23 +10,31 @@ use is\Helpers\Paths;
 
 //use \MatthiasMullie\Minify;
 
-class Css extends Master {
+class Libraries extends Master {
 	
 	public function launch($name) {
 		
-		// name - имя файла, без расширения и без пути
+		// name - имя файла, здесь с расширением
 		
-		$this -> setPath('css', $name . '.css');
+		$skip = !$this -> from[0];
+		$this -> setPath(null, $name);
 		
-		$this -> setHash();
+		$type = Paths::parseFile($name, 'extension');
 		
-		if (!$this -> matchHash()) {
-			if ($this -> rendering()) {
-				$this -> writeHash();
+		if (!$skip) {
+			$this -> setHash();
+			if (!$this -> matchHash()) {
+				if ($this -> rendering()) {
+					$this -> writeHash();
+				}
 			}
 		}
 		
-		return '<link rel="stylesheet" type="text/css" href="' . $this -> url . $this -> modificator() . '" />';
+		if ($type === 'js') {
+			return '<script type="text/javascript" src="' . $this -> url . $this -> modificator() . '"></script>';
+		} else {
+			return '<link rel="stylesheet" type="text/css" href="' . $this -> url . $this -> modificator() . '" />';
+		}
 		
 	}
 	

@@ -36,7 +36,7 @@ class Less extends Master {
 			unset($data);
 		}
 		
-		return '<link rel="stylesheet" rev="stylesheet" type="text/css" href="' . $this -> url . $this -> modificator() . '" />';
+		return '<link rel="stylesheet" type="text/css" href="' . $this -> url . $this -> modificator() . '" />';
 		
 	}
 	

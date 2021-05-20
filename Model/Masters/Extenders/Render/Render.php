@@ -25,14 +25,17 @@ class Render extends Data {
 		$this -> url = $url;
 	}
 	
-	public function launch($type, $name) {
+	public function launch($type, $name, $reinit = null) {
 		// вызов рендеринга
 		// например, render('css', 'filename')
+		$ri = System::typeIterable($reinit);
+		//echo '<pre>' . print_r($this, 1);
+		//echo '<pre>' . print_r($reinit, 1);
 		$ns = __NAMESPACE__ . '\\' . Prepare::upperFirst($type);
 		$render = new $ns(
-			$this -> from,
-			$this -> to,
-			$this -> url
+			$ri && $reinit['from'] ? $reinit['from'] : $this -> from,
+			$ri && $reinit['to'] ? $reinit['to'] : $this -> to,
+			$ri && $reinit['url'] ? $reinit['url'] : $this -> url
 		);
 		return $render -> launch($name);
 	}
