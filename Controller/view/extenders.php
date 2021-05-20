@@ -98,7 +98,13 @@ $view -> get('layout') -> init('blocks', $path, $cache); // переключит
 
 // запускаем поддержку модулей
 
-//$view -> add('modules');
+$view -> add('module');
+
+$view -> get('module') -> init(
+	$config -> get('path:vendors'),
+	$config -> get('path:app') . 'View' . DS . 'Modules' . DS,
+	$config -> get('path:cache') . 'modules' . DS
+);
 
 // пример рендеринга css файла
 //$result = $template -> render('css', 'filename');

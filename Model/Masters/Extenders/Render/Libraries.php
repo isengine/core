@@ -32,7 +32,7 @@ class Libraries extends Master {
 		
 		if ($type === 'js') {
 			return '<script type="text/javascript" src="' . $this -> url . $this -> modificator() . '"></script>';
-		} else {
+		} elseif ($type === 'css') {
 			return '<link rel="stylesheet" type="text/css" href="' . $this -> url . $this -> modificator() . '" />';
 		}
 		
