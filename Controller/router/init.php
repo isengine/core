@@ -59,8 +59,8 @@ System::includes('settings', $path);
 System::includes('secure', $path);
 
 if ($state -> get('blockip')) {
-	System::includes('template', $path, null, null);
-	System::includes('settings', $path, null, null);
+	System::includes('template', $path, null);
+	System::includes('settings', $path, null);
 }
 
 // предыдущая страница через куки
