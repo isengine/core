@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Device;
+namespace is\Masters\Extenders\Device;
 
 use is\Helpers\Sessions;
 use is\Helpers\Parser;
@@ -11,7 +11,7 @@ use is\Helpers\System;
 use is\Helpers\Match;
 use is\Helpers\Paths;
 
-use is\Model\Parents\Data;
+use is\Parents\Data;
 
 class Device extends Data {
 	

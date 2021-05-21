@@ -9,15 +9,15 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Sessions;
 use is\Helpers\Prepare;
-use is\Model\Components\Session;
-use is\Model\Components\Uri;
-use is\Model\Components\State;
-use is\Model\Components\Config;
-use is\Model\Components\Display;
-use is\Model\Components\Log;
-use is\Model\Components\User;
-use is\Model\Masters\Api;
-use is\Model\Masters\Database;
+use is\Components\Session;
+use is\Components\Uri;
+use is\Components\State;
+use is\Components\Config;
+use is\Components\Display;
+use is\Components\Log;
+use is\Components\User;
+use is\Masters\Api;
+use is\Masters\Database;
 
 // читаем user
 

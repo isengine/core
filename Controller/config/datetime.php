@@ -8,7 +8,7 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\System;
 use is\Helpers\Sessions;
-use is\Model\Components\Datetime;
+use is\Components\Datetime;
 
 // задаем конфигурацию
 

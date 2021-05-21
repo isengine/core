@@ -8,7 +8,7 @@ use is\Helpers\System;
 use is\Helpers\Parser;
 use is\Helpers\Objects;
 use is\Helpers\Local;
-use is\Model\Components\Config;
+use is\Components\Config;
 
 // Подготавливаем конфигурацию
 

@@ -4,7 +4,7 @@
 
 namespace is;
 
-use is\Model\Components\Display;
+use is\Components\Display;
 
 // инициализация
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Methods;
+namespace is\Masters\Methods;
 
 use is\Helpers\Sessions;
 use is\Helpers\Parser;

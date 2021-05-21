@@ -9,12 +9,12 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Prepare;
 use is\Helpers\Match;
-use is\Model\Components\Config;
-use is\Model\Components\Display;
-use is\Model\Components\Log;
-use is\Model\Components\Uri;
-use is\Model\Components\State;
-use is\Model\Masters\Api;
+use is\Components\Config;
+use is\Components\Display;
+use is\Components\Log;
+use is\Components\Uri;
+use is\Components\State;
+use is\Masters\Api;
 
 // инициализация
 

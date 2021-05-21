@@ -10,11 +10,11 @@ use is\Helpers\Objects;
 use is\Helpers\Parser;
 use is\Helpers\Paths;
 use is\Helpers\Sessions;
-use is\Model\Components\Config;
-use is\Model\Components\Display;
-use is\Model\Components\Log;
-use is\Model\Components\Router;
-use is\Model\Components\Uri;
+use is\Components\Config;
+use is\Components\Display;
+use is\Components\Log;
+use is\Components\Router;
+use is\Components\Uri;
 
 // читаем
 

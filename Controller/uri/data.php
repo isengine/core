@@ -7,8 +7,8 @@ namespace is;
 use is\Helpers\System;
 use is\Helpers\Strings;
 use is\Helpers\Objects;
-use is\Model\Components\Uri;
-use is\Model\Components\Config;
+use is\Components\Uri;
+use is\Components\Config;
 
 // читаем uri
 

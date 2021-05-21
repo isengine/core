@@ -7,11 +7,11 @@ namespace is;
 use is\Helpers\System;
 use is\Helpers\Strings;
 use is\Helpers\Objects;
-use is\Model\Components\State;
-use is\Model\Components\Config;
-use is\Model\Components\Display;
-use is\Model\Components\Log;
-use is\Model\Components\Error;
+use is\Components\State;
+use is\Components\Config;
+use is\Components\Display;
+use is\Components\Log;
+use is\Components\Error;
 
 // читаем uri
 

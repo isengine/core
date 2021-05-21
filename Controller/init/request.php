@@ -12,9 +12,9 @@ use is\Helpers\System;
 use is\Helpers\Parser;
 use is\Helpers\Match;
 use is\Helpers\Local;
-use is\Model\Components\Session;
-use is\Model\Components\Config;
-use is\Model\Components\State;
+use is\Components\Session;
+use is\Components\Config;
+use is\Components\State;
 
 // читаем сессию
 

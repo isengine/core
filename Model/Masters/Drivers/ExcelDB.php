@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Drivers;
+namespace is\Masters\Drivers;
 
 use is\Helpers\Sessions;
 use is\Helpers\Parser;

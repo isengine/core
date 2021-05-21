@@ -8,12 +8,12 @@ use is\Helpers\System;
 use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Paths;
-use is\Model\Components\State;
-use is\Model\Components\Config;
-use is\Model\Components\Uri;
-use is\Model\Components\Display;
-use is\Model\Components\Log;
-use is\Model\Masters\Generator;
+use is\Components\State;
+use is\Components\Config;
+use is\Components\Uri;
+use is\Components\Display;
+use is\Components\Log;
+use is\Masters\Generator;
 
 
 // читаем user

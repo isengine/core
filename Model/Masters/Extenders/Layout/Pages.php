@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Layout;
+namespace is\Masters\Extenders\Layout;
 
 use is\Helpers\Sessions;
 use is\Helpers\Parser;

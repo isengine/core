@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Process;
+namespace is\Masters\Extenders\Process;
 
 use is\Helpers\Local;
 use is\Helpers\Strings;
@@ -11,9 +11,9 @@ use is\Helpers\Prepare;
 use is\Helpers\Match;
 use is\Helpers\Paths;
 
-use is\Model\Parents\Data;
+use is\Parents\Data;
 
-use is\Model\Components\Language; 
+use is\Components\Language; 
 
 class Process extends Data {
 	

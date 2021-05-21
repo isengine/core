@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Components;
+namespace is\Components;
 
 use is\Helpers\System;
 use is\Helpers\Strings;
@@ -9,7 +9,7 @@ use is\Helpers\Match;
 use is\Helpers\Sessions;
 use is\Helpers\Parser;
 use is\Helpers\Paths;
-use is\Model\Components\Collection;
+use is\Components\Collection;
 
 class Structure extends Collection {
 	

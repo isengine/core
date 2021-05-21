@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Files\Script;
+namespace is\Masters\Files\Script;
 
 use is\Helpers\System;
 use is\Helpers\Strings;
@@ -10,13 +10,13 @@ use is\Helpers\Prepare;
 use is\Helpers\Paths;
 use is\Helpers\Sessions;
 use is\Helpers\Local;
-use is\Model\Parents\Data;
-use is\Model\Components\Router;
-use is\Model\Components\State;
-use is\Model\Components\Uri;
-use is\Model\Components\Config;
-use is\Model\Masters\View;
-use is\Model\Masters\Files\Master;
+use is\Parents\Data;
+use is\Components\Router;
+use is\Components\State;
+use is\Components\Uri;
+use is\Components\Config;
+use is\Masters\View;
+use is\Masters\Files\Master;
 
 class Serviceworker extends Master {
 	

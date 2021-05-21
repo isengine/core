@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Module;
+namespace is\Masters\Extenders\Module;
 
 use is\Helpers\Sessions;
 use is\Helpers\Parser;
@@ -11,9 +11,9 @@ use is\Helpers\System;
 use is\Helpers\Match;
 use is\Helpers\Paths;
 use is\Helpers\Prepare;
-use is\Model\Parents\Data;
-use is\Model\Masters\View;
-use is\Model\Masters\Database;
+use is\Parents\Data;
+use is\Masters\View;
+use is\Masters\Database;
 
 class Module extends Data {
 	

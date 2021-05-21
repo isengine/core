@@ -4,10 +4,10 @@
 
 namespace is;
 
-use is\Model\Masters\Database;
-use is\Model\Components\State;
-use is\Model\Components\Config;
-use is\Model\Components\Display;
+use is\Masters\Database;
+use is\Components\State;
+use is\Components\Config;
+use is\Components\Display;
 
 // Подготавливаем конфигурацию
 

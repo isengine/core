@@ -4,7 +4,7 @@
 
 namespace is;
 
-use is\Model\Components\Config;
+use is\Components\Config;
 
 // задаем конфигурацию php
 

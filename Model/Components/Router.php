@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Components;
+namespace is\Components;
 
 use is\Helpers\System;
 use is\Helpers\Strings;
@@ -9,9 +9,9 @@ use is\Helpers\Match;
 use is\Helpers\Sessions;
 use is\Helpers\Parser;
 use is\Helpers\Paths;
-use is\Model\Components\Structure;
+use is\Components\Structure;
 
-use is\Model\Parents\Globals;
+use is\Parents\Globals;
 
 class Router extends Globals {
 	

@@ -1,9 +1,9 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Process;
+namespace is\Masters\Extenders\Process;
 
 use is\Helpers\Strings;
-use is\Model\Components\Datetime;
+use is\Components\Datetime;
 
 class Time extends Master {
 	

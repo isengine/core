@@ -4,8 +4,8 @@
 
 namespace is;
 
-use is\Model\Components\Config;
-use is\Model\Components\Log;
+use is\Components\Config;
+use is\Components\Log;
 
 // инициализация
 

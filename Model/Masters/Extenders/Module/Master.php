@@ -1,12 +1,12 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Module;
+namespace is\Masters\Extenders\Module;
 
 use is\Helpers\System;
 use is\Helpers\Objects;
 use is\Helpers\Strings;
 
-use is\Model\Parents\Data;
+use is\Parents\Data;
 
 abstract class Master extends Data {
 	

@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Special;
+namespace is\Masters\Extenders\Special;
 
 use is\Helpers\System;
 use is\Helpers\Strings;
@@ -8,7 +8,7 @@ use is\Helpers\Objects;
 use is\Helpers\Parser;
 use is\Helpers\Prepare;
 use is\Helpers\Paths;
-use is\Model\Parents\Data;
+use is\Parents\Data;
 
 class Special extends Data {
 	

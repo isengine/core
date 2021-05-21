@@ -8,13 +8,13 @@ use is\Helpers\System;
 use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Paths;
-use is\Model\Components\Config;
-use is\Model\Components\State;
-use is\Model\Components\Display;
-use is\Model\Components\Log;
-use is\Model\Components\Router;
-use is\Model\Components\Language;
-use is\Model\Masters\View;
+use is\Components\Config;
+use is\Components\State;
+use is\Components\Display;
+use is\Components\Log;
+use is\Components\Router;
+use is\Components\Language;
+use is\Masters\View;
 
 // читаем конфиг
 

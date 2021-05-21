@@ -1,9 +1,9 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Process;
+namespace is\Masters\Extenders\Process;
 
 use is\Helpers\Prepare;
-use is\Model\Components\Language;
+use is\Components\Language;
 
 class Phone extends Master {
 	

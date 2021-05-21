@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Render;
+namespace is\Masters\Extenders\Render;
 
 use is\Helpers\System;
 use is\Helpers\Objects;

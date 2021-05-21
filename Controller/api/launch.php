@@ -9,13 +9,13 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Sessions;
 use is\Helpers\Prepare;
-use is\Model\Components\Session;
-use is\Model\Components\Uri;
-use is\Model\Components\State;
-use is\Model\Components\Config;
-use is\Model\Components\Display;
-use is\Model\Components\Log;
-use is\Model\Masters\Api;
+use is\Components\Session;
+use is\Components\Uri;
+use is\Components\State;
+use is\Components\Config;
+use is\Components\Display;
+use is\Components\Log;
+use is\Masters\Api;
 
 // читаем uri
 

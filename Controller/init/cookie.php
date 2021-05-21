@@ -7,8 +7,8 @@ namespace is;
 use is\Helpers\System;
 use is\Helpers\Sessions;
 use is\Helpers\Paths;
-use is\Model\Components\State;
-use is\Model\Components\Session;
+use is\Components\State;
+use is\Components\Session;
 
 // читаем сессию
 

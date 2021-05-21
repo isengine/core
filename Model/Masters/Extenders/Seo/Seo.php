@@ -1,16 +1,16 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Seo;
+namespace is\Masters\Extenders\Seo;
 
 use is\Helpers\System;
 use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Prepare;
-use is\Model\Parents\Data;
-use is\Model\Masters\Database;
-use is\Model\Components\Router;
+use is\Parents\Data;
+use is\Masters\Database;
+use is\Components\Router;
 
-use is\Model\Masters\Extenders\Process\Process;
+use is\Masters\Extenders\Process\Process;
 
 class Seo extends Process {
 	

@@ -8,10 +8,10 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\System;
 use is\Helpers\Sessions;
-use is\Model\Components\Config;
-use is\Model\Components\Log;
-use is\Model\Components\Display;
-use is\Model\Components\Session;
+use is\Components\Config;
+use is\Components\Log;
+use is\Components\Display;
+use is\Components\Session;
 
 // задаем конфигурацию php
 

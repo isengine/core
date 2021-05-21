@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Model\Masters\Extenders\Process;
+namespace is\Masters\Extenders\Process;
 
 use is\Helpers\System;
 
