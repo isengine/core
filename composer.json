@@ -15,6 +15,7 @@
 	"require": {
 		"php" : "^5.6|^7.0|^8.0",
 		"isengine/framework": "*",
+		"isengine/breadcrumbs": "*",
 		"isengine/map": "*",
 		"shuchkin/simplexlsx": "^0.8.21",
 		"mobiledetect/mobiledetectlib": "^2.8.0",
