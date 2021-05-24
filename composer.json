@@ -19,6 +19,7 @@
 		"isengine/currency": "*",
 		"isengine/map": "*",
 		"isengine/scrolltotop": "*",
+		"isengine/socialnews": "*",
 		"isengine/weather": "*",
 		"shuchkin/simplexlsx": "^0.8.21",
 		"mobiledetect/mobiledetectlib": "^2.8.0",
