@@ -17,6 +17,7 @@
 		"isengine/framework": "*",
 		"isengine/breadcrumbs": "*",
 		"isengine/currency": "*",
+		"isengine/informer": "*",
 		"isengine/map": "*",
 		"isengine/scrolltotop": "*",
 		"isengine/socialnews": "*",
