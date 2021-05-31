@@ -30,10 +30,9 @@ if (System::set($find)) {
 }
 
 if ($config -> get('url:data:query')) {
+	$data = Objects::merge($data, $uri -> query['array']);
 	if (System::server('method') === 'post') {
 		$data = Objects::merge($data, $_POST);
-	} else {
-		$data = Objects::merge($data, $uri -> query['array']);
 	}
 }
 
