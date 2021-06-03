@@ -21,6 +21,7 @@
 		"isengine/form": "*",
 		"isengine/informer": "*",
 		"isengine/map": "*",
+		"isengine/media": "*",
 		"isengine/menu": "*",
 		"isengine/scrolltotop": "*",
 		"isengine/socialnews": "*",
