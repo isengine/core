@@ -31,6 +31,9 @@ System::includes('files', $path);
 // Запускаем разбор структуры сайта
 System::includes('structure', $path);
 
+// Запускаем определение rest
+System::includes('rest', $path);
+
 // Запускаем проверку типов
 System::includes('content', $path);
 

@@ -32,24 +32,13 @@ $config = Config::getInstance();
 
 // здесь расположен базовый обработчик роутинга
 
-$uri -> resetRoute();
-$path_array = $uri -> getRoute();
 $path = $uri -> path['string'] ? '/' . $uri -> path['string'] : null;
 
 // определяем, где в структуре мы находимся
 
+$route = Strings::join($uri -> getRoute(), ':');
+
 // составляем путь
-
-$route = null;
-
-if (System::typeIterable($path_array)) {
-	$find = Objects::find($path_array, $config -> get('url:data:rest'));
-	if (System::set($find)) {
-		$uri -> route = Objects::get($path_array, 0, $find);
-	}
-	unset($find);
-	$route = Strings::join($uri -> getRoute(), ':');
-}
 
 if ($route) {
 	if (Objects::match($router -> structure -> getNames(), $route)) {
@@ -68,8 +57,6 @@ if ($route) {
 	$router -> current = new Entry;
 	$router -> current -> addData('link', '/');
 }
-
-unset($path_array);
 
 // сравниваем урл структуры с тем, который сейчас
 // и если нет совпадения, то переназначаем текущий урл

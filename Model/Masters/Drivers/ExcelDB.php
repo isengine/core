@@ -14,6 +14,7 @@ use \SimpleXLSX;
 class ExcelDB extends Master {
 	
 	protected $path;
+	protected $parent;
 	
 	public function connect() {
 		
@@ -23,6 +24,13 @@ class ExcelDB extends Master {
 	
 	public function close() {
 		
+	}
+	
+	public function parents($parent) {
+		if (!System::set($parent) && !System::typeIterable($parent)) {
+			return;
+		}
+		$this -> parent = System::typeIterable($parent) ? $parent : Strings::split($parent, ':');
 	}
 	
 	public function launch() {
@@ -69,12 +77,20 @@ class ExcelDB extends Master {
 	
 	public function hash() {
 		$json = json_encode($this -> filter) . json_encode($this -> fields) . json_encode($this -> rights);
-		$this -> hash = md5_file($this -> path . $this -> collection . '.xlsx') . '.' . md5($json) . '.' . Strings::len($json) . '.' . (int) $this -> settings['all'] . '.' . $this -> settings['limit'];
+		$path = $this -> path . $this -> collection . ($this -> parent ? DS . Strings::join($this -> parent, DS) : null) . '.xlsx';
+		$this -> hash = (Local::matchFile($path) ? md5_file($path) : null) . '.' . md5($json) . '.' . Strings::len($json) . '.' . (int) $this -> settings['all'] . '.' . $this -> settings['limit'];
 	}
 	
 	public function prepare() {
 		
-		$path = $this -> path . $this -> collection . '.xlsx';
+		$path = $this -> path . $this -> collection . ($this -> parent ? DS . Strings::join($this -> parent, DS) : null) . '.xlsx';
+		
+		echo print_r($path, 1) . '<br>';
+		
+		if (!Local::matchFile($path)) {
+			return;
+		}
+		
 		$stat = stat($path);
 		$excel = SimpleXLSX::parse($path);
 		
@@ -161,6 +177,9 @@ class ExcelDB extends Master {
 				unset($k, $i);
 				
 				// несколько обязательных полей
+				if (!$entry['parents']) {
+					$entry['parents'] = $this -> parent;
+				}
 				if (!$entry['ctime']) {
 					$entry['ctime'] = $stat['ctime'];
 				}
