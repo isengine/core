@@ -85,8 +85,6 @@ class ExcelDB extends Master {
 		
 		$path = $this -> path . $this -> collection . ($this -> parent ? DS . Strings::join($this -> parent, DS) : null) . '.xlsx';
 		
-		echo print_r($path, 1) . '<br>';
-		
 		if (!Local::matchFile($path)) {
 			return;
 		}
