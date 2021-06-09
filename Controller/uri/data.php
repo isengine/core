@@ -25,7 +25,7 @@ $find = Objects::find($path_array, $config -> get('url:data:rest'));
 if (System::set($find)) {
 	$array = Objects::get($path_array, $find + 1);
 	if ($array) {
-		$data = Objects::merge($data, Objects::pairs($array));
+		$data = Objects::merge($data, Objects::split($array));
 	}
 }
 

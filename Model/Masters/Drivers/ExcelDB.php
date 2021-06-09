@@ -126,7 +126,7 @@ class ExcelDB extends Master {
 				continue;
 			}
 			
-			$entry = Objects::fill($keys, $row);
+			$entry = Objects::join($keys, $row);
 			//$entry = Objects::combine($row, $keys);
 			
 			// проверка по имени
@@ -160,7 +160,7 @@ class ExcelDB extends Master {
 					if (Strings::match($k, ':')) {
 						// А вот это условие оставить - т.к. бьются только ключи и это правильно
 						$levels = Parser::fromString($k);
-						$entry = Objects::add($entry, Objects::level([], $levels, $i), true);
+						$entry = Objects::add($entry, Objects::inject([], $levels, $i), true);
 						unset($entry[$k], $levels);
 					} elseif (Objects::match(['type', 'parents', 'owner'], $k)) {
 						// Это условие тоже нужно оставить для базовых полей
