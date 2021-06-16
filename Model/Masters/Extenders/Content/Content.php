@@ -10,8 +10,6 @@ use is\Parents\Entry;
 use is\Masters\Database;
 use is\Components\Router;
 
-use is\Masters\Extenders\Process\Process;
-
 class Content extends Entry {
 	
 	public function __construct() {

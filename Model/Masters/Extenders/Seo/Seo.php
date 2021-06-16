@@ -10,9 +10,9 @@ use is\Parents\Data;
 use is\Masters\Database;
 use is\Components\Router;
 
-use is\Masters\Extenders\Process\Process;
+use is\Masters\Extenders\Tvars\Tvars;
 
-class Seo extends Process {
+class Seo extends Tvars {
 	
 	public function __construct() {
 		

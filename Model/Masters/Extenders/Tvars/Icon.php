@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Masters\Extenders\Process;
+namespace is\Masters\Extenders\Tvars;
 
 class Icon extends Master {
 	

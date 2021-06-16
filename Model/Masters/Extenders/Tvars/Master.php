@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Masters\Extenders\Process;
+namespace is\Masters\Extenders\Tvars;
 
 use is\Helpers\Local;
 use is\Helpers\Strings;

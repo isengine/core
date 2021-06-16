@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Masters\Extenders\Process;
+namespace is\Masters\Extenders\Tvars;
 
 use is\Helpers\Local;
 use is\Helpers\Strings;
@@ -15,7 +15,7 @@ use is\Parents\Data;
 
 use is\Components\Language; 
 
-class Process extends Data {
+class Tvars extends Data {
 	
 	// по $data для ссылок и тегов здесь общее правило такое:
 	// пути и ключевые значения

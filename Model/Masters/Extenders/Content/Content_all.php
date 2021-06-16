@@ -10,8 +10,6 @@ use is\Parents\Collection;
 use is\Masters\Database;
 use is\Components\Router;
 
-use is\Masters\Extenders\Process\Process;
-
 class Content extends Collection {
 	
 	public function __construct() {
