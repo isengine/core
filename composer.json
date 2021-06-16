@@ -20,7 +20,6 @@
 		"isengine/currency": "*",
 		"isengine/data": "*",
 		"isengine/form": "*",
-		"isengine/informer": "*",
 		"isengine/map": "*",
 		"isengine/media": "*",
 		"isengine/menu": "*",
