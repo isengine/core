@@ -23,6 +23,10 @@ class Lang extends Data {
 		return Language::getInstance() -> get($data);
 	}
 	
+	public function add($first = null, $second = null) {
+		return Language::getInstance() -> addData($first, $second);
+	}
+	
 }
 
 //class Lang {
