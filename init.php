@@ -15,12 +15,12 @@ if (!defined('DR')) { define('DR', realpath(__DIR__ . DS . DP . DP . DP) . DS); 
 // Include loading framework, core extend and classes from config
 // Подключаем загрузку фреймворка, расширений ядра и классов, вручную прописанных в конфигурации
 
-require_once 'Controller' . DS . 'autoload.php';
+require_once 'controller' . DS . 'autoload.php';
 
 // Include core controller
 // Подключаем контроллер ядра
 
-require_once 'Controller' . DS . 'controller.php';
+require_once 'controller' . DS . 'controller.php';
 
 exit;
 
