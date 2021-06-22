@@ -14,7 +14,6 @@ use is\Parents\Data;
 use is\Components\Router;
 use is\Components\State;
 use is\Components\Uri;
-use is\Components\Config;
 use is\Masters\View;
 use is\Masters\Files\Master;
 
@@ -29,9 +28,7 @@ class Serviceworker extends Master {
 		$webapp = $view -> get('state|settings:webapp');
 		$icons = $view -> get('icon|data');
 		
-		$config = Config::getInstance();
-		
-		$path = $config -> get('path:site') . (!empty($webapp['custompath']) ? str_replace(':', DS, $webapp['custompath']) . DS : null) . $webapp['serviceworker'];
+		$path = DI . (!empty($webapp['custompath']) ? str_replace(':', DS, $webapp['custompath']) . DS : null) . $webapp['serviceworker'];
 		$sw = !empty($webapp['serviceworker']) && file_exists($path) ? Local::readFile($path) : null;
 		
 		//System::setHeaderCode(200);

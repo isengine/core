@@ -68,7 +68,7 @@ $data = [
 	'name' => $uri -> file['name'],
 	'extension' => $uri -> file['extension'],
 	'url' => '/' . $uri -> path['string'],
-	'real' => $config -> get('path:site') . Paths::toReal($uri -> path['string'])
+	'real' => DI . Paths::toReal($uri -> path['string'])
 ];
 
 // Сам файл

@@ -57,7 +57,7 @@ $from = [
 	DS
 ];
 $to = [
-	$config -> get('path:site') . Paths::toReal(Paths::clearSlashes($config -> get('url:assets'))) . DS,
+	DI . Paths::toReal(Paths::clearSlashes($config -> get('url:assets'))) . DS,
 	DS . Paths::toReal($router -> template['name']) . DS
 ];
 $url = [

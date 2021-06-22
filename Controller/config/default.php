@@ -6,10 +6,6 @@ namespace is;
 
 use is\Helpers\System;
 
-$site = System::server('root');
-$base = DR;
-$core = realpath(__DIR__ . DS . DP) . DS;
-
 $default = [
 	'system' => [
 		'php' => '5.6',
@@ -27,16 +23,6 @@ $default = [
 		'year' => 31556926
 	],
 	'path' => [
-		'site' => $site,
-		'base' => $base,
-		'core' => $core
-		/*
-		'app' => $base . 'app' . DS,
-		'cache' => $base . 'cache' . DS,
-		'vendors' => $base . 'vendor' . DS,
-		'log' => $base . 'log' . DS,
-		'templates' => $base . 'templates' . DS
-		*/
 	],
 	'api' => [
 		'server' => null,
@@ -84,7 +70,5 @@ $default = [
 		'reload' => true
 	]
 ];
-
-unset($site, $base, $core);
 
 ?>

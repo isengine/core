@@ -20,7 +20,7 @@ class Img extends Data {
 	}
 	
 	public function get($data = null, $null = null) {
-		$real = System::server('root') . Strings::replace($data, ':', DS);
+		$real = DI . Strings::replace($data, ':', DS);
 		$url = '/' . Strings::replace($data, ':', '/');
 		return Local::matchFile($real) ? $url . '?' . filemtime($real) : null;
 	}
