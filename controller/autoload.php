@@ -17,8 +17,8 @@ $list = json_decode($list, true);
 
 if (!empty($list)) {
 	foreach ($list as $item) {
-		$item = $path . str_replace(['\\', '/', ':'], DS, $item);
-		require $item;
+		$item = $path . str_replace(['\\', '/', ':'], DS, $item) . '.php';
+		require_once $item;
 	}
 	unset($item);
 }
