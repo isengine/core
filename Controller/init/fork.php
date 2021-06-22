@@ -27,8 +27,18 @@ $uri = Uri::getInstance();
 $path = __DIR__ . DS . DP;
 
 // создаем развилку
-if ($state -> get('api') && $state -> get('api') !== true) {
+
+if (
+	$config -> get('default:mode') === 'test' &&
+	isset($_GET['test'])
+) {
 	
+	// Запускаем тестирование, но только в режиме тестирования
+	System::includes('test:init', $path . DP . DP . 'framework');
+	
+} elseif ($state -> get('api') && $state -> get('api') !== true) {
+	
+	// Запускаем api
 	System::includes('api:init', $path);
 	
 } else {
