@@ -41,7 +41,7 @@ class Robots extends Master {
 
 User-agent: *
 <?php
-		if ($config -> get('default:noindex')) {
+		if ($config -> get('develop:enable') && $config -> get('develop:noindex')) {
 ?>
 Disallow: /
 <?php

@@ -28,10 +28,7 @@ $path = __DIR__ . DS . DP;
 
 // создаем развилку
 
-if (
-	$config -> get('default:mode') === 'test' &&
-	isset($_GET['test'])
-) {
+if ($config -> get('develop:test') && isset($_GET['test'])) {
 	
 	// Запускаем тестирование, но только в режиме тестирования
 	System::includes('test:init', $path . DP . DP . 'framework');

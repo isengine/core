@@ -79,6 +79,20 @@ $view -> add('tvars');
 
 $view -> add('img');
 
+// запускаем реактивность
+
+if ($config -> get('develop:enable') && $config -> get('develop:reactive')) {
+	$view -> add('reactive');
+	
+	$folder = $view -> get('state|real');
+	$view -> get('reactive') -> launch($folder, $config -> get('develop:reactive'));
+	
+	if (isset($_GET['reactive'])) {
+		echo $view -> get('reactive') -> getList();
+		exit;
+	}
+}
+
 // запускаем специальные группы
 
 $view -> add('special');

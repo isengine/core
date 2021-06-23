@@ -17,7 +17,7 @@ ini_set('session.name', $config -> get('system:session'));
 
 // вывод ошибок рекомендуется включать только на время разработки
 
-if ($config -> get('default:mode') === 'develop') {
+if ($config -> get('develop:enable')) {
 	ini_set('display_errors', 'on');
 	ini_set('display_startup_errors', true);
 	if ($config -> get('log:mode') === 'panic') {

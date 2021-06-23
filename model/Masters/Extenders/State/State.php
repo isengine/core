@@ -39,6 +39,7 @@ class State extends Data {
 			'route' => $uri -> route,
 			'path' => $uri -> route ? Strings::join($uri -> route, '/') . '/' : null,
 			'previous' => $uri -> previous,
+			'string' => $uri -> path['string'],
 			'real' => $config -> get('path:templates') . $router -> template['name'] . DS,
 			
 			'url' => $uri -> url,

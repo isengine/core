@@ -50,7 +50,7 @@ System::includes('config:system', $path);
 
 // Делаем проверку системы, но только в режиме разработки
 
-if ($config -> get('default:mode') === 'develop') {
+if ($config -> get('develop:enable')) {
 	System::includes('config:check', $path);
 }
 
