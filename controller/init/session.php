@@ -63,7 +63,7 @@ if ($state -> get('session')) {
 	unset($item);
 	
 	if (
-		!$state -> get('request') ||
+		//!$state -> get('request') || // ----- очевидно, это логическая ошибка! он еще не задан, и всегда будет проходить проверку, т.е. всегда будет выдана ошибка, однако убрав его отсюда - он останется в определении реквеста
 		Sessions::getCookie('session') !== $token ||
 		$token_time > $time ||
 		!$token_verify

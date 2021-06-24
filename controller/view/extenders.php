@@ -43,6 +43,7 @@ $view -> get('seo') -> keys();
 // запускаем языки
 
 $view -> add('lang');
+$view -> add('translit');
 
 // запускаем иконки
 
