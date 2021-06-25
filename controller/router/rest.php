@@ -33,12 +33,21 @@ $path = $uri -> getRoute();
 
 // определяем данные по rest и отделяем их от остального пути
 
-if (System::typeIterable($path)) {
+//if (System::typeIterable($path)) {
+//	$find = Objects::find($path, $config -> get('url:data:rest'));
+//	if (System::set($find)) {
+//		$uri -> route = Objects::get($path, 0, $find);
+//	}
+//	unset($find);
+//}
+
+if ( System::type($config -> get('url:data:rest'), 'numeric') ) {
+	$uri -> route = Objects::get($path, 0, $config -> get('url:data:rest') - 1);
+} else {
 	$find = Objects::find($path, $config -> get('url:data:rest'));
 	if (System::set($find)) {
 		$uri -> route = Objects::get($path, 0, $find);
 	}
-	unset($find);
 }
 
 ?>

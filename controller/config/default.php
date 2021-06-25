@@ -48,6 +48,7 @@ $default = [
 		'assets' => '/assets/',
 		'data' => [
 			'rest' => 'data',
+			'keys' => true,
 			'query' => true
 		]
 	],
