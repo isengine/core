@@ -26,6 +26,9 @@ class Render extends Data {
 	}
 	
 	public function launch($type, $name, $reinit = null) {
+		if (!$type) {
+			return;
+		}
 		// вызов рендеринга
 		// например, render('css', 'filename')
 		$ri = System::typeIterable($reinit);
