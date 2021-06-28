@@ -31,16 +31,13 @@ $default = [
 		'token' => 'token'
 	],
 	'error' => [
-		'url' => '/error/',
-		'prefix' => '',
+		'prefix' => '/error/',
 		'postfix' => '',
-		'template' => 'error'
+		'template' => 'error',
 		
-		//'url' => '/',
-		//'prefix' => 'e',
+		//'prefix' => '/e',
 		//'postfix' => '.html'
 		
-		//'url' => '/',
 		//'prefix' => '?error=',
 		//'postfix' => ''
 	],
