@@ -47,8 +47,8 @@ abstract class Master extends Data {
 	
 	public function setPath($middle = null, $last = null) {
 		foreach (['from', 'to', 'url'] as $item) {
-			$middle = Strings::replace($middle, ':', $item === 'url' ? '/' : DS);
-			$last = Strings::replace($last, ':', $item === 'url' ? '/' : DS);
+			$middle = Strings::replace($middle, [':', '/', '\\'], $item === 'url' ? '/' : DS);
+			$last = Strings::replace($last, [':', '/', '\\'], $item === 'url' ? '/' : DS);
 			$name = $this -> $item;
 			$this -> $item = $name[0] . $middle . $name[1] . $last;
 		}
