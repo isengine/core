@@ -8,6 +8,7 @@ use is\Helpers\Objects;
 use is\Helpers\Parser;
 use is\Helpers\Prepare;
 use is\Helpers\Paths;
+use is\Helpers\Local;
 use is\Parents\Data;
 use is\Components\Language;
 
@@ -18,13 +19,29 @@ class Lang extends Data {
 		//$this -> setData($lang -> getData());
 	}
 	
-	public function get($data = null, $null = null) {
+	public function get($data = null, $prepare = null) {
+		
 		if (!System::set($data)) { return null; }
-		return Language::getInstance() -> get($data);
+		
+		if (!$prepare) {
+			return Language::getInstance() -> get($data);
+		}
+		
+		$lang = Language::getInstance() -> get($data);
+		Objects::each(Parser::fromString($prepare), function($item) use (&$lang){
+			$lang = Prepare::$item($lang);
+		});
+		
+		return $lang;
+		
 	}
 	
-	public function add($first = null, $second = null) {
-		return Language::getInstance() -> addData($first, $second);
+	public function add($name, $path) {
+		$data = Local::readFile($path);
+		$data = Parser::fromJson($data);
+		if ($data) {
+			Language::getInstance() -> addData($name, $data);
+		}
 	}
 	
 }

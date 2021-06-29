@@ -43,6 +43,11 @@ $view -> get('seo') -> keys();
 // запускаем языки
 
 $view -> add('lang');
+$view -> get('lang') -> add(
+	'this',
+	$config -> get('path:templates') . $router -> template['name'] . DS . 'lang' . DS . $view -> get('state|lang') . '.ini'
+);
+
 $view -> add('translit');
 
 // запускаем иконки
