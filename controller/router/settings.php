@@ -9,6 +9,7 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Sessions;
 use is\Helpers\Prepare;
+use is\Helpers\Parser;
 use is\Helpers\Local;
 use is\Components\Session;
 use is\Components\Uri;
@@ -30,6 +31,18 @@ $config = Config::getInstance();
 $state = State::getInstance();
 $router = Router::getInstance();
 
+// читаем данные из настроек шаблона
+
+$path = $config -> get('path:templates') . $router -> template['name'] . DS . 'settings.ini';
+
+$local = Local::readFile($path);
+$local = Parser::fromJson($local);
+
+$router -> setData( $local ? $local : null );
+$router -> addData('mtime', $local ? filemtime($path) : time() );
+
+// читаем настройки шаблона из базы
+
 $db = Database::getInstance();
 
 $db -> collection('templates');
@@ -39,7 +52,7 @@ $db -> launch();
 $data = $db -> data -> getFirstData();
 
 if ($data) {
-	$router -> setData( $data );
+	$router -> mergeData( $data, true );
 	$router -> addData('mtime', $db -> data -> getFirst() -> getEntryKey('mtime') );
 }
 

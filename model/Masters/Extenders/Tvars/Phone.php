@@ -19,7 +19,7 @@ class Phone extends Master {
 		$lang = Language::getInstance();
 		$url = Prepare::phone($url, $lang -> get('lang'));
 		
-		return '<a href="tel:' . $url . '" alt="' . $data[2] . '"' . $class . '>' . $data[2] . '</a>';
+		return '<a href="tel:' . $url . '" alt="' . Prepare::tags($data[2]) . '"' . $class . '>' . $data[2] . '</a>';
 		
 	}
 	
