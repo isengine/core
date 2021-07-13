@@ -60,8 +60,10 @@ class Tvars extends Data {
 	public function strings($string) {
 		return Parser::textVariables($string, function($type, $data){
 			$name = __NAMESPACE__ . '\\' . Prepare::upperFirst($type);
-			$call = new $name;
-			return $call -> launch($data);
+			if (class_exists($name)) {
+				$call = new $name;
+				return $call -> launch($data);
+			}
 		});
 	}
 	
