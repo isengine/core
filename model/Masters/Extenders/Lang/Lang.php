@@ -17,6 +17,10 @@ class Lang extends Data {
 	public function __construct() {
 		//$lang = Language::getInstance();
 		//$this -> setData($lang -> getData());
+		// возможно, имеет смысл сделать this -> data ссылкой на язык,
+		// чтобы инициализировать компонент языка только один раз
+		// также это упростит работу с языком - всякие get/set-Data
+		// но надо смотреть, сравнивать по затрате ресурсов
 	}
 	
 	public function get($data = null, $prepare = null) {
@@ -34,6 +38,14 @@ class Lang extends Data {
 		
 		return $lang;
 		
+	}
+	
+	public function getData($null = null) {
+		return Language::getInstance() -> getData();
+	}
+	
+	public function setData($data, $null = null) {
+		return Language::getInstance() -> setData($data);
 	}
 	
 	public function add($name, $path) {
