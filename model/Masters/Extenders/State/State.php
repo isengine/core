@@ -32,6 +32,8 @@ class State extends Data {
 			
 			'template' => $router -> template['name'],
 			'section' => $router -> template['section'],
+			'path-to-page' => $router -> template['path-to-page'],
+			
 			'page' => $entry ? $router -> current -> getEntryData('name') : null,
 			'parents' => $entry ? $router -> current -> getEntryKey('parents') : null,
 			'type' => $entry ? $router -> current -> getEntryKey('type') : null,

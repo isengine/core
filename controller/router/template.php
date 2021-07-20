@@ -50,6 +50,10 @@ $array = [
 	'default' => $config -> get('default:template')
 ];
 
+// число пропущенных элементов пути от шаблона
+
+$skip = null;
+
 // проверяем шаблон из родителей
 
 if (System::typeIterable($router -> current -> parents)) {
@@ -66,6 +70,7 @@ if (System::typeIterable($router -> current -> parents)) {
 		$data = $router -> structure -> getDataByName($item);
 		if ($data['template']) {
 			$array['parents'] = $data['template'];
+			$skip = Objects::len(Strings::split($data['link'], '\/', true));
 			break;
 		}
 	}
@@ -118,18 +123,31 @@ if ($array['section'] && $array['error']) {
 
 // устанавливаем шаблон
 
+$router -> template['name'] = Objects::first( Objects::clear($array), 'value' );
+
 //echo '<pre>';
 //echo print_r($templates, 1);
 //echo print_r($array, 1);
 //echo '</pre>';
 
-$router -> template['name'] = Objects::first( Objects::clear($array), 'value' );
+// устанавливаем путь к странице внутри шаблона
+
+if (Objects::first( Objects::clear($array), 'key' ) === 'route') {
+	$skip = 1;
+}
+$router -> template['path-to-page'] = System::typeIterable($router -> current -> parents) ? $router -> current -> parents : [];
+//$key = $router -> current -> getData('name');
+$key = $router -> current -> data['name'];
+if ($key) {
+	$router -> template['path-to-page'][] = $key;
+}
+$router -> template['path-to-page'] = Objects::get($router -> template['path-to-page'], $skip);
 
 //if ($router -> template['name'] === $array['route']) {
 //	$uri -> unRoute('first');
 //}
 
-unset($array, $templates);
+unset($array, $templates, $skip, $key);
 
 //echo '<pre>';
 //echo print_r($router, 1);
