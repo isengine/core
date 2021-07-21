@@ -33,13 +33,15 @@ class Folder extends Master {
 		$this -> to = DI . Strings::join($name[1], DS) . DS;
 		$this -> url = '/' . Strings::join($name[1], '/') . '/';
 		
+		$hash_name = Strings::replace(Strings::get($this -> from, Strings::len(DR), 1, true), DS, '_');
+		
 		$this -> hash = (string) filemtime($this -> from);
-		$hash = Local::readFile($this -> to . 'hash.md5');
+		$hash = Local::readFile($this -> to . $hash_name . '.md5');
 		
 		if (!$this -> hash || !$hash || $this -> hash !== $hash) {
 			Local::createFolder($this -> to);
 			$this -> rendering();
-			Local::writeFile($this -> to . 'hash.md5', $this -> hash);
+			Local::writeFile($this -> to . $hash_name . '.md5', $this -> hash);
 		}
 		
 		//return '<link rel="stylesheet" type="text/css" href="' . $this -> url . $this -> modificator() . '" />';
