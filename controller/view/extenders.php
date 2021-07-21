@@ -58,20 +58,11 @@ $view -> add('icon');
 
 $view -> add('render');
 
-$from = [
-	$config -> get('path:templates') . $router -> template['name'] . DS,
-	DS
-];
-$to = [
-	DI . Paths::toReal(Paths::clearSlashes($config -> get('url:assets'))) . DS,
-	DS . Paths::toReal($router -> template['name']) . DS
-];
-$url = [
-	'/' . Paths::clearSlashes($config -> get('url:assets')) . '/',
-	'/' . $router -> template['name'] . '/'
-];
-
-$view -> get('render') -> init($from, $to, $url);
+$view -> get('render') -> init(
+	$config -> get('path:templates') . $router -> template['name'] . DS, // from
+	DI . Paths::toReal(Paths::clearSlashes($config -> get('url:assets'))) . DS . Paths::toReal($router -> template['name']) . DS, // to
+	'/' . Paths::clearSlashes($config -> get('url:assets')) . '/' . $router -> template['name'] . '/' // url
+);
 
 // запускаем обнаружение устройств
 
@@ -107,10 +98,10 @@ if ($config -> get('develop:enable') && $config -> get('develop:reactive')) {
 	$folder = $view -> get('state|real');
 	$view -> get('reactive') -> launch($folder, $config -> get('develop:reactive'));
 	
-	if (isset($_GET['reactive'])) {
-		echo $view -> get('reactive') -> getList();
-		exit;
-	}
+	//if (isset($_GET['reactive'])) {
+	//	echo $view -> get('reactive') -> getList();
+	//	exit;
+	//}
 }
 
 // запускаем специальные группы

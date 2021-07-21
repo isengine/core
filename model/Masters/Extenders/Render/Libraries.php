@@ -17,7 +17,7 @@ class Libraries extends Master {
 		// name - имя файла, здесь с расширением
 		
 		$skip = !$this -> from[0];
-		$this -> setPath(null, $name);
+		$this -> setPath($name);
 		
 		$type = Paths::parseFile($name, 'extension');
 		

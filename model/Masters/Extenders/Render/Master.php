@@ -45,24 +45,21 @@ abstract class Master extends Data {
 	
 	abstract public function launch($null);
 	
-	public function setPath($middle = null, $last = null) {
+	public function setPath($name = null) {
 		foreach (['from', 'to', 'url'] as $item) {
-			$middle = Strings::replace($middle, [':', '/', '\\'], $item === 'url' ? '/' : DS);
-			$last = Strings::replace($last, [':', '/', '\\'], $item === 'url' ? '/' : DS);
-			$name = $this -> $item;
-			$this -> $item = $name[0] . $middle . $name[1] . $last;
+			$name = Strings::replace($name, [':', '/', '\\'], $item === 'url' ? '/' : DS);
+			$this -> $item = $this -> $item . $name;
 		}
-		unset($name, $item);
+		unset($item);
 	}
 	
-	public function setPathByKey($key, $middle = null, $last = null) {
-		$name = $this -> $key;
-		$this -> $key = $name[0] . $middle . $name[1] . $last;
+	public function setPathByKey($key, $name = null) {
+		$name = Strings::replace($name, [':', '/', '\\'], $item === 'url' ? '/' : DS);
+		$this -> $key = $this -> $key . $name;
 	}
 	
-	public function getPathByKey($key, $middle = null, $last = null) {
-		$name = $this -> $key;
-		return $name[0] . $middle . $name[1] . $last;
+	public function getPathByKey($key, $name = null) {
+		return $this -> $key . $name;
 	}
 	
 	public function modificator() {

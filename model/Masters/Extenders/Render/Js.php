@@ -17,7 +17,7 @@ class Js extends Master {
 		// name - имя файла, без расширения и без пути
 		// folder - промежуточная папка
 		
-		$this -> setPath('js', $name . '.js');
+		$this -> setPath('js:' . $name . '.js');
 		
 		$this -> setHash();
 		

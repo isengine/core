@@ -21,9 +21,9 @@ class Less extends Master {
 		
 		$url_folder = $this -> getPathByKey('url', 'less');
 		
-		$this -> setPathByKey('from', 'less', $name . '.less');
-		$this -> setPathByKey('to', 'less', $name . '.css');
-		$this -> setPathByKey('url', 'less', $name . '.css');
+		$this -> setPathByKey('from', 'less:' . $name . '.less');
+		$this -> setPathByKey('to', 'less:' . $name . '.css');
+		$this -> setPathByKey('url', 'less:' . $name . '.css');
 		
 		$this -> setHash();
 		

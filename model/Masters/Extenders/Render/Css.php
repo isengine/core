@@ -16,7 +16,7 @@ class Css extends Master {
 		
 		// name - имя файла, без расширения и без пути
 		
-		$this -> setPath('css', $name . '.css');
+		$this -> setPath('css:' . $name . '.css');
 		
 		$this -> setHash();
 		

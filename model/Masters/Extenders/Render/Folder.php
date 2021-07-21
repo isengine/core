@@ -17,18 +17,21 @@ class Folder extends Master {
 		
 		// name - папка, где путь разделен ':'
 		
-		$this -> to[1] = DS;
-		$this -> url[1] = '/';
-		
 		$name = Parser::fromString($name, ['simple' => null]);
 		
 		if (!$name[1]) {
 			$name[1] = $name[0];
 		}
 		
-		$this -> from = $this -> from[0] . Strings::join($name[0], DS) . $this -> from[1];
-		$this -> to = $this -> to[0] . Strings::join($name[1], DS) . $this -> to[1];
-		$this -> url = $this -> url[0] . Strings::join($name[1], '/') . $this -> url[1];
+		if (Objects::match($name[1], '..')) {
+			return;
+		}
+		
+		$this -> from = $this -> from . Strings::join($name[0], DS) . DS;
+		//$this -> to = $this -> to . Strings::join($name[1], DS);
+		//$this -> url = $this -> url . Strings::join($name[1], '/');
+		$this -> to = DI . Strings::join($name[1], DS) . DS;
+		$this -> url = '/' . Strings::join($name[1], '/') . '/';
 		
 		$this -> hash = (string) filemtime($this -> from);
 		$hash = Local::readFile($this -> to . 'hash.md5');
