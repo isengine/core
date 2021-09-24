@@ -30,6 +30,8 @@ class State extends Data {
 		$data = [
 			'settings' => $router -> getData(),
 			
+			'structure' => $router -> structure -> original,
+			
 			'template' => $router -> template['name'],
 			'section' => $router -> template['section'],
 			'path-to-page' => $router -> template['path-to-page'],
