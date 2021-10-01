@@ -2,6 +2,8 @@
 
 namespace is\Masters\Extenders\Tvars;
 
+use is\Helpers\Prepare;
+
 class Mail extends Master {
 	
 	public function launch($data) {
@@ -15,7 +17,7 @@ class Mail extends Master {
 		
 		$subject = $data[3] ? '?subject=' . $data[3] : null;
 		
-		return '<a href="mailto:' . $url . $subject . '" alt="' . $data[2] . '"' . $class . '>' . $data[2] . '</a>';
+		return '<a href="mailto:' . $url . $subject . '" alt="' . Prepare::tags($data[2]) . '"' . $class . '>' . $data[2] . '</a>';
 		
 	}
 	

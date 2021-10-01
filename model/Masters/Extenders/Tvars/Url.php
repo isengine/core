@@ -2,6 +2,7 @@
 
 namespace is\Masters\Extenders\Tvars;
 
+use is\Helpers\Prepare;
 use is\Helpers\Strings;
 
 class Url extends Master {
@@ -12,7 +13,7 @@ class Url extends Master {
 		$absolute = Strings::find($url, '//') === 0 ? ' target="_blank"' : null;
 		$class = $data[1] ? ' class="' . $data[1] . '"' : null;
 		
-		return '<a href="' . $url . '" alt="' . $data[2] . '"' . $class . $absolute . '>' . $data[2] . '</a>';
+		return '<a href="' . $url . '" alt="' . Prepare::tags($data[2]) . '"' . $class . $absolute . '>' . $data[2] . '</a>';
 		
 	}
 	
