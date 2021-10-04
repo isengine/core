@@ -6,23 +6,33 @@ namespace is;
 
 $path = realpath(__DIR__ . DS . DP . DP . DP) . DS;
 
-// auto loading
+$autoload = $path . 'autoload.php';
 
-require_once $path . 'autoload.php';
-
-// manual loading
-
-$list = file_get_contents( DR . 'config' . DS . 'classes.ini' );
-$list = json_decode($list, true);
-
-if (!empty($list)) {
-	foreach ($list as $item) {
-		$item = $path . str_replace(['\\', '/', ':'], DS, $item) . '.php';
-		require_once $item;
+if (file_exists($autoload)) {
+	
+	// auto loading
+	require_once $autoload;
+	
+} else {
+	
+	// manual loading
+	$autoload = $path . 'isengine' . DS . 'framework' . DS . 'php' . DS . 'init.php';
+	require_once $autoload;
+	
+	$list = file_get_contents( DR . 'config' . DS . 'classes.ini' );
+	$list = json_decode($list, true);
+	
+	if (!empty($list)) {
+		foreach ($list as $item) {
+			$item = $path . str_replace(['\\', '/', ':'], DS, $item) . '.php';
+			require_once $item;
+		}
+		unset($item);
 	}
-	unset($item);
+	
+	unset($list, $path);
+	
 }
 
-unset($list, $path);
 
 ?>
