@@ -210,7 +210,7 @@ class ExcelDB extends Master {
 						$levels = Parser::fromString($k);
 						$entry = Objects::add($entry, Objects::inject([], $levels, $i), true);
 						unset($entry[$k], $levels);
-					} elseif (Objects::match(['type', 'parents', 'owner'], $k)) {
+					} elseif (Objects::match(['type', 'parents', 'owner'], $k) && System::typeOf($i, 'scalar')) {
 						// Это условие тоже нужно оставить для базовых полей
 						if (
 							Strings::match($i, ':') ||
