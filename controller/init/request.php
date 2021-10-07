@@ -46,8 +46,7 @@ if ($referrer && !Strings::match($referrer, $server)) {
 			
 			$match = Match::maskOf(
 				Paths::parseUrl($referrer, 'host'),
-				$content,
-				false
+				$content
 			);
 			
 			if (

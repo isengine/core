@@ -105,13 +105,34 @@ class ExcelDB extends Master {
 		
 		// Общие настройки
 		
+		// rowkeys - номер строки, откуда берутся ключи или массив с ключами
+		// rowskip - номера строк (в виде текста или массива) которые нужно пропустить (обычно rowkeys тоже должен сюда входить)
+		// colskip - номера колонок (в виде текста или массива) которые нужно пропустить
+		// sheets - номера листов (в виде текста или массива) которые нужно обработать
+		// fill - номер колонки, который будет браться для заполнения (см. метод 'cols' в мастере)
+		
+		// например:
+		// "rowkeys" : "6",
+		// "rowkeys" : ["data:title", "data:price", "data:units"],
+		// "rowskip" : "0:1:2:3:4:5:6:7:8:9:10",
+		// "colskip" : "0:2",
+		// "fill" : 1,
+		
 		$rowkeys = $this -> settings['rowkeys'] ? $this -> settings['rowkeys'] : 0;
 		
 		$rowskip = $this -> settings['rowskip'] ? (is_array($this -> settings['rowskip']) ? $this -> settings['rowskip'] : Objects::convert($this -> settings['rowskip'])) : [];
 		
-		$sheets = $this -> settings['sheets'] ? (is_array($this -> settings['sheets']) ? $this -> settings['sheets'] : Objects::convert($this -> settings['sheets'])) : Objects::keys($excel -> sheetNames());
+		$colskip = $this -> settings['colskip'] ? (is_array($this -> settings['colskip']) ? $this -> settings['colskip'] : Objects::convert($this -> settings['colskip'])) : [];
+		$colskip_true = System::set($colskip);
 		
-		$keys = $excel -> rows()[$rowkeys];
+		$keys = System::typeOf($rowkeys, 'iterable') ? $rowkeys : $excel -> rows()[$rowkeys];
+		
+		$sheets = System::set($this -> settings['sheets']) ? (is_array($this -> settings['sheets']) ? $this -> settings['sheets'] : Objects::convert($this -> settings['sheets'])) : Objects::keys($excel -> sheetNames());
+		
+		System::debug($sheets, '!q');
+		
+		$fill = System::typeOf($this -> settings['fill'], 'scalar') ? $this -> settings['fill'] : null;
+		$fill_val = null;
 		
 		$count = 0;
 		
@@ -119,6 +140,9 @@ class ExcelDB extends Master {
 		foreach ($sheets as $sheet) {
 		foreach ($excel -> rows($sheet) as $index => $row) {
 			
+			//System::debug($row, '!q');
+			
+			// пропускаем номера строк, которые были заданы в настройках
 			if (
 				$index === $rowkeys ||
 				Match::equalIn($rowskip, $index)
@@ -126,8 +150,35 @@ class ExcelDB extends Master {
 				continue;
 			}
 			
+			// заполняем fill
+			// это специальная переменная для автоподстановки значений
+			// например, заголовок групп
+			// если в настройках задан fill, то проверяем значение колонок
+			// все должны быть пустыми, кроме одного, заданного ключом fill
+			// если это так, то значение записываем в переменную fill_val,
+			// которое потом можем подставлять при создании колонок и обработке текущих
+			// после этого пропускаем эту строку
+			$fill_row = $row;
+			Objects::clear($fill_row);
+			if (
+				Objects::len($fill_row) === 1 &&
+				Objects::first($fill_row, 'key') === $fill
+			) {
+				$fill_val = Objects::first($fill_row, 'value');
+				continue;
+			}
+			unset($fill_row);
+			
+			// пропускаем номера колонок, которые были заданы в настройках
+			if ($colskip_true) {
+				$row = Objects::removeByIndex($row, $colskip);
+			}
+			
 			$entry = Objects::join($keys, $row);
 			//$entry = Objects::combine($row, $keys);
+			
+			// создание новых колонок и обработка текущих
+			$this -> cols($entry, $fill_val);
 			
 			// проверка по имени
 			if (!$this -> verifyName($entry['name'])) {
@@ -136,24 +187,21 @@ class ExcelDB extends Master {
 			
 			if ($entry) {
 				foreach ($entry as $k => $i) {
-					/*
-					// Это условие надо убрать, иначе будут биться любые строки
-					// Нужно оставить разбор, как он был задан - через настройки контента
-					// КСТАТИ, ЭТИ НАСТРОЙКИ ТАКЖЕ МОЖНО ВНЕСТИ В НАСТРОЙКИ ДРАЙВЕРА
-					// И ТОГДА БУДЕТ ОЧЕНЬ КРУТО !!!
-					// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-					// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-					// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-					// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-					// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-					// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-					if (
-						Strings::match($i, ':') ||
-						Strings::match($i, '|')
-					) {
-						$i = Parser::fromString($i);
-					}
-					*/
+					
+					// Это условие должно оставаться выключенным, иначе будут биться любые строки
+					// Если нужно преобразование, см. ниже
+					// if (
+					//   Strings::match($i, ':') ||
+					//   Strings::match($i, '|')
+					// ) {
+					//   $i = Parser::fromString($i);
+					// }
+					
+					// Мы сделали разбор строк и колонок, как и хотели, в мастере драйвера
+					// Теперь через группу настроек 'cols' можно задавать новые колонки, обработку,
+					// задавать значение по-умолчанию и преобразовывать в массив или в строку
+					// Теперь не нужно задавать это в настройках контента - так намного мощнее
+					
 					if ($this -> settings['encoding']) {
 						$i = mb_convert_encoding($i, 'UTF-8', $this -> settings['encoding']);
 					}
