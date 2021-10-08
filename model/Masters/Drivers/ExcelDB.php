@@ -109,7 +109,7 @@ class ExcelDB extends Master {
 		// rowskip - номера строк (в виде текста или массива) которые нужно пропустить (обычно rowkeys тоже должен сюда входить)
 		// colskip - номера колонок (в виде текста или массива) которые нужно пропустить
 		// sheets - номера листов (в виде текста или массива) которые нужно обработать
-		// fill - номер колонки, который будет браться для заполнения (см. метод 'cols' в мастере)
+		// fill - номер поля/колонки, который будет браться для заполнения (см. метод 'fields' в мастере)
 		
 		// например:
 		// "rowkeys" : "6",
@@ -128,8 +128,6 @@ class ExcelDB extends Master {
 		$keys = System::typeOf($rowkeys, 'iterable') ? $rowkeys : $excel -> rows()[$rowkeys];
 		
 		$sheets = System::set($this -> settings['sheets']) ? (is_array($this -> settings['sheets']) ? $this -> settings['sheets'] : Objects::convert($this -> settings['sheets'])) : Objects::keys($excel -> sheetNames());
-		
-		System::debug($sheets, '!q');
 		
 		$fill = System::typeOf($this -> settings['fill'], 'scalar') ? $this -> settings['fill'] : null;
 		$fill_val = null;
@@ -177,8 +175,8 @@ class ExcelDB extends Master {
 			$entry = Objects::join($keys, $row);
 			//$entry = Objects::combine($row, $keys);
 			
-			// создание новых колонок и обработка текущих
-			$this -> cols($entry, $fill_val);
+			// создание новых полей/колонок и обработка текущих
+			$this -> fields($entry, $fill_val);
 			
 			// проверка по имени
 			if (!$this -> verifyName($entry['name'])) {
@@ -198,7 +196,7 @@ class ExcelDB extends Master {
 					// }
 					
 					// Мы сделали разбор строк и колонок, как и хотели, в мастере драйвера
-					// Теперь через группу настроек 'cols' можно задавать новые колонки, обработку,
+					// Теперь через группу настроек 'fields' можно задавать новые колонки, обработку,
 					// задавать значение по-умолчанию и преобразовывать в массив или в строку
 					// Теперь не нужно задавать это в настройках контента - так намного мощнее
 					
