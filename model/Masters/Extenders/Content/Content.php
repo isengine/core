@@ -19,18 +19,27 @@ class Content extends Entry {
 		$router = Router::getInstance();
 		
 		$name = $router -> content['name'];
-		$last = Objects::last($router -> content['array'], 'value');
-		$parents = Objects::unlast($router -> content['array']);
-		$parents = System::typeIterable($parents) ? Strings::join($parents, ':+') : null;
+		$parents = $router -> content['parents'];
 		
 		$db = Database::getInstance();
 		$db -> collection('content');
 		
-		if ($last) {
-			$db -> driver -> filter -> addFilter('name', '+' . $last);
-			$db -> driver -> filter -> addFilter('parents', '+' . $name . ($parents ? ':+' . $parents : null));
+		if ($name) {
+			$db -> driver -> filter -> addFilter('name', '+' . $name);
+			if (System::typeIterable($parents)) {
+				$db -> driver -> filter -> addFilter('parents', '+' . Strings::join($parents, ':+'));
+			}
 			$db -> launch();
-			$this -> setEntry($db -> data -> getFirst());
+			if ($db -> data -> count()) {
+				$this -> setEntry($db -> data -> getFirst());
+			}
+			// сюда можно было бы добавить еще условия проверки,
+			// является ли имя родительской категорией
+			// типа !count ... addFilter(parents, +names:+parents) ... launch ...
+			// но это не имеет смысла,
+			// т.к. либо не будет материала,
+			// либо это будет категория со множеством материалов
+			// и в любом случае запись останется пустой
 		}
 		
 		$db -> clear();

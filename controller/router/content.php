@@ -46,7 +46,7 @@ $names = $router -> structure -> getNames();
 $name = null;
 $type = null;
 $id = null;
-$id_last = null;
+$last = null;
 
 foreach ($route as $key => $item) {
 	$name = ($name ? $name . ':' : null) . $item;
@@ -55,9 +55,11 @@ foreach ($route as $key => $item) {
 		$type = $item -> get('type');
 		if ($type === 'content') {
 			$id = $id === null ? $key : $id;
-			$id_last = $key + 1;
+			$last = $key + 1;
 			//break;
 		}
+	} else {
+		break;
 	}
 }
 unset($key, $item);
@@ -66,27 +68,18 @@ if ($type !== 'content') {
 	return;
 }
 
-$item = Objects::last(Objects::get($route, $id_last));
+$array = Objects::reset(Objects::get($route, $id));
+$len = Objects::len($array) > 1;
 
 $router -> content = [
-	'name' => Objects::last(Objects::cut($route, $id + 1), 'value'),
-	'array' => Objects::get($route, $id, $id + $id_last),
-	// name and array now is deprecated
-	'parents' => Objects::get($route, $id, $item['key']),
-	'item' => $item['value']
+	'name' => $len ? Objects::last($array, 'value') : null,
+	'parents' => $len ? Objects::unlast($array) : $array
+	//'name' => Objects::first(Objects::get($route, $last), 'value'),
+	//'parents' => Objects::get($route, $id, $last - $id)
 ];
 
-$route = Objects::cut($route, $id_last);
+$route = Objects::get($route, 0, $last);
 
-unset($route, $names, $name, $type, $id);
-
-//echo '<pre>';
-//$r1 = $route;
-//$r2 = $router -> content;
-//$print = Display::getInstance();
-//$print -> dump($r1);
-//$print -> dump($r2);
-//echo '<hr>';
-//exit;
+unset($route, $names, $name, $type, $id, $last, $array, $len);
 
 ?>

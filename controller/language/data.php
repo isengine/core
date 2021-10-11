@@ -18,19 +18,20 @@ use is\Components\Display;
 use is\Components\Log;
 use is\Components\User;
 use is\Components\Language;
+use is\Components\Cache;
 use is\Masters\Database;
 
 // читаем user
 
 $lang = Language::getInstance();
-
 $config = Config::getInstance();
-$cache = $config -> get('path:cache') . 'language' . DS . $lang -> lang . '.ini';
-$data = Local::readFile($cache);
+
+$cache = new Cache($config -> get('path:cache') . 'language' . DS);
+$cache -> init($lang -> lang);
+$data = $cache -> read();
 
 if ($data) {
 	
-	$data = Parser::fromJson($data);
 	$lang -> setData($data);
 	
 } else {
@@ -62,11 +63,9 @@ if ($data) {
 	
 	unset($result);
 	
-	$data = Parser::toJson($lang -> getData(), true);
-	Local::createFile($cache);
-	Local::writeFile($cache, $data, 'replace');
-	
 }
+
+$cache -> write( $lang -> getData() );
 
 unset($cache, $data);
 
