@@ -7,14 +7,22 @@ use is\Helpers\Strings;
 use is\Helpers\Objects;
 use is\Helpers\Prepare;
 use is\Parents\Entry;
+use is\Parents\Data;
 use is\Masters\Database;
 use is\Components\Router;
+use is\Components\Cache;
+use is\Components\Config;
 
-class Content extends Entry {
+class Content extends Data {
+//class Content extends Entry {
+	
+	public $entry;
 	
 	public function __construct() {
 		
 		// инициализация настроек
+		
+		$this -> entry = new Entry;
 		
 		$router = Router::getInstance();
 		
@@ -25,14 +33,19 @@ class Content extends Entry {
 		$db -> collection('content');
 		
 		if ($name) {
+			
 			$db -> driver -> filter -> addFilter('name', '+' . $name);
+			
 			if (System::typeIterable($parents)) {
 				$db -> driver -> filter -> addFilter('parents', '+' . Strings::join($parents, ':+'));
 			}
+			
 			$db -> launch();
+			
 			if ($db -> data -> count()) {
-				$this -> setEntry($db -> data -> getFirst());
+				$this -> entry -> setEntry($db -> data -> getFirst());
 			}
+			
 			// сюда можно было бы добавить еще условия проверки,
 			// является ли имя родительской категорией
 			// типа !count ... addFilter(parents, +names:+parents) ... launch ...
@@ -40,8 +53,13 @@ class Content extends Entry {
 			// т.к. либо не будет материала,
 			// либо это будет категория со множеством материалов
 			// и в любом случае запись останется пустой
+			
+			$db -> clear();
+			
 		}
 		
+		$db -> launch();
+		$this -> setData( $db -> data -> getMap() );
 		$db -> clear();
 		
 	}

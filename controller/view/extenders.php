@@ -30,9 +30,7 @@ $view -> add('vars');
 
 // читаем контент
 
-if (System::set($router -> content)) {
-	$view -> add('content');
-}
+$view -> add('content');
 
 // читаем настройки seo
 
