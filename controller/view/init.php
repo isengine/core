@@ -31,6 +31,7 @@ $path = __DIR__;
 
 System::includes('extenders', $path);
 System::includes('folders', $path);
+System::includes('pages', $path);
 System::includes('modules', $path);
 System::includes('launch', $path);
 

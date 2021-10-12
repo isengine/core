@@ -24,7 +24,7 @@ $dbset = $config -> getArray('db', true);
 $db = Database::getInstance();
 $db -> init($dbset);
 
-if ($dbset['cache']) {
+if ($config -> get('cache:db')) {
 	$db -> cache($config -> get('path:cache') . 'database' . DS . $config -> get('db:name') . DS);
 }
 

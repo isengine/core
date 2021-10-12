@@ -49,10 +49,6 @@ class Router extends Globals {
 		}
 	}
 	
-	public function getOriginal() {
-		return $this -> structure -> original;
-	}
-	
 }
 
 ?>

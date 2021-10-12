@@ -125,7 +125,7 @@ class Seo extends Tvars {
 		
 		$view = View::getInstance();
 		
-		$content = $view -> get('content|entry') -> getData();
+		$content = $view -> get('content') -> getData();
 		
 		foreach ($this -> getData('content') as $key => $item) {
 			$this -> addData(

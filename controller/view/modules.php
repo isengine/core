@@ -30,7 +30,8 @@ $module = Module::getInstance();
 $module -> init(
 	$config -> get('path:vendors'),
 	$config -> get('path:app') . 'Masters' . DS . 'Modules' . DS,
-	$config -> get('path:cache') . 'modules' . DS
+	$config -> get('path:cache') . 'modules' . DS,
+	$config -> get('cache:modules')
 );
 
 $view -> set('module', $module);

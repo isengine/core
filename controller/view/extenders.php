@@ -32,6 +32,10 @@ $view -> add('vars');
 
 $view -> add('content');
 
+// создаем карту контента
+
+$view -> add('map');
+
 // читаем настройки seo
 
 $view -> add('seo');
@@ -106,22 +110,6 @@ if ($config -> get('develop:enable') && $config -> get('develop:reactive')) {
 
 $view -> add('special');
 $view -> get('special') -> init( $view -> get('state|settings:special') );
-
-// инициализируем шаблонизатор с параметрами
-
-// задаем кэширование блоков
-// и запрещаем кэширование страниц
-
-$path = $config -> get('path:templates');
-$cache = $config -> get('path:cache') . 'templates' . DS;
-
-$view -> add('layout');
-
-$view -> get('layout') -> init('pages', $path, $cache);
-$view -> get('layout') -> init('blocks', $path, $cache); // переключить на true
-
-// не хватает layout-а для остальных страниц, не inner,
-// например, wrapper, common и других
 
 // пример рендеринга css файла
 //$result = $template -> render('css', 'filename');

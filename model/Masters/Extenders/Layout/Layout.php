@@ -55,6 +55,13 @@ class Layout extends Data {
 		
 		$this -> $type -> includes($name, $template, $caching);
 		
+		echo '
+<!--
+DEPRECATED!
+use $view -> get(\'block/page\') -> launch(...)
+-->
+';
+		
 	}
 	
 	public function clear($type) {

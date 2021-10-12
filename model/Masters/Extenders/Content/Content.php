@@ -13,16 +13,11 @@ use is\Components\Router;
 use is\Components\Cache;
 use is\Components\Config;
 
-class Content extends Data {
-//class Content extends Entry {
-	
-	public $entry;
+class Content extends Entry {
 	
 	public function __construct() {
 		
 		// инициализация настроек
-		
-		$this -> entry = new Entry;
 		
 		$router = Router::getInstance();
 		
@@ -43,7 +38,7 @@ class Content extends Data {
 			$db -> launch();
 			
 			if ($db -> data -> count()) {
-				$this -> entry -> setEntry($db -> data -> getFirst());
+				$this -> setEntry($db -> data -> getFirst());
 			}
 			
 			// сюда можно было бы добавить еще условия проверки,
@@ -54,12 +49,8 @@ class Content extends Data {
 			// либо это будет категория со множеством материалов
 			// и в любом случае запись останется пустой
 			
-			$db -> clear();
-			
 		}
 		
-		$db -> launch();
-		$this -> setData( $db -> data -> getMap() );
 		$db -> clear();
 		
 	}

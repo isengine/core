@@ -14,7 +14,6 @@ use is\Components\Collection;
 class Structure extends Collection {
 	
 	public $extension;
-	public $original;
 	
 	public function structure($array = null, $level = 0, $parents = [], $groups = null, $cache = null) {
 		
@@ -23,23 +22,20 @@ class Structure extends Collection {
 		foreach ($array as $key => $item) {
 			
 			$k = Parser::fromString($key, ['simple' => null]);
-			
 			$type = System::typeOf($k[0], 'scalar') ? null : $k[0][1];
 			$name = System::typeOf($k[0], 'scalar') ? $k[0] : $k[0][0];
 			$sub = System::typeOf($item, 'iterable');
 			
 			$i = [
-				'name' => $parents ? Strings::join($parents, ':') . ':' . $name : $name,
+				//'name' => $parents ? Strings::join($parents, ':') . ':' . $name : $name,
+				'name' => $name,
 				'type' => $type,
 				'parents' => $parents ? $parents : null,
 				'data' => [
 					'name' => $name,
 					'groups' => $groups,
 					'template' => $k[1][0],
-					'cache' => [
-						'page' => $k[2],
-						'browser' => $k[3]
-					],
+					'cache' => $k[2],
 					'level' => $level,
 					'sub' => $sub,
 					'link' => null
@@ -50,22 +46,19 @@ class Structure extends Collection {
 			// чтобы убрать special нужно сделать более правильную обработку урла через helper
 			// Paths::prepareUrl сейчас с этим не справляется, он не учитывает этот синтаксис
 			
-			foreach (['page', 'browser'] as $ii) {
-				$n = &$i['data']['cache'][$ii];
-				if ($n) {
-					if (Objects::len($n) === 1) {
-						$n = Objects::first($n, 'value');
-					}
-					if ($n === 'parent') {
-						$n = $cache[$ii];
-					}
-					if ($n) {
-						$cache[$ii] = $n;
-					}
+			$n = &$i['data']['cache'];
+			if ($n) {
+				if (Objects::len($n) === 1) {
+					$n = Objects::first($n, 'value');
 				}
-				unset($n);
+				if ($n === 'parent') {
+					$n = $cache;
+				}
+				if ($n) {
+					$cache = $n;
+				}
 			}
-			unset($ii);
+			unset($n);
 			
 			if ($type !== 'group') {
 				
@@ -75,10 +68,6 @@ class Structure extends Collection {
 				$i['data']['link'] = $this -> url( $custom ? $item : $parents_string . $name . '/' );
 				
 				$this -> add($i);
-				
-				if ($name !== 'index') {
-					$this -> addOriginal($name, $parents);
-				}
 				
 			}
 			
@@ -122,24 +111,6 @@ class Structure extends Collection {
 		}
 		
 		return $data;
-		
-	}
-	
-	public function addOriginal($name, $parents) {
-		
-		$array = &$this -> original;
-		
-		if (System::typeiterable($parents)) {
-			foreach ($parents as $item) {
-				if (!$array[$item]) {
-					$array[$item] = null;
-				}
-				$array = &$array[$item];
-			}
-			unset($item);
-		}
-		
-		$array[$name] = null;
 		
 	}
 	

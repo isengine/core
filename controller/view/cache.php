@@ -18,18 +18,24 @@ use is\Components\Uri;
 
 // читаем
 
+$config = Config::getInstance();
 $router = Router::getInstance();
 
 // browser cache
 
-$cache = $router -> current -> data['cache']['browser'];
+$cache = $router -> current -> data['cache'];
+$cache_custom = $config -> get('cache:browser:custom');
+$cache_default = $config -> get('cache:browser:default');
 
-if (!$cache) { return; }
-
-$config = Config::getInstance();
+if (
+	(!$cache_custom && !$cache_default) ||
+	($cache_custom && !$cache)
+) {
+	return;
+}
 
 if ($cache === 'default') {
-	$cache = Parser::fromString( $config -> get('default:cache') );
+	$cache = Parser::fromString($cache_default);
 }
 
 $set_time = System::typeIterable($cache) ? (int) $cache[0] * ($cache[1] ? $config -> get('time:' . $cache[1]) : 1) : (int) $cache;
