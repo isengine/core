@@ -17,20 +17,12 @@ class ExcelDB extends Master {
 	protected $parent;
 	
 	public function connect() {
-		
 		$this -> path = preg_replace('/[\\/]+/ui', DS, DR . str_replace(':', DS, $this -> settings['name']) . DS);
-		
+		$this -> parent = Objects::convert($this -> settings['parents']);
 	}
 	
 	public function close() {
 		
-	}
-	
-	public function parents($parent) {
-		if (!System::set($parent) && !System::typeIterable($parent)) {
-			return;
-		}
-		$this -> parent = System::typeIterable($parent) ? $parent : Strings::split($parent, ':');
 	}
 	
 	public function launch() {
@@ -77,13 +69,13 @@ class ExcelDB extends Master {
 	
 	public function hash() {
 		$json = json_encode($this -> filter) . json_encode($this -> fields) . json_encode($this -> rights);
-		$path = $this -> path . $this -> collection . ($this -> parent ? DS . Strings::join($this -> parent, DS) : null) . '.xlsx';
-		$this -> hash = (Local::matchFile($path) ? md5_file($path) : null) . '.' . md5($json) . '.' . Strings::len($json) . '.' . (int) $this -> settings['all'] . '.' . $this -> settings['limit'];
+		$path = $this -> path . $this -> collection . '.xlsx';
+		$this -> hash = (Local::matchFile($path) ? md5_file($path) : 0) . '.' . md5($json) . '.' . Strings::len($json) . '.' . (int) $this -> settings['all'] . '.' . $this -> settings['limit'];
 	}
 	
 	public function prepare() {
 		
-		$path = $this -> path . $this -> collection . ($this -> parent ? DS . Strings::join($this -> parent, DS) : null) . '.xlsx';
+		$path = $this -> path . $this -> collection . '.xlsx';
 		
 		if (!Local::matchFile($path)) {
 			return;
@@ -221,8 +213,11 @@ class ExcelDB extends Master {
 				unset($k, $i);
 				
 				// несколько обязательных полей
-				if (!$entry['parents']) {
-					$entry['parents'] = $this -> parent;
+				//if (!$entry['parents']) {
+				//	$entry['parents'] = $this -> parent;
+				//}
+				if (System::typeIterable($this -> parent)) {
+					$entry['parents'] = Objects::add($this -> parent, $entry['parents']);
 				}
 				if (!$entry['ctime']) {
 					$entry['ctime'] = $stat['ctime'];
