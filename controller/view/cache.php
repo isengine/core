@@ -34,7 +34,7 @@ if (
 	return;
 }
 
-if ($cache === 'default') {
+if ($cache === 'default' || !$cache_custom) {
 	$cache = Parser::fromString($cache_default);
 }
 

@@ -25,12 +25,12 @@ $array = [
 	$config -> get('path:templates'),
 	$view -> get('state|template'),
 	[
-		System::server('ip'),
+		//System::server('ip'),
 		System::server('agent'),
 		System::server('method'),
 		$view -> get('state|lang') . '-' . $view -> get('state|code'),
-		$user -> getEntryKey('id'),
-		$user -> getEntryKey('name'),
+		//$user -> getEntryKey('id'),
+		//$user -> getEntryKey('name'),
 		$user -> getEntryKey('type'),
 		$user -> getEntryKey('parents')
 	],
