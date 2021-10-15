@@ -32,7 +32,7 @@ class ExcelDB extends Master {
 		protected $settings;
 		
 		public $query; // тип запроса в базу данных - чтение, запись, добавление, удаление
-		public $collection; // раздел базы данных
+		public $collection; // раздел базы данных, здесь - имя файла с расширением
 		
 		public $id; // имя или имена записей в базе данных
 		public $name; // имя или имена записей в базе данных
@@ -69,13 +69,13 @@ class ExcelDB extends Master {
 	
 	public function hash() {
 		$json = json_encode($this -> filter) . json_encode($this -> fields) . json_encode($this -> rights);
-		$path = $this -> path . $this -> collection . '.xlsx';
+		$path = $this -> path . $this -> collection;
 		$this -> hash = (Local::matchFile($path) ? md5_file($path) : 0) . '.' . md5($json) . '.' . Strings::len($json) . '.' . (int) $this -> settings['all'] . '.' . $this -> settings['limit'];
 	}
 	
 	public function prepare() {
 		
-		$path = $this -> path . $this -> collection . '.xlsx';
+		$path = $this -> path . $this -> collection;
 		
 		if (!Local::matchFile($path)) {
 			return;
@@ -133,10 +133,7 @@ class ExcelDB extends Master {
 			//System::debug($row, '!q');
 			
 			// пропускаем номера строк, которые были заданы в настройках
-			if (
-				$index === $rowkeys ||
-				Match::equalIn($rowskip, $index)
-			) {
+			if (Match::equalIn($rowskip, $index)) {
 				continue;
 			}
 			

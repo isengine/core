@@ -27,7 +27,9 @@ $lang = Language::getInstance();
 $config = Config::getInstance();
 
 $cache = new Cache($config -> get('path:cache') . 'language' . DS);
+$cache -> caching($config -> get('cache:language'));
 $cache -> init($lang -> lang);
+
 $data = $cache -> read();
 
 if ($data) {
