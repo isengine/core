@@ -30,7 +30,7 @@ class State extends Data {
 		$data = [
 			'settings' => $router -> getData(),
 			
-			'structure' => $router -> structure -> getMap(),
+			'structure' => $router -> structure -> map -> getMap(),
 			
 			'template' => $router -> template['name'],
 			'section' => $router -> template['section'],

@@ -32,10 +32,6 @@ $view -> add('vars');
 
 $view -> add('content');
 
-// создаем карту контента
-
-$view -> add('map');
-
 // читаем настройки seo
 
 $view -> add('seo');
