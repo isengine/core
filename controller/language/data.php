@@ -41,6 +41,7 @@ if ($data) {
 	$db = Database::getInstance();
 	$db -> collection('languages');
 	$db -> driver -> filter -> addFilter('parents', $lang -> lang);
+	$db -> driver -> filter -> addFilter('name', '-translit:-translate');
 	$db -> launch();
 	
 	$result = $db -> data -> getData();

@@ -47,6 +47,7 @@ $view -> get('lang') -> add(
 );
 
 $view -> add('translit');
+$view -> get('translit') -> init($view -> get('state|lang'));
 
 // запускаем иконки
 
