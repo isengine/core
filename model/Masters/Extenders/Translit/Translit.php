@@ -89,12 +89,6 @@ class Translit extends Data {
 				$db -> clear();
 				
 				foreach ($pre as $key => $item) {
-					if (
-						!System::set($item) ||
-						!System::set($item[$to])
-					) {
-						continue;
-					}
 					$result[$key] = $item[$to];
 				}
 				unset($key, $item);

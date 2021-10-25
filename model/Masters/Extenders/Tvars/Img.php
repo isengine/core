@@ -4,6 +4,7 @@ namespace is\Masters\Extenders\Tvars;
 
 use is\Helpers\Strings;
 use is\Helpers\Paths;
+use is\Helpers\Local;
 
 class Img extends Master {
 	
@@ -18,12 +19,15 @@ class Img extends Master {
 		// lozad('.demilazyload').observe();
 		// lozad( document.querySelector('img') ).observe();
 		
-		$url = $data[0];
-		if (Strings::find($url, '//') !== 0) {
-			$url = Paths::prepareUrl($url);
+		$result = Local::matchUrl($data[0], true);
+		
+		$url = $result ? $data[0] : $data[1];
+		
+		if (!$url) {
+			return;
 		}
 		
-		$srcset = $data[1];
+		$srcset = $result ? $data[1] : null;
 		if ($srcset) {
 			$srcset = ' srcset="' . $srcset . '" data-srcset="' . $url . '"';
 		}
