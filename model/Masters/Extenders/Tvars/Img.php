@@ -19,15 +19,18 @@ class Img extends Master {
 		// lozad('.demilazyload').observe();
 		// lozad( document.querySelector('img') ).observe();
 		
-		$result = Local::matchUrl($data[0], true);
+		$result = [
+			Local::matchUrl($data[0], true),
+			Local::matchUrl($data[1], true)
+		];
 		
-		$url = $result ? $data[0] : $data[1];
+		$url = $result[0] ? $data[0] . '?' . $result[0] : $data[1] . '?' . $result[1];
 		
 		if (!$url) {
 			return;
 		}
 		
-		$srcset = $result ? $data[1] : null;
+		$srcset = $result[0] ? $data[1] . '?' . $result[1] : null;
 		if ($srcset) {
 			$srcset = ' srcset="' . $srcset . '" data-srcset="' . $url . '"';
 		}

@@ -33,6 +33,7 @@ System::includes('extenders', $path);
 System::includes('folders', $path);
 System::includes('pages', $path);
 System::includes('modules', $path);
+System::includes('display', $path);
 System::includes('launch', $path);
 
 //$print = Display::getInstance();
