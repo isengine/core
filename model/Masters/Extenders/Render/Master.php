@@ -54,7 +54,7 @@ abstract class Master extends Data {
 	}
 	
 	public function setPathByKey($key, $name = null) {
-		$name = Strings::replace($name, [':', '/', '\\'], $item === 'url' ? '/' : DS);
+		$name = Strings::replace($name, [':', '/', '\\'], $key === 'url' ? '/' : DS);
 		$this -> $key = $this -> $key . $name;
 	}
 	
