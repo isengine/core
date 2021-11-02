@@ -59,8 +59,8 @@ $view -> add('render');
 
 $view -> get('render') -> init(
 	$config -> get('path:templates') . $router -> template['name'] . DS, // from
-	DI . Paths::toReal(Paths::clearSlashes($config -> get('url:assets'))) . DS . Paths::toReal($router -> template['name']) . DS, // to
-	'/' . Paths::clearSlashes($config -> get('url:assets')) . '/' . $router -> template['name'] . '/' // url
+	DI . Paths::toReal(Paths::clearSlashes($config -> get('path:assets'))) . DS . Paths::toReal($router -> template['name']) . DS, // to
+	'/' . Paths::toUrl(Paths::clearSlashes($config -> get('path:assets'))) . '/' . $router -> template['name'] . '/' // url
 );
 
 // запускаем обнаружение устройств

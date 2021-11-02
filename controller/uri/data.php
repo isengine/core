@@ -21,24 +21,24 @@ $data = [];
 $array = null;
 $path_array = $uri -> getPathArray();
 
-if ( System::type($config -> get('url:data:rest'), 'numeric') ) {
-	$array = Objects::get($path_array, $config -> get('url:data:rest') - 1);
+if ( System::type($config -> get('url:rest'), 'numeric') ) {
+	$array = Objects::get($path_array, $config -> get('url:rest') - 1);
 } else {
-	$find = Objects::find($path_array, $config -> get('url:data:rest'));
+	$find = Objects::find($path_array, $config -> get('url:rest'));
 	if (System::set($find)) {
 		$array = Objects::get($path_array, $find + 1);
 	}
 }
 
 if ($array) {
-	if ($config -> get('url:data:keys')) {
+	if ($config -> get('url:keys')) {
 		$data = Objects::split($array);
 	} else {
 		$data = Objects::reset($array);
 	}
 }
 
-if ($config -> get('url:data:query')) {
+if ($config -> get('url:query')) {
 	$data = Objects::merge($data, $uri -> query['array']);
 	if (System::server('method') === 'post') {
 		$data = Objects::merge($data, $_POST);

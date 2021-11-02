@@ -42,12 +42,9 @@ $default = [
 		//'postfix' => ''
 	],
 	'url' => [
-		'assets' => '/assets/',
-		'data' => [
-			'rest' => 'data',
-			'keys' => true,
-			'query' => true
-		]
+		'rest' => 'data',
+		'keys' => true,
+		'query' => true
 	],
 	'router' => [
 		'folders' => [
