@@ -61,11 +61,14 @@ if (file_exists($autoload)) {
 		$module = $module || $module === 0 ? true : null;
 		
 		$path = implode(DS, $array);
-		$vendors = $module ? implode(DS, array_slice($array, 2)) : null;
+		$vendors = $module ? mb_strtolower(implode(DS, array_slice($array, 2, 2))) : null;
 		
 		foreach ($paths as $key => $item) {
 			if ($module) {
-				$file = $item . ($key === 'vendors' && $vendors ? $vendors : $path) . DS . 'class' . DS . end($array) . '.php';
+				$patha = implode(DS, array_slice($array, 0, 4));
+				$pathb = implode(DS, array_slice($array, 3));
+				$file = $item . ($key === 'vendors' && $vendors ? $vendors : $patha) . DS . 'class' . DS . $pathb . '.php';
+				unset($patha, $pathb);
 				if (file_exists($file)) {
 					require_once $file;
 				}
