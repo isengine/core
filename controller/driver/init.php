@@ -15,8 +15,8 @@ $config = Config::getInstance();
 
 $dbset = $config -> getArray('db', true);
 
-//$dbset['driver'] = 'ExcelDB';
-//$dbset['driver'] = 'TableDB';
+//$dbset['driver'] = 'excel';
+//$dbset['driver'] = 'table';
 //$dbset['rowkeys'] = '0';
 //$dbset['rowskip'] = '1';
 //$dbset['encoding'] = 'CP1251';

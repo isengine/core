@@ -33,7 +33,10 @@ if ($config -> get('develop:test') && isset($_GET['test'])) {
 	// Запускаем тестирование, но только в режиме тестирования
 	System::includes('test:init', $path . DP . DP . 'framework');
 	
-} elseif ($state -> get('api') && $state -> get('api') !== true) {
+} elseif ($state -> get('api')) {
+//} elseif ($state -> get('api') && $state -> get('api') !== true) {
+	// а вот эта проверка неправильная, т.к.
+	// переход на апи должен происходить в любом случае
 	
 	// Запускаем api
 	System::includes('api:init', $path);

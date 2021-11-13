@@ -72,7 +72,7 @@ if (!$user -> data -> getData()) {
 	$session = Session::getInstance();
 	$session -> close();
 	
-	$state -> set('error', 403);
+	$state -> set('error', 401);
 	$state -> set('reason', 'user data or user name not set in session and cannot be read from database');
 	
 }

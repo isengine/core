@@ -28,8 +28,16 @@ class Serviceworker extends Master {
 		$webapp = $view -> get('state|settings:webapp');
 		$icons = $view -> get('icon|data');
 		
-		$path = DI . (!empty($webapp['custompath']) ? str_replace(':', DS, $webapp['custompath']) . DS : null) . $webapp['serviceworker'];
-		$sw = !empty($webapp['serviceworker']) && file_exists($path) ? Local::readFile($path) : null;
+		$path = DI . (!empty($webapp['serviceworker']['path']) ? str_replace(':', DS, $webapp['serviceworker']['path']) . DS : null) . $webapp['serviceworker']['name'];
+		$sw = null;
+		if (!empty($webapp['serviceworker']['name'])) {
+			if (file_exists($path)) {
+				$sw = Local::readFile($path);
+			} elseif (!empty($webapp['serviceworker']['link'])) {
+				Local::saveFromUrl($path, $webapp['serviceworker']['link']);
+				$sw = Local::readFile($path);
+			}
+		}
 		
 		//System::setHeaderCode(200);
 		Sessions::setHeader(['Content-type' => 'application/javascript; charset=utf-8']);

@@ -11,7 +11,7 @@ use is\Helpers\System;
 use is\Helpers\Match;
 use \SimpleXLSX;
 
-class ExcelDB extends Master {
+class Excel extends Master {
 	
 	protected $path;
 	protected $parent;
