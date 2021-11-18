@@ -41,6 +41,7 @@ class State extends Data {
 			'type' => $entry ? $router -> current -> getEntryKey('type') : null,
 			
 			'route' => $uri -> route,
+			'route-string' => Strings::join($uri -> route, ':'),
 			'path' => $uri -> route ? Strings::join($uri -> route, '/') . '/' : null,
 			'previous' => $uri -> previous,
 			'string' => $uri -> path['string'],
@@ -68,7 +69,8 @@ class State extends Data {
 				'others' => null,
 				'page' => null,
 				'parents' => null,
-				'route' => null
+				'route' => null,
+				'route-string' => null
 			]
 		];
 		
@@ -105,6 +107,7 @@ class State extends Data {
 				$data['langs']['route'][] = $name ? $name : $item;
 			}
 			unset($item);
+			$data['langs']['route-strings'] = Strings::join($data['langs']['route'], ':');
 		}
 		unset($route);
 		
