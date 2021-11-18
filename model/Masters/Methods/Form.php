@@ -132,13 +132,37 @@ class Form extends Master {
 		});
 	}
 	
-	public function prepareFields($data, $prepare) {
+	public function prepareFields($result, $prepare) {
 		$prepare = Objects::convert($prepare);
-		foreach ($prepare as $item) {
-			$data = Prepare::$item($data);
-		}
-		unset($item);
-		return $data;
+		
+		Objects::each($prepare, function($item) use (&$result){
+			if ($item) {
+				if (Strings::match($item, '.')) {
+					$second = Strings::after($item, '.');
+					$item = Strings::before($item, '.');
+					$result = Prepare::$item($result, $second);
+				} else {
+					$result = Prepare::$item($result);
+				}
+			}
+		});
+		
+		return $result;
+		
+		//foreach ($prepare as $item) {
+		//	if (Strings::match($item, '.')) {
+		//		$data = Strings::after($item, '.');
+		//		$item = Strings::before($item, '.');
+		//		$result = Prepare::$item($result, $data);
+		//	} else {
+		//		$result = Prepare::$item($result);
+		//	}
+		//
+		//	$data = Prepare::$item($data);
+		//}
+		//unset($item);
+		//return $data;
+		
 	}
 	
 	public function spam($field = 'spam', $break = null) {

@@ -86,12 +86,12 @@ class State extends Data {
 		}
 		unset($codes);
 		
-		$data['langs']['page'] = $data['page'] ? $lang -> get('menu:' . $data['page']) : null;
+		$data['langs']['page'] = $data['page'] ? $lang -> get('nav:' . $data['page']) : null;
 		
 		$parents = $data['parents'];
 		if (System::typeIterable($parents)) {
 			foreach ($parents as $item) {
-				$name = $lang -> get('menu:' . $item);
+				$name = $lang -> get('nav:' . $item);
 				$data['langs']['parents'][] = $name ? $name : $item;
 			}
 			unset($item);
@@ -101,7 +101,7 @@ class State extends Data {
 		$route = $data['route'];
 		if (System::typeIterable($route)) {
 			foreach ($route as $item) {
-				$name = $lang -> get('menu:' . $item);
+				$name = $lang -> get('nav:' . $item);
 				$data['langs']['route'][] = $name ? $name : $item;
 			}
 			unset($item);
