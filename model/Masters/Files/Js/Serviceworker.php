@@ -1,6 +1,6 @@
 <?php
 
-namespace is\Masters\Files\Script;
+namespace is\Masters\Files\Js;
 
 use is\Helpers\System;
 use is\Helpers\Strings;
@@ -24,6 +24,7 @@ class Serviceworker extends Master {
 	public function launch() {
 		
 		$view = View::getInstance();
+		$uri = Uri::getInstance();
 		
 		$webapp = $view -> get('state|settings:webapp');
 		$icons = $view -> get('icon|data');
@@ -39,11 +40,12 @@ class Serviceworker extends Master {
 			}
 		}
 		
-		//System::setHeaderCode(200);
-		Sessions::setHeader(['Content-type' => 'application/javascript; charset=utf-8']);
-		//header('Cache-Control: no-store, no-cache, must-revalidate');
-		
-		echo $sw;
+		if ($uri -> path['string'] === 'serviceworker.js') {
+			Sessions::setHeader(['Content-type' => 'application/javascript; charset=utf-8']);
+			echo $sw;
+		} else {
+			Sessions::setHeaderCode(404);
+		}
 		
 		// read and echo content another file (as js) which set in template -> webapp
 		// and print push-messages

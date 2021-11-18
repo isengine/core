@@ -8,10 +8,12 @@ use is\Helpers\Objects;
 use is\Helpers\Parser;
 use is\Helpers\System;
 use is\Helpers\Prepare;
-use is\Helpers\Match;
+use is\Helpers\Paths;
+use is\Helpers\Sessions;
 
 use is\Components\Config;
 use is\Components\State;
+use is\Components\Uri;
 
 use is\Masters\Module;
 
@@ -63,13 +65,14 @@ class Form extends Master {
 			$value = $this -> getData($name);
 			$change = null;
 			
+			
 			if (System::typeIterable($item['data'])) {
 				$change = true;
 				$value = $item['data'][$value];
 			}
 			
 			if ($value && !$change && $options['filter']) {
-				$filter = Strings::split($filter, ':');
+				$filter = Strings::split($options['filter'], ':');
 				foreach ($filter as $item) {
 					if (Strings::match($value, $item)) {
 						$change = true;
@@ -138,7 +141,7 @@ class Form extends Master {
 		return $data;
 	}
 	
-	public function antispam($field = 'antispam') {
+	public function spam($field = 'spam', $break = null) {
 		
 		// определение спам-ботов по заполнению скрытого поля,
 		// которое должно присутствовать в форме,
@@ -147,7 +150,15 @@ class Form extends Master {
 		// возвращает результат проверки
 		// а что делать с этим результатом - ваша реализация
 		
-		return !System::exists($this -> getData($field)) || System::set($this -> getData($field));
+		// если второй аргумент задан, то он считается кодом ошибки
+		// при этом, если спам был обнаружен, выводится ошибка
+		// и дальнейшие операции прерываются
+		
+		$spam = !System::exists($this -> getData($field)) || System::set($this -> getData($field));
+		if ($break && $spam) {
+			$this -> break($break);
+		}
+		return $spam;
 		
 	}
 	
@@ -156,8 +167,66 @@ class Form extends Master {
 		// запись ошибки с указанием имени поля в качестве ключа
 		// если описании пустое, то в значение тоже будет записано имя поля
 		
-		$this -> errors[$filed][] = $message ? $message : $field;
+		$this -> errors[$field][] = $message ? $message : $field;
 		
+	}
+	
+	public function errors() {
+		// проверка на наличие ошибок
+		return System::typeIterable($this -> errors);
+	}
+	
+	public function returns($field = 'success', $refresh = null) {
+		
+		// возвращает url-адрес, содержащий данные из формы для вставки обратно
+		// если второй аргумент задан, то страница перезагружается по этому url-адресу
+		
+		$config = Config::getInstance();
+		
+		$array = [];
+		$string = Sessions::getCookie('current-url');
+		
+		if (!$string) {
+			if ($refresh) {
+				Sessions::reload();
+			}
+			return;
+		}
+		
+		if (Strings::match($string, '?')) {
+			$array = Paths::querySplit($string);
+			$string = Strings::before($string, '?');
+		}
+		
+		$keys = Objects::keys($this -> getData());
+		$array = Objects::removeByIndex($array, $keys);
+		unset($array[$field]);
+		
+		if ($this -> errors()) {
+			Objects::each(Objects::keys($this -> errors), function($item) use (&$array){
+				$array[$item] = Prepare::urlencode($this -> getData($item));
+			});
+		} else {
+			$array[$field] = true;
+		}
+		
+		if ($config -> get('url:query')) {
+			$string .= Paths::queryJoin($array);
+		} else {
+			$string .= System::type($config -> get('url:rest'), 'numeric') ? null : (Strings::last($string) === '/' ? null : '/') . $config -> get('url:rest') . '/';
+			$string .= $string .= Paths::restJoin($array);
+		}
+		
+		if ($refresh) {
+			Sessions::reload($string);
+		}
+		return $string;
+		
+	}
+	
+	public function break($code = 403) {
+		Sessions::setHeaderCode($code);
+		exit;
 	}
 	
 }
