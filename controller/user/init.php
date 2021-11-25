@@ -25,11 +25,15 @@ $user = User::getInstance();
 
 $user -> init();
 
+// проверяем, разрешены ли пользователи в системе
+if (!$config -> get('users:enable')) {
+	return;
+}
+
 // загружаем последовательность инициализации
 $path = __DIR__;
 
 // если сессия была открыта и доступ был разрешен
-
 if (
 	$state -> get('session') ||
 	$state -> get('api') && $state -> get('api') !== true
@@ -44,25 +48,23 @@ if (
 	// то система сюда зайдет сама, т.к. будет открыта сессия
 	// без этого изменения нельзя было обработать простой
 	// общедоступный запрос по api вроде отправки формы
-	
+	echo '**';
 	// читаем настройки полей пользователя
 	System::includes('settings', $path);
 	
 	// инициализация пользователя со всеми данными
 	System::includes('data', $path);
 	
-	if ($config -> get('secure:users')) {
+	if ($config -> get('users:secure')) {
 		// более глубокая проверка пользователя по базе данных
 		// инициализация пользователя по базе данных - смотрим привязки к браузерам и ip
-		System::includes('allow', $path);
+		System::includes('secure', $path);
 	}
 	
 }
 
 // читаем права пользователя
-if ($config -> get('secure:rights')) {
-	System::includes('rights', $path);
-}
+System::includes('rights', $path);
 
 //$print = Display::getInstance();
 //$print -> dump($user -> getData());

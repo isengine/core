@@ -40,12 +40,6 @@ foreach ($extensions as $item) {
 // Проверяем взаимодействие констант
 
 if (
-	!$config -> get('default:users') && (
-		$config -> get('secure:rights') ||
-		$config -> get('secure:csrf') ||
-		$config -> get('users:rights') ||
-		$config -> get('secure:users')
-	) ||
 	$config -> get('secure:writing') && (
 		!$config -> get('db:writing:user') ||
 		!$config -> get('db:writing:pass')

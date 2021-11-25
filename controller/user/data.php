@@ -34,27 +34,43 @@ unset($su);
 
 // подгружаем данные пользователя из апи
 
-if ($state -> get('api')) {
+if ($state -> get('api') && $state -> get('api') !== true) {
 	
 	$field = $user -> getFieldsNameBySpecial('apikey');
+	$key = Prepare::decode($state -> get('api'));
 	
-	$key = json_decode(Prepare::decode( $state -> get('api') ), true);
-	//eyJwYXNzd29yZCI6InBhc3N3b3JkIiwibmFtZSI6ImNvbW1vbiJ9
+	// создать ключ:
+	// $key = Prepare::encode([
+	// 	'name' => $user -> data -> getEntryKey('name'),
+	// 	'password' => $user -> getFieldsBySpecial('apikey'),
+	// 	...
+	// ]);
+	// 
+	// например:
+	// eyJwYXNzd29yZCI6InBhc3N3b3JkIiwibmFtZSI6ImNvbW1vbiJ9
+	// 
+	// закодированный ключ api содержит массив
+	// с ключами 'name', 'password' и, возможно, другими данными
+	// другие данные могут быть нужны для того, чтобы ограничить запросы,
+	// например, только для одного referrer или сроком по времени и т.п.
 	
-	$uname = $key['name'];
-	$ukey = $key['password'];
-	
-	if (
-		$uname && $uname !== $user -> data -> getEntryKey('name') ||
-		$ukey && $ukey !== $user -> data -> getData($field)
-	) {
+	if ($key['name'] && $key['name'] !== $user -> data -> getEntryKey('name')) {
+		
+		// раньше условие также включало проверку по $key['password'] :
+		// || $key['password'] && $key['password'] !== $user -> getFieldsBySpecial('apikey')
+		// но мы ее убрали, потому что если имена пользователей разные,
+		// будет попытка авторизовать другого пользователя
+		// а если имена совпадают, то пароль совпадение пароля совершенно неважно
+		// ведь пользователь уже авторизован
 		
 		$session -> close();
+		// МОЖЕТ БЫТЬ, ЗАКРЫВАТЬ СЕССИЮ НЕ НАДО?
+		// ИНАЧЕ УБИВАЮТСЯ ВСЕ СЕССИОННЫЕ ДАННЫЕ
 		
 		$db = Database::getInstance();
 		$db -> collection('users');
-		$db -> driver -> filter -> addFilter('name', '+' . $uname);
-		$db -> driver -> filter -> addFilter('data:' . $field, $ukey);
+		$db -> driver -> filter -> addFilter('name', '+' . $key['name']);
+		$db -> driver -> filter -> addFilter('data:' . $field, $key['password']);
 		$db -> launch();
 		
 		$user -> data -> setEntry( $db -> data -> getFirst() );
@@ -69,13 +85,23 @@ if ($state -> get('api')) {
 
 if (!$user -> data -> getData()) {
 	
-	$session = Session::getInstance();
 	$session -> close();
 	
 	$state -> set('error', 401);
 	$state -> set('reason', 'user data or user name not set in session and cannot be read from database');
 	
 }
+
+// если из-под одного пользователя был вызван ключ api другого пользователя
+// то обратная переинициализация пользователя не требуется
+// дело в том, что пользователь определяется по данным сессии
+// эти данные записываются в сессию один раз при авторизации
+// при вызове api эти данные не перезаписываются
+// таким образом при каждом обновлении страницы будут сначала читаться данные сессии
+// и только потом, исходя из запроса - данные api
+
+
+
 
 /*
 это все нафиг не нужно, по большому счету

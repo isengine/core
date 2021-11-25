@@ -36,10 +36,11 @@ if ($suset) {
 	$db = Database::getInstance();
 	$db -> collection('users');
 	$db -> driver -> filter -> addFilter('type', 'settings');
-	$db -> driver -> filter -> addFilter('name', 'default');
+	//$db -> driver -> filter -> addFilter('name', 'default');
 	$db -> launch();
 	
-	$suset = $db -> data -> getFirstData();
+	//$suset = $db -> data -> getFirstData();
+	$suset = $db -> data -> getData();
 	
 	$db -> clear();
 	

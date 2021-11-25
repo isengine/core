@@ -25,55 +25,13 @@ class Excel extends Master {
 		
 	}
 	
-	public function launch() {
-		
-		/*
-		protected $prepare;
-		protected $settings;
-		
-		public $query; // тип запроса в базу данных - чтение, запись, добавление, удаление
-		public $collection; // раздел базы данных, здесь - имя файла с расширением
-		
-		public $id; // имя или имена записей в базе данных
-		public $name; // имя или имена записей в базе данных
-		public $type; // тип или типы записей в базе данных
-		public $parents; // родитель или родители записей в базе данных
-		public $owner; // владелец или владельцы записей в базе данных
-		
-		public $ctime; // дата и время (в формате unix) создания записи в базе данных
-		public $mtime; // дата и время (в формате unix) последнего изменения записи в базе данных
-		public $dtime; // дата и время (в формате unix) удаления записи в базе данных
-		
-		public $limit; // установить возвращаемое количество записей в базе данных
-		*/
-		
-		if (!$this -> collection) {
-			return;
-		}
-		
-		if ($this -> query === 'read') {
-			$this -> read();
-		}
-		
-		// ЕЩЕ НУЖНО СДЕЛАТЬ ФИЛЬТРАЦИЮ И ОТБОР ПО УКАЗАННЫМ QUERY ДАННЫМ
-		// ЕЩЕ НУЖНО createFileFromInfo
-		// ДЛЯ ПОДГОТОВКИ ФАЙЛА К ЗАПИСИ
-		
-		//echo $name . '<br>';
-		//echo print_r($query, 1) . '<br>';
-		//echo '<pre>';
-		//echo print_r($prepared, 1) . '<br>';
-		//echo '</pre>';
-		
-	}
-	
 	public function hash() {
 		$json = json_encode($this -> filter) . json_encode($this -> fields) . json_encode($this -> rights);
 		$path = $this -> path . $this -> collection;
 		$this -> hash = (Local::matchFile($path) ? md5_file($path) : 0) . '.' . md5($json) . '.' . Strings::len($json) . '.' . (int) $this -> settings['all'] . '.' . $this -> settings['limit'];
 	}
 	
-	public function prepare() {
+	public function read() {
 		
 		$path = $this -> path . $this -> collection;
 		
@@ -231,7 +189,9 @@ class Excel extends Master {
 			}
 			
 			// контрольная проверка
-			$count = $this -> verify($entry, $count);
+			$entry = $this -> verify($entry);
+			
+			$count = $this -> result($entry, $count);
 			if (!System::set($count)) {
 				break;
 			}

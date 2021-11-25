@@ -34,52 +34,49 @@ if ($sur) {
 	
 } else {
 	
+	// назначаем права по-умолчанию из конфигурации
+	
+	$config = Config::getInstance();
+	$def = $config -> get('users:rights');
+	
+	$sur = [
+		'read' => true,
+		'write' => $def,
+		'create' => $def,
+		'delete' => $def
+	];
+	
+	unset($def, $config);
+	
 	// читаем права с выборкой из базы данных
 	// последовательно по всем родителям пользователя
 	
-	$sur = [];
-	$array = ['default'];
 	$parents = $user -> data -> getEntryKey('parents');
 	
+	// сюда мы еще вернемся,
+	// здесь может быть ошибка из-за того, что родитель один и назначен строкой
+	// или родители есть, а прав на них нет
+	
 	if ($parents) {
-		$array = Objects::add(['default'], $parents);
-	}
-	
-	$db -> collection('rights');
-	$db -> driver -> filter -> methodFilter('or');
-	
-	foreach ($array as $item) {
-		$db -> driver -> filter -> addFilter('name', $item);
-	}
-	unset($item);
-	
-	$db -> launch();
-	
-	foreach ($array as $item) {
-		$id = $db -> data -> getId($item);
-		$data = System::set($id) ? $db -> data -> getDataByName($item) : null;
-		$sur = Objects::merge($sur, $data, true);
-	}
-	unset($item, $id, $data);
-	
-	$db -> clear();
-	
-	// если права все еще пустые
-	// назначаем права по-умолчанию из конфигурации
-	
-	if (!$sur) {
 		
-		$config = Config::getInstance();
-		$def = $config -> get('users:rights');
+		$db -> collection('rights');
+		$db -> driver -> filter -> methodFilter('or');
 		
-		$sur = [
-			'read' => true,
-			'write' => $def,
-			'create' => $def,
-			'delete' => $def
-		];
+		foreach ($parents as $item) {
+			$db -> driver -> filter -> addFilter('name', $item);
+		}
+		unset($item);
 		
-		unset($def);
+		$db -> launch();
+		
+		foreach ($parents as $item) {
+			$id = $db -> data -> getId($item);
+			$data = System::set($id) ? $db -> data -> getDataByName($item) : null;
+			$sur = Objects::merge($sur, $data, true);
+		}
+		unset($item, $id, $data);
+		
+		$db -> clear();
 		
 	}
 	
