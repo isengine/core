@@ -37,16 +37,8 @@ if ($sur) {
 	// назначаем права по-умолчанию из конфигурации
 	
 	$config = Config::getInstance();
-	$def = $config -> get('users:rights');
-	
-	$sur = [
-		'read' => true,
-		'write' => $def,
-		'create' => $def,
-		'delete' => $def
-	];
-	
-	unset($def, $config);
+	$sur = $config -> getArray('db:rights', true);
+	unset($config);
 	
 	// читаем права с выборкой из базы данных
 	// последовательно по всем родителям пользователя
@@ -83,10 +75,6 @@ if ($sur) {
 	$session -> setValue('rights', json_encode($sur));
 	
 }
-
-// назначаем права пользователю
-
-$user -> setRights($sur);
 
 // переназначаем права для базы данных
 

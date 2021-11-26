@@ -75,7 +75,7 @@ if ($user -> getFieldsBySpecial('ban')) {
 	if ($allow['ip'] && !$allow['agent']) {
 		
 		//logging('security user verification - unknown agent but known ip, agent will be added in list');
-		echo 'security user verification - unknown agent but known ip, agent will be added in list';
+		//echo 'security user verification - unknown agent but known ip, agent will be added in list';
 		
 		$user -> addFieldsBySpecial('allowagent', $allow['session_agent']);
 		
@@ -86,7 +86,7 @@ if ($user -> getFieldsBySpecial('ban')) {
 	} elseif (!$allow['ip'] && $allow['agent']) {
 		
 		//logging('security user verification - unknown ip but known agent, ip will be added in list with extended diapason');
-		echo 'security user verification - unknown ip but known agent, ip will be added in list with extended diapason';
+		//echo 'security user verification - unknown ip but known agent, ip will be added in list with extended diapason';
 		
 		$user -> addFieldsBySpecial('allowip', $allow['session_ip']);
 		
@@ -96,7 +96,7 @@ if ($user -> getFieldsBySpecial('ban')) {
 		
 	} elseif (!$allow['ip'] && !$allow['agent']) {
 		
-		echo 'security user verification - unknown ip and agent, user must be notified and added this in lists';
+		//echo 'security user verification - unknown ip and agent, user must be notified and added this in lists';
 		//logging('security user verification - unknown ip and agent, user must be notified and added this in lists');
 		
 	}

@@ -47,7 +47,7 @@ if ($state -> get('session')) {
 	
 	$time = time();
 	$config = Config::getInstance();
-	$session_time = (int) $config -> get('secure:sessiontime');
+	$session_time = (int) $config -> get('secure:session');
 	
 	$token = $session -> getSession('token');
 	$token_array = json_decode(Prepare::decode($token), true);
@@ -80,6 +80,9 @@ if ($state -> get('session')) {
 		// обновляем сессию
 		
 		$session -> reinit();
+		
+		// только для проверки
+		//file_put_contents(DR . time() . '.' . mt_rand(100, 999) . '.reinit.log', session_status() );
 		
 	}
 	

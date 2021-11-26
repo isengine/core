@@ -4,14 +4,16 @@
 
 namespace is;
 
+use is\Helpers\System;
 use is\Masters\Database;
-use is\Components\State;
 use is\Components\Config;
 use is\Components\Display;
 
 // Подготавливаем конфигурацию
 
 $config = Config::getInstance();
+
+// Задаем права по-умолчанию
 
 $dbset = $config -> getArray('db', true);
 
@@ -57,7 +59,7 @@ if ($config -> get('cache:db')) {
 //]);
 
 $db -> query('read');
-$db -> rights(true);
+$db -> rights( $config -> getArray('db:rights', true) );
 
 //$db -> collection('content');
 //$db -> launch();
