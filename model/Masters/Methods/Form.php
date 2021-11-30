@@ -10,6 +10,7 @@ use is\Helpers\System;
 use is\Helpers\Prepare;
 use is\Helpers\Paths;
 use is\Helpers\Sessions;
+use is\Helpers\Match;
 
 use is\Components\Config;
 use is\Components\State;
@@ -120,6 +121,12 @@ class Form extends Master {
 				$this -> error($name, 'maxlength');
 			}
 			
+			if ($value && $options['match']) {
+				if (!Match::regexpOf($value, $options['match'], true)) {
+					$this -> error($name, 'match');
+				}
+			}
+			
 			if (!System::set($value) && $item['required']) {
 				$this -> error($name, 'required');
 			}
@@ -200,9 +207,11 @@ class Form extends Master {
 		return System::typeIterable($this -> errors);
 	}
 	
-	public function returns($field = 'success', $refresh = null) {
+	public function returns($field = 'success') {
 		
 		// возвращает url-адрес, содержащий данные из формы для вставки обратно
+		// аргументы по большей части чисто служебные
+		// первый аргумент добавляет поле, определяющее успешное выполнение запроса
 		// если второй аргумент задан, то страница перезагружается по этому url-адресу
 		
 		$config = Config::getInstance();
@@ -211,10 +220,7 @@ class Form extends Master {
 		$string = Sessions::getCookie('current-url');
 		
 		if (!$string) {
-			if ($refresh) {
-				Sessions::reload();
-			}
-			return;
+			Sessions::reload();
 		}
 		
 		if (Strings::match($string, '?')) {
@@ -224,13 +230,16 @@ class Form extends Master {
 		
 		$keys = Objects::keys($this -> getData());
 		$array = Objects::removeByIndex($array, $keys);
-		unset($array[$field]);
+		if ($field) {
+			unset($array[$field]);
+		}
 		
 		if ($this -> errors()) {
 			Objects::each(Objects::keys($this -> errors), function($item) use (&$array){
-				$array[$item] = Prepare::urlencode($this -> getData($item));
+				//$array[$item] = Prepare::urlencode($this -> getData($item));
+				$array[$item] = $this -> getData($item);
 			});
-		} else {
+		} elseif ($field) {
 			$array[$field] = true;
 		}
 		
@@ -241,10 +250,8 @@ class Form extends Master {
 			$string .= $string .= Paths::restJoin($array);
 		}
 		
-		if ($refresh) {
-			Sessions::reload($string);
-		}
-		return $string;
+		Sessions::reload($string);
+		//return $string;
 		
 	}
 	
