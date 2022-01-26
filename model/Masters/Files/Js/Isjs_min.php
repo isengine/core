@@ -14,16 +14,16 @@ use is\Components\Uri;
 use is\Masters\View;
 use is\Masters\Files\Master;
 
-class Frameworkjs extends Master {
+class Isjs_min extends Master {
 	
 	public function launch() {
 		
 		$config = Config::getInstance();
 		$uri = Uri::getInstance();
 		
-		$file = DR . 'vendor' . DS . 'isengine' . DS . 'frameworkjs' . DS . 'init.php';
+		$file = DR . 'vendor' . DS . 'isengine' . DS . 'isjs' . DS . 'init.php';
 		if (file_exists($file)) {
-			if (!defined('isOPTIONS')) { define('isOPTIONS', json_encode(['path' => Paths::toUrl(Strings::get($config -> get('path:assets'), Strings::len(DI)))])); }
+			if (!defined('isOPTIONS')) { define('isOPTIONS', json_encode(['path' => Paths::toUrl(Strings::get($config -> get('path:assets'), Strings::len(DI))), 'min' => true])); }
 			require_once $file;
 		}
 		

@@ -217,7 +217,12 @@ class Form extends Master {
 		$config = Config::getInstance();
 		
 		$array = [];
-		$string = Sessions::getCookie('current-url');
+		$string = Sessions::getCookie('previous-url');
+		
+		// раньше работали с current-url, очевидно из-за того, что
+		// система не перезаписывала current и previous при перезагрузке с запросом по api,
+		// с одной стороны, так в общем-то и должно быть, чтобы запросы не сохранялись
+		// с другой стороны, помнить прямой api-запрос правильно, раз уж он был
 		
 		if (!$string) {
 			Sessions::reload();
