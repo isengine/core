@@ -59,7 +59,40 @@ if ($config -> get('cache:db')) {
 //]);
 
 $db -> query('read');
-$db -> rights( $config -> getArray('db:rights', true) );
+
+// здесь мы добавляем новое условие, которого не было раньше
+// оно связано с тем, что в конфигурации теперь можно назначать
+// имя группы прав по-умолчанию
+// и если это так, то сначала права на чтение разрешаются
+// но только затем, чтобы прочесть группу прав
+// и установить права из нее
+
+$rights = $config -> get('db:rights');
+
+if (System::type($rights) !== 'true') {
+	
+	if ($rights) {
+		
+		// если права - это строка
+		
+		$db -> rights(true);
+		
+		$db -> collection('rights');
+		$db -> driver -> filter -> addFilter('name', $rights);
+		$db -> launch();
+		
+		$rights = $db -> data -> getDataByName($rights);
+		
+		$db -> clear();
+		
+	} else {
+		// пробуем прочесть права как массив прав
+		$rights = $config -> getArray('db:rights', true);
+	}
+	
+}
+
+$db -> rights($rights);
 
 //$db -> collection('content');
 //$db -> launch();
