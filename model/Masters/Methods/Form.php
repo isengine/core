@@ -207,7 +207,7 @@ class Form extends Master {
 		return System::typeIterable($this -> errors);
 	}
 	
-	public function returns($field = 'success') {
+	public function returns($field = 'success', $link = null) {
 		
 		// возвращает url-адрес, содержащий данные из формы для вставки обратно
 		// аргументы по большей части чисто служебные
@@ -231,6 +231,10 @@ class Form extends Master {
 		if (Strings::match($string, '?')) {
 			$array = Paths::querySplit($string);
 			$string = Strings::before($string, '?');
+		}
+		
+		if ($link) {
+			$string .= Strings::replace($link, ':', '/') . '/';
 		}
 		
 		$keys = Objects::keys($this -> getData());
