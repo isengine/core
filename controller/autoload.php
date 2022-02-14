@@ -19,7 +19,7 @@ if (file_exists($autoload)) {
 	
 	// framework
 	
-	$autoload = $path . 'isengine' . DS . 'framework' . DS . 'init.php';
+	$autoload = $path . 'isengine' . DS . 'isphp' . DS . 'init.php';
 	require_once $autoload;
 	
 	// classes
