@@ -25,8 +25,8 @@ $uri = Uri::getInstance();
 $index = Objects::find($uri -> getPathArray(), $config -> get('api:name'));
 
 $apiset = [
-	'class' => $uri -> getPathArray( $index + 1 ),
-	'method' => $uri -> getPathArray( $index + 2),
+	'class' => $uri -> getPathArray($index + 1),
+	'method' => $uri -> getPathArray($index + 2),
 	'key' => $state -> get('api'),
 	'token' => $uri -> getData( $config -> get('api:token') ),
 	'data' => $uri -> getData()

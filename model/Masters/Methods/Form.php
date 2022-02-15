@@ -23,6 +23,8 @@ class Form extends Master {
 	public $settings;
 	public $errors;
 	
+	public function launch() {}
+	
 	public function settings($field = 'instance') {
 		
 		$instance = Parser::fromString($this -> getData($field));

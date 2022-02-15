@@ -9,7 +9,7 @@ use is\Helpers\Strings;
 use is\Helpers\Local;
 use is\Helpers\System;
 use is\Helpers\Match;
-use \SimpleXLSX;
+use \Shuchkin\SimpleXLSX;
 
 class Excel extends Master {
 	
