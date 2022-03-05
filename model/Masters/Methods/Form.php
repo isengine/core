@@ -209,6 +209,13 @@ class Form extends Master {
 		return System::typeIterable($this -> errors);
 	}
 	
+	public function reload($string = null) {
+		if (!$string) {
+			$string = Sessions::getCookie('previous-url');
+		}
+		Sessions::reload($string);
+	}
+	
 	public function returns($field = 'success', $link = null) {
 		
 		// возвращает url-адрес, содержащий данные из формы для вставки обратно

@@ -41,7 +41,7 @@ class Folder extends Master {
 		if (!$this -> hash || !$hash || $this -> hash !== $hash) {
 			Local::createFolder($this -> to);
 			$this -> rendering();
-			Local::writeFile($this -> to . $hash_name . '.md5', $this -> hash);
+			Local::writeFile($this -> to . $hash_name . '.md5', $this -> hash, 'replace');
 		}
 		
 		//return '<link rel="stylesheet" type="text/css" href="' . $this -> url . $this -> modificator() . '" />';
