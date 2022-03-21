@@ -92,6 +92,10 @@ $view -> get('lang') -> setData(
 
 $view -> add('img');
 
+// запускаем обработку даты и времени
+
+$view -> add('time');
+
 // запускаем реактивность
 
 if ($config -> get('develop:enable') && $config -> get('develop:reactive')) {

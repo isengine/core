@@ -15,6 +15,14 @@ use is\Components\Config;
 $config = Config::getInstance();
 $uri = Uri::getInstance();
 
+// устанавливаем настройки rest
+// запрещен, разрешен и если разрешен, то с ключами или без
+
+if ($config -> get('url:rest')) {
+	$uri -> rest = $config -> get('url:rest');
+	$uri -> keys = $config -> get('url:keys');
+}
+
 // разбираем данные
 
 $data = [];

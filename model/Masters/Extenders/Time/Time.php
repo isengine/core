@@ -16,8 +16,8 @@ class Time extends Data {
 	public function __construct() {
 	}
 	
-	public function get($data) {
-		return Datetime::getInstance() -> getData($data);
+	public function get($data = null, $prepare = null) {
+		return Datetime::getInstance() -> convertDate($data, null, $prepare);
 	}
 	
 } 
