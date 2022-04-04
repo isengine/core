@@ -22,12 +22,6 @@ $config = Config::getInstance();
 $state = State::getInstance();
 $uri = Uri::getInstance();
 
-// ini
-
-if ($uri -> file['extension'] === 'ini') {
-	$state -> set('error', 404);
-}
-
 // scheme
 
 $scheme = $config -> get('default:scheme');

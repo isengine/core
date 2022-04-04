@@ -32,7 +32,9 @@ System::includes('files', $path);
 System::includes('structure', $path);
 
 // Запускаем определение rest
-System::includes('rest', $path);
+// устарело, т.к. rest теперь задается
+// на базе компонента uri в самом начале
+//System::includes('rest', $path);
 
 // Запускаем проверку типов
 System::includes('content', $path);

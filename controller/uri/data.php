@@ -19,61 +19,42 @@ $uri = Uri::getInstance();
 // запрещен, разрешен и если разрешен, то с ключами или без
 
 if ($config -> get('url:rest')) {
-	$uri -> rest = $config -> get('url:rest');
-	$uri -> keys = $config -> get('url:keys');
+	$uri -> setRest(
+		$config -> get('url:rest'),
+		$config -> get('url:keys')
+	);
 }
 
-// разбираем данные
+// ini
 
-$data = [];
-$array = null;
-$path_array = $uri -> getPathArray();
-
-if ( System::type($config -> get('url:rest'), 'numeric') ) {
-	$array = Objects::get($path_array, $config -> get('url:rest') - 1);
-} else {
-	$find = Objects::find($path_array, $config -> get('url:rest'));
-	if (System::set($find)) {
-		$array = Objects::get($path_array, $find + 1);
-	}
+if ($uri -> file['extension'] === 'ini') {
+	$state -> set('error', 404);
 }
 
-if ($array) {
-	if ($config -> get('url:keys')) {
-		$data = Objects::split($array);
-	} else {
-		$data = Objects::reset($array);
-	}
-}
+/*
+в этой строке возникла ошибка, связанная с использованием точки
 
-if ($config -> get('url:query')) {
-	$data = Objects::merge($data, $uri -> query['array']);
-	if (System::server('method') === 'post') {
-		$data = Objects::merge($data, $_POST);
-	}
-}
+https://0isengine.org/catalog/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%B0%201/data/page/1/items/0/sort/asc/price/100_210/matherial/%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BE/date/*01.12.2001
 
-$uri -> setData($data);
+хотя точка не должна определяться в данных rest
 
-unset($data);
+из-за чего это происходит?
+из-за точки часть строки парсится как файл
 
-//echo print_r($data, 1);
-//echo '[' . print_r($match, 1) . ']';
-//echo '[' . print_r($find, 1) . ']';
+мы это исправили
 
-//echo '<pre>';
-//echo print_r($uri, 1);
-//exit;
+чего мы добиваемся?
+дело в том, что определение файлов и папок сейчас работают корректно только без rest
+нам нужно интегрировать rest в определение файлов и папок
+раньше это было завязано исключительно на $uri -> path['array'] и $uri -> path['string']
+но дело в том, что они все содержат полный путь, не учитывая запросы
+мы сделали некоторые изменения, но сейчас rest в полную силу не поддерживается ими
+об этом есть предупреждения в контроллере
 
-// здесь теперь куча новых настроек, однако на данный момент
-// роутинг в ури унесен вообще в запределье
-// router/rest.php
-// хотя это до сих пор относится к ури, роутер из ури потом парсит
-// надо проверить, зачем это и можно ли его перетащить поближе сюда
-// нужны тесты и смотреть код
-// ну, вдруг он там для того, чтобы не мешать еще каким-то условиям
-
-// а еще это хотелось бы сделать так, чтобы можно было задавать персональный REST для разных разделов
-// вот это было бы вообще вау-вау
+мы также перенесли определение rest в библиотеку, в метод $uri -> setRest
+после чего стало не нужно использование router/rest.php и почти всего кода uri/data.php
+эти файлы были выключены из использования, но остались в качестве устаревших на время тестирования
+в дальнейшем они будут безболезненно удалены
+*/
 
 ?>
