@@ -79,7 +79,8 @@ class Excel extends Master {
 		
 		$sheets = System::set($this -> settings['sheets']) ? (is_array($this -> settings['sheets']) ? $this -> settings['sheets'] : Objects::convert($this -> settings['sheets'])) : Objects::keys($excel -> sheetNames());
 		
-		$fill = System::typeOf($this -> settings['fill'], 'scalar') ? $this -> settings['fill'] : null;
+		$fill = System::typeOf($this -> settings['fill'], 'scalar') ? (System::type($this -> settings['fill'], 'numeric') ? System::typeTo($this -> settings['fill'], 'numeric') : $this -> settings['fill']) : null;
+		
 		$fill_val = null;
 		
 		$count = 0;
