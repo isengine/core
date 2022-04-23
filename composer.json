@@ -29,7 +29,7 @@
 		"isengine/socialnews": "*",
 		"isengine/weather": "*",
 		"cebe/markdown": "~1.1.1",
-		"shuchkin/simplexlsx": "0.8.21",
+		"shuchkin/simplexlsx": "^0.9.10",
 		"mobiledetect/mobiledetectlib": "^2.8.0",
 		"chrisjean/php-ico": "^1.0.0",
 		"claviska/simpleimage": "^3.6.0",
