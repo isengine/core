@@ -2,7 +2,7 @@
 	"name": "isengine/core",
 	"type": "project",
 	"description": "This is automated engine for creating websites based on self framework",
-	"version": "1.0.0-beta",
+	"version": "1.0.0-rc",
 	"keywords": [ "php", "cms", "framework", "isengine" ],
 	"license": "MIT",
 	"authors": [
