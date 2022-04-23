@@ -16,7 +16,6 @@ if (file_exists($autoload)) {
 } else {
 	
 	// manual loading
-	
 	// framework
 	
 	$autoload = $path . 'isengine' . DS . 'isphp' . DS . 'init.php';
