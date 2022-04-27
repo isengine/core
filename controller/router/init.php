@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -11,7 +9,6 @@ use is\Components\State;
 use is\Components\Config;
 use is\Components\Display;
 use is\Components\Log;
-
 use is\Components\Router;
 
 // читаем uri
@@ -45,10 +42,10 @@ System::includes('base', $path);
 // правила роутинга
 
 if (
-	!$state -> get('error') &&
-	$config -> get('router:reload')
+    !$state->get('error') &&
+    $config->get('router:reload')
 ) {
-	System::includes('reload', $path);
+    System::includes('reload', $path);
 }
 
 // определяем шаблон
@@ -63,9 +60,9 @@ System::includes('settings', $path);
 
 System::includes('secure', $path);
 
-if ($state -> get('blockip')) {
-	System::includes('template', $path, null);
-	System::includes('settings', $path, null);
+if ($state->get('blockip')) {
+    System::includes('template', $path, null);
+    System::includes('settings', $path, null);
 }
 
 // предыдущая страница через куки
@@ -75,5 +72,3 @@ System::includes('previous', $path);
 // устанавливаем заголовок
 
 System::includes('headers', $path);
-
-?>

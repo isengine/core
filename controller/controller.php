@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -72,5 +70,3 @@ System::includes('language:init', $path);
 // Запускаем правила развилки
 
 System::includes('init:fork', $path);
-
-?>

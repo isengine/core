@@ -10,23 +10,24 @@ use is\Helpers\Prepare;
 use is\Helpers\Paths;
 use is\Parents\Data;
 
-class Vars extends Data {
-	
-	public function __construct() {
-	}
-	
-	public function set($key, $value = null) {
-		$this -> addDataKey($key, $value);
-	}
-	
-	public function match($key, $value) {
-		return $this -> getData($key) === $value;
-	}
-	
-	public function is($key) {
-		return System::set($this -> get($key));
-	}
-	
-}
+class Vars extends Data
+{
+    public function __construct()
+    {
+    }
 
-?>
+    public function set($key, $value = null)
+    {
+        $this->addDataKey($key, $value);
+    }
+
+    public function match($key, $value)
+    {
+        return $this->getData($key) === $value;
+    }
+
+    public function is($key)
+    {
+        return System::set($this->get($key));
+    }
+}

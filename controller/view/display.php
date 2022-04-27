@@ -13,6 +13,4 @@ $view = View::getInstance();
 
 // запускаем поддержку вывода
 
-$view -> set('display', $display);
-
-?>
+$view->set('display', $display);

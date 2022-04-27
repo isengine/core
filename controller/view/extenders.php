@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -25,50 +23,49 @@ $view = View::getInstance();
 
 // читаем базовые состояния
 
-$view -> add('state');
-$view -> add('vars');
+$view->add('state');
+$view->add('vars');
 
 // читаем контент
 
-$view -> add('content');
+$view->add('content');
 
 // читаем настройки seo
 
-$view -> add('seo');
-$view -> get('seo') -> title();
-$view -> get('seo') -> keys();
+$view->add('seo');
+$view->get('seo')->title();
+$view->get('seo')->keys();
 
 // запускаем языки
 
-$view -> add('lang');
-$view -> get('lang') -> add(
-	'this',
-	$config -> get('path:templates') . $router -> template['name'] . DS . 'lang' . DS . $view -> get('state|lang') . '.ini'
+$view->add('lang');
+$view->get('lang')->add(
+    'this',
+    $config->get('path:templates') . $router->template['name'] . DS . 'lang' . DS . $view->get('state|lang') . '.ini'
 );
 
-$view -> add('translit');
-$view -> get('translit') -> init($view -> get('state|lang'));
+$view->add('translit');
+$view->get('translit')->init($view->get('state|lang'));
 
 // запускаем иконки
 
-$view -> add('icon');
+$view->add('icon');
 
 // задаем рендеринг
 
-$view -> add('render');
+$view->add('render');
 
-
-$view -> get('render') -> init(
-	$config -> get('path:templates') . $router -> template['name'] . DS, // from
-	$config -> get('path:assets') . Paths::toReal($router -> template['name']) . DS, // to
-	'/' . Paths::toUrl(Strings::get($config -> get('path:assets'), Strings::len(DI))) . $router -> template['name'] . '/' // url
-	//DI . Paths::toReal(Paths::clearSlashes($config -> get('path:assets'))) . DS . Paths::toReal($router -> template['name']) . DS, // to
-	//'/' . Paths::toUrl(Paths::clearSlashes($config -> get('path:assets'))) . '/' . $router -> template['name'] . '/' // url
+$view->get('render')->init(
+    $config->get('path:templates') . $router->template['name'] . DS, // from
+    $config->get('path:assets') . Paths::toReal($router->template['name']) . DS, // to
+    '/' . Paths::toUrl(Strings::get($config->get('path:assets'), Strings::len(DI))) . $router->template['name'] . '/' // url
+    //DI . Paths::toReal(Paths::clearSlashes($config->get('path:assets'))) . DS . Paths::toReal($router->template['name']) . DS, // to
+    //'/' . Paths::toUrl(Paths::clearSlashes($config->get('path:assets'))) . '/' . $router->template['name'] . '/' // url
 );
 
 // запускаем обнаружение устройств
 
-$view -> add('device');
+$view->add('device');
 
 // запускаем процессы обработки текстовых переменных
 
@@ -80,56 +77,54 @@ $view -> add('device');
 // но нужно посмотреть, не используют ли язык предыдущие штуки
 // или тогда поднять tvars выше
 
-$view -> add('tvars');
+$view->add('tvars');
 
-$view -> get('lang') -> setData(
-	$view -> get('tvars') -> launch(
-		$view -> get('lang') -> getData()
-	)
+$view->get('lang')->setData(
+    $view->get('tvars')->launch(
+        $view->get('lang')->getData()
+    )
 );
 
 // запускаем процессы отрисовки изображений
 
-$view -> add('img');
+$view->add('img');
 
 // запускаем обработку даты и времени
 
-$view -> add('time');
+$view->add('time');
 
 // запускаем реактивность
 
-if ($config -> get('develop:enable') && $config -> get('develop:reactive')) {
-	$view -> add('reactive');
-	
-	$folder = $view -> get('state|real');
-	$view -> get('reactive') -> launch($folder, $config -> get('develop:reactive'));
-	
-	//if (isset($_GET['reactive'])) {
-	//	echo $view -> get('reactive') -> getList();
-	//	exit;
-	//}
+if ($config->get('develop:enable') && $config->get('develop:reactive')) {
+    $view->add('reactive');
+
+    $folder = $view->get('state|real');
+    $view->get('reactive')->launch($folder, $config->get('develop:reactive'));
+
+    //if (isset($_GET['reactive'])) {
+    //    echo $view->get('reactive')->getList();
+    //    exit;
+    //}
 }
 
 // запускаем специальные группы
 
-$view -> add('special');
-$view -> get('special') -> init( $view -> get('state|settings:special') );
+$view->add('special');
+$view->get('special')->init($view->get('state|settings:special'));
 
 // пример рендеринга css файла
-//$result = $template -> render('css', 'filename');
+//$result = $template->render('css', 'filename');
 //echo $result;
 
 //$print = Display::getInstance();
-//$print -> dump($user -> getData());
+//$print->dump($user->getData());
 //echo '<hr>';
-//$print -> dump($db);
-//$print -> dump($uri);
-//$print -> dump($state);
-//$print -> dump($template);
-//$print -> dump($router -> content);
-//$print -> dump($view -> get('content'));
-//$print -> dump($router -> current);
+//$print->dump($db);
+//$print->dump($uri);
+//$print->dump($state);
+//$print->dump($template);
+//$print->dump($router->content);
+//$print->dump($view->get('content'));
+//$print->dump($router->current);
 //
 //exit;
-
-?>

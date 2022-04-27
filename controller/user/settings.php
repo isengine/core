@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -25,32 +23,26 @@ $session = Session::getInstance();
 
 // проверяем сессию на наличие настроек полей пользователя
 
-$suset = $session -> getValue('settings');
+$suset = $session->getValue('settings');
 
 if ($suset) {
-	
-	$suset = json_decode($suset, true);
-	
+    $suset = json_decode($suset, true);
 } else {
-	
-	$db = Database::getInstance();
-	$db -> collection('users');
-	$db -> driver -> filter -> addFilter('type', 'settings');
-	//$db -> driver -> filter -> addFilter('name', 'default');
-	$db -> launch();
-	
-	//$suset = $db -> data -> getFirstData();
-	$suset = $db -> data -> getData();
-	
-	$db -> clear();
-	
-	$session -> setValue('settings', json_encode($suset));
-	
+    $db = Database::getInstance();
+    $db->collection('users');
+    $db->driver->filter->addFilter('type', 'settings');
+    //$db->driver->filter->addFilter('name', 'default');
+    $db->launch();
+
+    //$suset = $db->data->getFirstData();
+    $suset = $db->data->getData();
+
+    $db->clear();
+
+    $session->setValue('settings', json_encode($suset));
 }
 
-$user -> setSettings($suset);
+$user->setSettings($suset);
 unset($suset);
 
-$user -> setSpecial();
-
-?>
+$user->setSpecial();

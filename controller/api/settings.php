@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -28,15 +26,15 @@ $session = Session::getInstance();
 // загружаем установки апи из базы данных
 
 $db = Database::getInstance();
-$db -> collection('api');
-$db -> driver -> filter -> addFilter('parents', $api -> class);
-$db -> driver -> filter -> addFilter('name', $api -> method);
-$db -> driver -> filter -> addFilter('type', '-settings');
-$db -> launch();
+$db->collection('api');
+$db->driver->filter->addFilter('parents', $api->class);
+$db->driver->filter->addFilter('name', $api->method);
+$db->driver->filter->addFilter('type', '-settings');
+$db->launch();
 
-$api -> setSettings( $db -> data -> getFirstData() );
+$api->setSettings($db->data->getFirstData());
 
-$db -> clear();
+$db->clear();
 
 //$us = $user
 
@@ -44,5 +42,3 @@ $db -> clear();
 //echo print_r($api, 1);
 //echo print_r($user, 1);
 //echo '</pre>';
-
-?>

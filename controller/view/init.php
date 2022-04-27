@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -37,11 +35,9 @@ System::includes('display', $path);
 System::includes('launch', $path);
 
 //$print = Display::getInstance();
-//$print -> dump($user -> getData());
+//$print->dump($user->getData());
 //echo '<hr>';
-//$print -> dump($db);
-//$print -> dump($state);
+//$print->dump($db);
+//$print->dump($state);
 //
 //exit;
-
-?>

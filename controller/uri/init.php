@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -22,7 +20,7 @@ $config = Config::getInstance();
 $state = State::getInstance();
 
 $uri = Uri::getInstance();
-$uri -> init();
+$uri->init();
 
 // загружаем последовательность инициализации
 
@@ -34,8 +32,6 @@ System::includes('data', $path);
 System::includes('api', $path);
 
 //$print = Display::getInstance();
-//$print -> dump($uri);
+//$print->dump($uri);
 //
 //exit;
-
-?>

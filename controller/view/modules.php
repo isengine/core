@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -27,13 +25,11 @@ $module = Module::getInstance();
 
 // запускаем поддержку модулей
 
-$module -> init(
-	$config -> get('path:vendors'),
-	$config -> get('path:app') . 'Masters' . DS . 'Modules' . DS,
-	$config -> get('path:cache') . 'modules' . DS,
-	$config -> get('cache:modules')
+$module->init(
+    $config->get('path:vendors'),
+    $config->get('path:app') . 'Masters' . DS . 'Modules' . DS,
+    $config->get('path:cache') . 'modules' . DS,
+    $config->get('cache:modules')
 );
 
-$view -> set('module', $module);
-
-?>
+$view->set('module', $module);

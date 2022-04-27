@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -21,17 +19,17 @@ $view = View::getInstance();
 
 // запускаем рендеринг папок
 
-$array = $view -> get('state|settings:folders');
+$array = $view->get('state|settings:folders');
 
-if (!System::typeIterable($array)) { return; }
+if (!System::typeIterable($array)) {
+    return;
+}
 
 $array = Objects::clear($array, true);
 
 foreach ($array as $item) {
-	$view -> get('render') -> launch('folder', $item);
+    $view->get('render')->launch('folder', $item);
 }
 unset($item, $array);
 
 //exit;
-
-?>

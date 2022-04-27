@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -20,10 +18,10 @@ use is\Masters\Api;
 // читаем uri
 
 $api = Api::getInstance();
-$api -> launch();
+$api->launch();
 
 $print = Display::getInstance();
-$print -> dump($api);
+$print->dump($api);
 
 // Здесь мы устанавливаем правила окончания обработки api
 // Например, задаем заголовок или передаем состояние ошибки
@@ -33,5 +31,3 @@ $print -> dump($api);
 
 // но сейчас только:
 exit;
-
-?>

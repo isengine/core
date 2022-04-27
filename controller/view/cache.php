@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -23,37 +21,39 @@ $router = Router::getInstance();
 
 // browser cache
 
-$cache = $router -> current -> data['cache'];
-$cache_custom = $config -> get('cache:browser:custom');
-$cache_default = $config -> get('cache:browser:default');
+$cache = $router->current->getData('cache');
+$cache_custom = $config->get('cache:browser:custom');
+$cache_default = $config->get('cache:browser:default');
 
 if (
-	(!$cache_custom && !$cache_default) ||
-	($cache_custom && !$cache)
+    (!$cache_custom && !$cache_default) ||
+    ($cache_custom && !$cache)
 ) {
-	return;
+    return;
 }
 
 if ($cache === 'default' || !$cache_custom) {
-	$cache = Parser::fromString($cache_default);
+    $cache = Parser::fromString($cache_default);
 }
 
-$set_time = System::typeIterable($cache) ? (int) $cache[0] * ($cache[1] ? $config -> get('time:' . $cache[1]) : 1) : (int) $cache;
+$set_time = System::typeIterable($cache) ? (int) $cache[0] * ($cache[1] ? $config->get('time:' . $cache[1]) : 1) : (int) $cache;
 $now_time = time();
 
-if (!$set_time) { return; }
+if (!$set_time) {
+    return;
+}
 
 $cache_time = Sessions::getCookie('is-expires');
 if (!$cache_time) {
-	$cache_time = $now_time + $set_time;
-	Sessions::setCookie('is-expires', $cache_time);
+    $cache_time = $now_time + $set_time;
+    Sessions::setCookie('is-expires', $cache_time);
 }
 
 // включение кэширования в заголовках
 
 $data = [
-	'Cache-Control' => 'public',
-	'Expires' => gmdate('D, d M Y H:i:s \G\M\T', $cache_time)
+    'Cache-Control' => 'public',
+    'Expires' => gmdate('D, d M Y H:i:s \G\M\T', $cache_time)
 ];
 
 Sessions::setHeader($data);
@@ -63,13 +63,13 @@ Sessions::setHeader($data);
 $start_time = $cache_time - $set_time;
 
 $uri = Uri::getInstance();
-$page = $config -> get('path:templates') . $router -> template['name'] . DS . 'html' . DS . 'inner' . DS . (System::set($uri -> getRoute()) ? Strings::join($uri -> getRoute(), DS) : 'index') . '.php';
+$page = $config->get('path:templates') . $router->template['name'] . DS . 'html' . DS . 'inner' . DS . (System::set($uri->getRoute()) ? Strings::join($uri->getRoute(), DS) : 'index') . '.php';
 $page_time = file_exists($page) ? filemtime($page) : null;
 
-$template = $config -> get('path:templates') . $router -> template['name'] . DS . 'html' . DS . 'template.php';
+$template = $config->get('path:templates') . $router->template['name'] . DS . 'html' . DS . 'template.php';
 $template_time = file_exists($template) ? filemtime($template) : null;
 
-$settings_time = $router -> getData('mtime');
+$settings_time = $router->getData('mtime');
 
 // расчет кэша идет по куки и по дате последней модификации страницы
 // если время кэширования еще не вышло и
@@ -77,19 +77,17 @@ $settings_time = $router -> getData('mtime');
 // вытаскиваем страницу из кэша
 
 if (
-	$cache_time &&
-	$cache_time >= $now_time &&
-	$page_time < $start_time &&
-	$template_time < $start_time &&
-	$settings_time < $start_time
+    $cache_time &&
+    $cache_time >= $now_time &&
+    $page_time < $start_time &&
+    $template_time < $start_time &&
+    $settings_time < $start_time
 ) {
-	Sessions::setHeaderCode(304);
-	exit;
+    Sessions::setHeaderCode(304);
+    exit;
 } else {
-	Sessions::unCookie('is-expires');
-	header('Last-Modified: ' . gmdate('D, d M Y H:i:s \G\M\T', $now_time));
+    Sessions::unCookie('is-expires');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s \G\M\T', $now_time));
 }
 
 unset($cache);
-
-?>

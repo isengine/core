@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -37,72 +35,60 @@ $session = Session::getInstance();
 // вводом капчи - ну в общем как положено
 // возможно, это придется сделать через шаблон ошибки или через шаблон восстановления доступа
 
-if ($user -> getFieldsBySpecial('ban')) {
-	
-	// проверка на бан
-	
-	$session -> close();
-	
-	$state -> set('error', 403);
-	$state -> set('reason', 'security user verification - user are banned');
-	
-} else {
-	
-	$allow = [
-		'ip' => null,
-		'agent' => null,
-		'user_ip' => $user -> getFieldsBySpecial('ips'),
-		'user_agent' => $user -> getFieldsBySpecial('agents'),
-		'session_ip' => $session -> getSession('ip'),
-		'session_agent' => $session -> getSession('agent'),
-	];
-	
-	// проверка на присутствие текущего ip в списке разрешенных
-	
-	if (Ip::range($allow['session_ip'], $allow['user_ip'])) {
-		$allow['ip'] = true;
-	}
-	
-	// проверка на присутствие текущего хэша агента в списке разрешенных
-	
-	if (
-		is_array($allow['user_agent']) &&
-		in_array($allow['session_agent'], $allow['user_agent'])
-	) {
-		$allow['agent'] = true;
-	}
-	
-	if ($allow['ip'] && !$allow['agent']) {
-		
-		//logging('security user verification - unknown agent but known ip, agent will be added in list');
-		//echo 'security user verification - unknown agent but known ip, agent will be added in list';
-		
-		$user -> addFieldsBySpecial('allowagent', $allow['session_agent']);
-		
-		// сюда не хватает записи о перезаписи $user -> allow['allowagent'] в базу данных
-		// он уже массив, так что никаких дополнительных условий делать не нужно
-		// разве только узнать имя поля в базе данных пользователя
-		
-	} elseif (!$allow['ip'] && $allow['agent']) {
-		
-		//logging('security user verification - unknown ip but known agent, ip will be added in list with extended diapason');
-		//echo 'security user verification - unknown ip but known agent, ip will be added in list with extended diapason';
-		
-		$user -> addFieldsBySpecial('allowip', $allow['session_ip']);
-		
-		// сюда не хватает записи о перезаписи $user -> allow['allowip'] в базу данных
-		// он уже массив, так что никаких дополнительных условий делать не нужно
-		// разве только узнать имя поля в базе данных пользователя
-		
-	} elseif (!$allow['ip'] && !$allow['agent']) {
-		
-		//echo 'security user verification - unknown ip and agent, user must be notified and added this in lists';
-		//logging('security user verification - unknown ip and agent, user must be notified and added this in lists');
-		
-	}
-	
-	unset($allow);
-	
-}
+if ($user->getFieldsBySpecial('ban')) {
+    // проверка на бан
 
-?>
+    $session->close();
+
+    $state->set('error', 403);
+    $state->set('reason', 'security user verification - user are banned');
+} else {
+    $allow = [
+        'ip' => null,
+        'agent' => null,
+        'user_ip' => $user->getFieldsBySpecial('ips'),
+        'user_agent' => $user->getFieldsBySpecial('agents'),
+        'session_ip' => $session->getSession('ip'),
+        'session_agent' => $session->getSession('agent'),
+    ];
+
+    // проверка на присутствие текущего ip в списке разрешенных
+
+    if (Ip::range($allow['session_ip'], $allow['user_ip'])) {
+        $allow['ip'] = true;
+    }
+
+    // проверка на присутствие текущего хэша агента в списке разрешенных
+
+    if (
+        is_array($allow['user_agent']) &&
+        in_array($allow['session_agent'], $allow['user_agent'])
+    ) {
+        $allow['agent'] = true;
+    }
+
+    if ($allow['ip'] && !$allow['agent']) {
+        //logging('security user verification - unknown agent but known ip, agent will be added in list');
+        //echo 'security user verification - unknown agent but known ip, agent will be added in list';
+
+        $user->addFieldsBySpecial('allowagent', $allow['session_agent']);
+
+        // сюда не хватает записи о перезаписи $user->allow['allowagent'] в базу данных
+        // он уже массив, так что никаких дополнительных условий делать не нужно
+        // разве только узнать имя поля в базе данных пользователя
+    } elseif (!$allow['ip'] && $allow['agent']) {
+        //logging('security user verification - unknown ip but known agent, ip will be added in list with extended diapason');
+        //echo 'security user verification - unknown ip but known agent, ip will be added in list with extended diapason';
+
+        $user->addFieldsBySpecial('allowip', $allow['session_ip']);
+
+        // сюда не хватает записи о перезаписи $user->allow['allowip'] в базу данных
+        // он уже массив, так что никаких дополнительных условий делать не нужно
+        // разве только узнать имя поля в базе данных пользователя
+    } elseif (!$allow['ip'] && !$allow['agent']) {
+        //echo 'security user verification - unknown ip and agent, user must be notified and added this in lists';
+        //logging('security user verification - unknown ip and agent, user must be notified and added this in lists');
+    }
+
+    unset($allow);
+}

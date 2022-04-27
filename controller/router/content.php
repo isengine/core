@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -30,56 +28,54 @@ $state = State::getInstance();
 // если пути нет или была ошибка, то выходим из этого разбора
 
 if (
-	!System::typeIterable($uri -> route) ||
-	$state -> get('error')
+    !System::typeIterable($uri->route) ||
+    $state->get('error')
 ) {
-	return;
+    return;
 }
 
 // устанавливаем путь
 
-$route = &$uri -> route;
+$route = &$uri->route;
 
 // продолжаем разбор
 
-$names = $router -> structure -> getNames();
+$names = $router->structure->getNames();
 $name = null;
 $type = null;
 $id = null;
 $last = null;
 
 foreach ($route as $key => $item) {
-	$name = ($name ? $name . ':' : null) . $item;
-	if (Objects::match($names, $name)) {
-		$item = $router -> structure -> getByName($name);
-		$type = $item -> get('type');
-		if ($type === 'content') {
-			$id = $id === null ? $key : $id;
-			$last = $key + 1;
-			//break;
-		}
-	} else {
-		break;
-	}
+    $name = ($name ? $name . ':' : null) . $item;
+    if (Objects::match($names, $name)) {
+        $item = $router->structure->getByName($name);
+        $type = $item->get('type');
+        if ($type === 'content') {
+            $id = $id === null ? $key : $id;
+            $last = $key + 1;
+            //break;
+        }
+    } else {
+        break;
+    }
 }
 unset($key, $item);
 
 if ($type !== 'content') {
-	return;
+    return;
 }
 
 $array = Objects::reset(Objects::get($route, $id));
 $len = Objects::len($array) > 1;
 
-$router -> content = [
-	'name' => $len ? Objects::last($array, 'value') : null,
-	'parents' => $len ? Objects::unlast($array) : $array
-	//'name' => Objects::first(Objects::get($route, $last), 'value'),
-	//'parents' => Objects::get($route, $id, $last - $id)
+$router->content = [
+    'name' => $len ? Objects::last($array, 'value') : null,
+    'parents' => $len ? Objects::unlast($array) : $array
+    //'name' => Objects::first(Objects::get($route, $last), 'value'),
+    //'parents' => Objects::get($route, $id, $last - $id)
 ];
 
 $route = Objects::get($route, 0, $last);
 
 unset($route, $names, $name, $type, $id, $last, $array, $len);
-
-?>

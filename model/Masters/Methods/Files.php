@@ -8,14 +8,12 @@ use is\Helpers\Objects;
 use is\Helpers\Strings;
 use is\Helpers\Local;
 use is\Helpers\System;
-use is\Helpers\Match;
+use is\Helpers\Matches;
 
-class Files extends Master {
-	
-	public function txt() {
-		echo print_r($this -> getData(), 1);
-	}
-	
+class Files extends Master
+{
+    public function txt()
+    {
+        echo print_r($this->getData(), 1);
+    }
 }
-
-?>

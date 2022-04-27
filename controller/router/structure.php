@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -26,51 +24,47 @@ $session = Session::getInstance();
 $state = State::getInstance();
 $router = Router::getInstance();
 
-$router -> init();
+$router->init();
 
-$structure = $session -> getValue('structure');
+$structure = $session->getValue('structure');
 
 if ($structure) {
-	
-	$structure = json_decode($structure, true);
-	$router -> setStructure($structure);
-	
+    $structure = json_decode($structure, true);
+    $router->setStructure($structure);
 } else {
-	
-	// подгружаем данные из БД
-	
-	$db = Database::getInstance();
-	$db -> collection('structures');
-	//$db -> driver -> format('structure');
-	//$db -> driver -> addFilter('name', $uname);
-	//$db -> driver -> addFilter('data:' . $field, $ukey);
-	$db -> launch();
-	
-	$structure = $db -> data -> getData();
-	
-	$result = [];
-	
-	$db -> clear();
-	
-	if (System::typeIterable($structure)) {
-		foreach ($structure as $item) {
-			$data = $item -> getEntryData();
-			if (System::typeOf($data, 'iterable')) {
-				$result = Objects::merge($result, $data);
-			}
-		}
-		unset($key, $item);
-	}
-	
-	if (System::typeOf($result, 'iterable')) {
-		$router -> addExtension($state -> get('relast'));
-		$router -> parseStructure($result);
-	}
-	
-	unset($result);
-	
-	$session -> setValue('structure', json_encode( $router -> getStructure() ));
-	
+    // подгружаем данные из БД
+
+    $db = Database::getInstance();
+    $db->collection('structures');
+    //$db->driver->format('structure');
+    //$db->driver->addFilter('name', $uname);
+    //$db->driver->addFilter('data:' . $field, $ukey);
+    $db->launch();
+
+    $structure = $db->data->getData();
+
+    $result = [];
+
+    $db->clear();
+
+    if (System::typeIterable($structure)) {
+        foreach ($structure as $item) {
+            $data = $item->getEntryData();
+            if (System::typeOf($data, 'iterable')) {
+                $result = Objects::merge($result, $data);
+            }
+        }
+        unset($key, $item);
+    }
+
+    if (System::typeOf($result, 'iterable')) {
+        $router->addExtension($state->get('relast'));
+        $router->parseStructure($result);
+    }
+
+    unset($result);
+
+    $session->setValue('structure', json_encode($router->getStructure()));
 }
 
 unset($structure);
@@ -78,5 +72,3 @@ unset($structure);
 //echo '<pre>';
 //echo print_r($router, 1);
 //echo '</pre>';
-
-?>

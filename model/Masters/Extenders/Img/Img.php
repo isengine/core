@@ -12,19 +12,18 @@ use is\Helpers\Local;
 use is\Parents\Data;
 use is\Components\Language;
 
-class Img extends Data {
-	
-	public function __construct() {
-		//$lang = Language::getInstance();
-		//$this -> setData($lang -> getData());
-	}
-	
-	public function get($data = null, $null = null) {
-		$real = DI . Strings::replace($data, ':', DS);
-		$url = '/' . Strings::replace($data, ':', '/');
-		return Local::matchFile($real) ? $url . '?' . filemtime($real) : null;
-	}
-	
-}
+class Img extends Data
+{
+    public function __construct()
+    {
+        //$lang = Language::getInstance();
+        //$this->setData($lang->getData());
+    }
 
-?>
+    public function get($data = null, $null = null)
+    {
+        $real = DI . Strings::replace($data, ':', DS);
+        $url = '/' . Strings::replace($data, ':', '/');
+        return Local::matchFile($real) ? $url . '?' . filemtime($real) : null;
+    }
+}

@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -40,5 +38,3 @@ $session = Session::getInstance();
 //echo print_r($api, 1);
 //echo print_r($user, 1);
 //echo '</pre>';
-
-?>

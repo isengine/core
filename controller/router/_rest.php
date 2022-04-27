@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -28,26 +26,24 @@ $config = Config::getInstance();
 
 // здесь расположен базовый обработчик роутинга
 
-$uri -> resetRoute();
-$path = $uri -> getRoute();
+$uri->resetRoute();
+$path = $uri->getRoute();
 
 // определяем данные по rest и отделяем их от остального пути
 
 //if (System::typeIterable($path)) {
-//	$find = Objects::find($path, $config -> get('url:rest'));
-//	if (System::set($find)) {
-//		$uri -> route = Objects::get($path, 0, $find);
-//	}
-//	unset($find);
+//    $find = Objects::find($path, $config->get('url:rest'));
+//    if (System::set($find)) {
+//        $uri->route = Objects::get($path, 0, $find);
+//    }
+//    unset($find);
 //}
 
-if ( System::type($config -> get('url:rest'), 'numeric') ) {
-	$uri -> route = Objects::get($path, 0, $config -> get('url:rest') - 1);
+if (System::type($config->get('url:rest'), 'numeric')) {
+    $uri->route = Objects::get($path, 0, $config->get('url:rest') - 1);
 } else {
-	$find = Objects::find($path, $config -> get('url:rest'));
-	if (System::set($find)) {
-		$uri -> route = Objects::get($path, 0, $find);
-	}
+    $find = Objects::find($path, $config->get('url:rest'));
+    if (System::set($find)) {
+        $uri->route = Objects::get($path, 0, $find);
+    }
 }
-
-?>

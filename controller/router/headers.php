@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -16,6 +14,4 @@ use is\Components\Log;
 
 $state = State::getInstance();
 
-Sessions::setHeaderCode($state -> get('error') ? $state -> get('error') : 200);
-
-?>
+Sessions::setHeaderCode($state->get('error') ? $state->get('error') : 200);

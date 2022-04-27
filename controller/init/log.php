@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Components\Config;
@@ -10,15 +8,13 @@ use is\Components\Log;
 // инициализация
 
 $config = Config::getInstance();
-$path = $config -> get('path:log');
+$path = $config->get('path:log');
 
 $log = Log::getInstance();
-$log -> init();
-$log -> setPath($path);
+$log->init();
+$log->setPath($path);
 
 //$log = Log::getInstance();
-//$log -> data[] = ...;
-//$log -> summary();
-//$log -> close(); 
-
-?>
+//$log->data[] = ...;
+//$log->summary();
+//$log->close();

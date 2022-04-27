@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -22,21 +20,19 @@ $uri = Uri::getInstance();
 
 // инициализируем апи с параметрами
 
-$index = Objects::find($uri -> getPathArray(), $config -> get('api:name'));
+$index = Objects::find($uri->getPathArray(), $config->get('api:name'));
 
 $apiset = [
-	'class' => $uri -> getPathArray($index + 1),
-	'method' => $uri -> getPathArray($index + 2),
-	'key' => $state -> get('api'),
-	'token' => $uri -> getData( $config -> get('api:token') ),
-	'data' => $uri -> getData()
+    'class' => $uri->getPathArray($index + 1),
+    'method' => $uri->getPathArray($index + 2),
+    'key' => $state->get('api'),
+    'token' => $uri->getData($config->get('api:token')),
+    'data' => $uri->getData()
 ];
 
 $api = Api::getInstance();
-$api -> init($apiset);
+$api->init($apiset);
 
 unset($apiset, $index);
 
 //echo print_r($api, 1);
-
-?>

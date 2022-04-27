@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -16,5 +14,3 @@ $path = __DIR__;
 
 System::includes('base', $path);
 System::includes('data', $path);
-
-?>

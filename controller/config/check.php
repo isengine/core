@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\Strings;
@@ -20,8 +18,8 @@ $log = Log::getInstance();
 
 // Проверяем версию php
 
-if (version_compare(PHP_VERSION, $config -> get('system:php'), '<')) {
-	$log -> data[] = 'php is not compatible [>=' . $config -> get('system:php') . '] version';
+if (version_compare(PHP_VERSION, $config->get('system:php'), '<')) {
+    $log->data[] = 'php is not compatible [>=' . $config->get('system:php') . '] version';
 }
 
 // Проверяем существование модулей php
@@ -32,20 +30,20 @@ if (version_compare(PHP_VERSION, $config -> get('system:php'), '<')) {
 $extensions = ['curl', 'date', 'json', 'mbstring', 'pcre', 'SimpleXML', 'session', 'zip'];
 
 foreach ($extensions as $item) {
-	if (!extension_loaded($item)) {
-		$log -> data[] = 'required php extension [' . $item . '] not installed';
-	}
+    if (!extension_loaded($item)) {
+        $log->data[] = 'required php extension [' . $item . '] not installed';
+    }
 }
 
 // Проверяем взаимодействие констант
 
 if (
-	$config -> get('secure:writing') && (
-		!$config -> get('db:writing:user') ||
-		!$config -> get('db:writing:pass')
-	)
+    $config->get('secure:writing') && (
+        !$config->get('db:writing:user') ||
+        !$config->get('db:writing:pass')
+    )
 ) {
-	$log -> data[] = 'system constants is set wrong';
+    $log->data[] = 'system constants is set wrong';
 }
 
 // Проверяем существование системных папок
@@ -53,29 +51,25 @@ if (
 $folders = ['app', 'cache', 'vendors', 'log', 'templates'];
 
 foreach ($folders as $item) {
-	$path = $config -> get('path:' . $item);
-	if (!file_exists($path) || !is_dir($path)) {
-		mkdir($path);
-		$log -> data[] = 'system folder [' . $path . '] does not exist and was created';
-	}
+    $path = $config->get('path:' . $item);
+    if (!file_exists($path) || !is_dir($path)) {
+        mkdir($path);
+        $log->data[] = 'system folder [' . $path . '] does not exist and was created';
+    }
 }
 
-if ($log -> data) {
-	
-	$log -> init();
-	$log -> setPath('log');
-	
-	$print = Display::getInstance();
-	$print -> splitter = '<br>';
-	$print -> render($log -> data);
-	
-	$log -> summary();
-	$log -> close();
-	
-	exit;
-	
+if ($log->data) {
+    $log->init();
+    $log->setPath('log');
+
+    $print = Display::getInstance();
+    $print->splitter = '<br>';
+    $print->render($log->data);
+
+    $log->summary();
+    $log->close();
+
+    exit;
 }
 
 unset($item, $extensions, $folders);
-
-?>

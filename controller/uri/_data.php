@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -18,57 +16,55 @@ $uri = Uri::getInstance();
 // устанавливаем настройки rest
 // запрещен, разрешен и если разрешен, то с ключами или без
 
-if ($config -> get('url:rest')) {
-	//$uri -> rest = $config -> get('url:rest');
-	//$uri -> keys = $config -> get('url:keys');
-	$uri -> setRest(
-		$config -> get('url:rest'),
-		$config -> get('url:keys')
-	);
+if ($config->get('url:rest')) {
+    //$uri->rest = $config->get('url:rest');
+    //$uri->keys = $config->get('url:keys');
+    $uri->setRest(
+        $config->get('url:rest'),
+        $config->get('url:keys')
+    );
 }
-
 
 // ini
 
-if ($uri -> file['extension'] === 'ini') {
-	$state -> set('error', 404);
+if ($uri->file['extension'] === 'ini') {
+    $state->set('error', 404);
 }
 
 System::debug($uri);
 exit;
 
-
 // разбираем данные
 /*
 $data = [];
 $array = null;
-$path_array = $uri -> getPathArray();
+$path_array = $uri->getPathArray();
 
-if ( System::type($config -> get('url:rest'), 'numeric') ) {
-	$array = Objects::get($path_array, $config -> get('url:rest') - 1);
+if ( System::type($config->get('url:rest'), 'numeric') ) {
+    $array = Objects::get($path_array, $config->get('url:rest') - 1);
 } else {
-	$find = Objects::find($path_array, $config -> get('url:rest'));
-	if (System::set($find)) {
-		$array = Objects::get($path_array, $find + 1);
-	}
+    $find = Objects::find($path_array, $config->get('url:rest'));
+    if (System::set($find)) {
+        $array = Objects::get($path_array, $find + 1);
+    }
 }
 
 if ($array) {
-	if ($config -> get('url:keys')) {
-		$data = Objects::split($array);
-	} else {
-		$data = Objects::reset($array);
-	}
+    if ($config->get('url:keys')) {
+        $data = Objects::split($array);
+    } else {
+        $data = Objects::reset($array);
+    }
 }
 
-if ($config -> get('url:query')) {
-	$data = Objects::merge($data, $uri -> query['array']);
-	if (System::server('method') === 'post') {
-		$data = Objects::merge($data, $_POST);
-	}
+if ($config->get('url:query')) {
+    $data = Objects::merge($data, $uri->query['array']);
+    if (System::server('method') === 'post') {
+        $data = Objects::merge($data, $_POST);
+    }
 }
 
-$uri -> setData($data);
+$uri->setData($data);
 
 unset($data);
 */
@@ -91,5 +87,3 @@ unset($data);
 
 // а еще это хотелось бы сделать так, чтобы можно было задавать персональный REST для разных разделов
 // вот это было бы вообще вау-вау
-
-?>

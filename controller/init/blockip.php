@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\Ip;
@@ -17,37 +15,33 @@ use is\Helpers\Ip;
 // для RAM 1 GB это около 2000 одновременных запросов
 // на локальной машине время обработки этих запросов составляет 0.700 сек
 
-$mode = file_get_contents( DR . 'config' . DS . 'ip.mode.ini' );
-$list = file_get_contents( DR . 'config' . DS . 'ip.' . $mode . '.ini' );
+$mode = file_get_contents(DR . 'config' . DS . 'ip.mode.ini');
+$list = file_get_contents(DR . 'config' . DS . 'ip.' . $mode . '.ini');
 $list = json_decode($list, true);
 $block = null;
 
 if (!empty($list)) {
-	
-	$ip = Ip::real();
-	$in_range = Ip::range($ip, $list);
-	
-	if (
-		($mode === 'blacklist' && $in_range) ||
-		($mode === 'whitelist' && !$in_range) ||
-		($mode === 'develop' && !$in_range)
-	) {
-		$block = true;
-	}
-	
+    $ip = Ip::real();
+    $in_range = Ip::range($ip, $list);
+
+    if (
+        ($mode === 'blacklist' && $in_range) ||
+        ($mode === 'whitelist' && !$in_range) ||
+        ($mode === 'develop' && !$in_range)
+    ) {
+        $block = true;
+    }
 }
 
 if ($block) {
-	if ($mode === 'develop') {
-		echo 'System update. Wait...';
-	} elseif ($mode === 'whitelist') {
-		echo 'Your ip not in whitelist';
-	} else {
-		echo 'Your ip in blacklist';
-	}
-	exit;
+    if ($mode === 'develop') {
+        echo 'System update. Wait...';
+    } elseif ($mode === 'whitelist') {
+        echo 'Your ip not in whitelist';
+    } else {
+        echo 'Your ip in blacklist';
+    }
+    exit;
 }
 
 unset($mode, $list, $list, $block);
-
-?>

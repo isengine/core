@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -23,30 +21,28 @@ $file = Generator::getInstance();
 
 // file generator
 
-if ($file -> exists) {
-	$file -> launch();
+if ($file->exists) {
+    $file->launch();
 }
 
 // section
 
-$section = $state -> get('section') && $router -> template['section'] ? 'sections:' . $router -> template['section'] . ':' : null;
+$section = $state->get('section') && $router->template['section'] ? 'sections:' . $router->template['section'] . ':' : null;
 
 // cache header
 
-if (!$state -> get('error') && !$section) {
-	$path = __DIR__;
-	System::includes('cache', $path);
+if (!$state->get('error') && !$section) {
+    $path = __DIR__;
+    System::includes('cache', $path);
 }
 
 // include template
 
 System::includes(
-	'html:' . $section . 'template',
-	$config -> get('path:templates') . $router -> template['name']
+    'html:' . $section . 'template',
+    $config->get('path:templates') . $router->template['name']
 );
 
 //echo '<pre>';
 //echo print_r($path, 1);
 //echo '</pre>';
-
-?>

@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -21,26 +19,26 @@ $state = State::getInstance();
 // инициализация
 
 $error = Error::getInstance();
-$error -> init($config -> get('error:prefix'));
-$error -> postfix = $config -> get('error:postfix');
+$error->init($config->get('error:prefix'));
+$error->postfix = $config->get('error:postfix');
 
 $find = System::server('request');
 
-$path = $error -> path;
+$path = $error->path;
 $code = Strings::get($find, Strings::find($find, $path) + Strings::len($path), 3);
-$path .= $code . $error -> postfix;
+$path .= $code . $error->postfix;
 
 $next = Strings::get($find, Strings::find($find, $path) + Strings::len($path), 1);
 
 // error из пути, согласно заданным настройкам
 
 if (
-	$path &&
-	System::type($code, 'numeric') &&
-	Strings::match($find, $path) &&
-	Objects::match(['', '/', '?', '&'], $next)
+    $path &&
+    System::type($code, 'numeric') &&
+    Strings::match($find, $path) &&
+    Objects::match(['', '/', '?', '&'], $next)
 ) {
-	$state -> set('error', $code);
+    $state->set('error', $code);
 }
 
 //echo '[' . Strings::find($find, $path) . ']<br>';
@@ -54,13 +52,11 @@ if (
 // error из первого параметра get, согласно общепринятой совместимости с настройками из файла htaccess
 
 if (
-	!empty($_GET['error']) &&
-	System::type($_GET['error'], 'numeric') &&
-	Objects::first($_GET, 'key') === 'error'
+    !empty($_GET['error']) &&
+    System::type($_GET['error'], 'numeric') &&
+    Objects::first($_GET, 'key') === 'error'
 ) {
-	$state -> set('error', $_GET['error']);
+    $state->set('error', $_GET['error']);
 }
 
 unset($path, $find, $code);
-
-?>

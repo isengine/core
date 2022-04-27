@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -24,32 +22,30 @@ $uri = Uri::getInstance();
 
 // scheme
 
-$scheme = $config -> get('default:scheme');
+$scheme = $config->get('default:scheme');
 
-if ($scheme && $scheme !== $uri -> scheme) {
-	$uri -> scheme = $scheme;
+if ($scheme && $scheme !== $uri->scheme) {
+    $uri->scheme = $scheme;
 }
 
 unset($scheme);
 
 // www
 
-$www = $config -> get('default:www');
+$www = $config->get('default:www');
 
 if (
-	$www && !$uri -> www
+    $www && !$uri->www
 ) {
-	$uri -> host = 'www.' . $uri -> host;
+    $uri->host = 'www.' . $uri->host;
 } elseif (
-	!$www && $uri -> www
+    !$www && $uri->www
 ) {
-	$uri -> host = substr($uri -> host, 4);
+    $uri->host = substr($uri->host, 4);
 }
 
 unset($www);
 
 // set domain
 
-$uri -> setDomain();
-
-?>
+$uri->setDomain();

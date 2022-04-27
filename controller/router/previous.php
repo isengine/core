@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -22,24 +20,20 @@ $config = Config::getInstance();
 $state = State::getInstance();
 $uri = Uri::getInstance();
 
-if (Sessions::getCookie('current-url') !== $uri -> url) {
-	
-	$current = Sessions::getCookie('current-url');
-	$current = Prepare::clear($current);
-	$current = Prepare::script($current);
-	$current = Prepare::stripTags($current);
-	$current = Prepare::urldecode($current);
-	
-	Sessions::setCookie('previous-url', $current);
-	
-	unset($current);
-	
+if (Sessions::getCookie('current-url') !== $uri->url) {
+    $current = Sessions::getCookie('current-url');
+    $current = Prepare::clear($current);
+    $current = Prepare::script($current);
+    $current = Prepare::stripTags($current);
+    $current = Prepare::urldecode($current);
+
+    Sessions::setCookie('previous-url', $current);
+
+    unset($current);
 }
 
-if (!$state -> get('error')) {
-	Sessions::setCookie('current-url', $uri -> url);
+if (!$state->get('error')) {
+    Sessions::setCookie('current-url', $uri->url);
 }
 
-$uri -> previous = Sessions::getCookie('previous-url');
-
-?>
+$uri->previous = Sessions::getCookie('previous-url');

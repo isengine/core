@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -23,8 +21,6 @@ $state = State::getInstance();
 // только если не была установлена ошибка
 // и только если релоад задан в настройках
 
-if ($uri -> url !== $uri -> original) {
-	Sessions::reload($uri -> url, $state -> get('reload') === 'temporary' ? null : 301);
+if ($uri->url !== $uri->original) {
+    Sessions::reload($uri->url, $state->get('reload') === 'temporary' ? null : 301);
 }
-
-?>

@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -23,22 +21,24 @@ $config = Config::getInstance();
 $state = State::getInstance();
 $user = User::getInstance();
 
-$user -> init();
+$user->init();
 
 // проверяем, разрешены ли пользователи в системе
-if (!$config -> get('users:enable')) {
-	return;
+if (!$config->get('users:enable')) {
+    return;
 }
 
 // загружаем последовательность инициализации
 $path = __DIR__;
 
 // если сессия не была открыта и доступ по api не был разрешен
-if (!(
-	$state -> get('session') ||
-	$state -> get('api') && $state -> get('api') !== true
-)) {
-	return;
+if (
+    !(
+        $state->get('session') ||
+        $state->get('api') && $state->get('api') !== true
+    )
+) {
+    return;
 }
 
 // раньше по условиям проверки было достаточно проверки
@@ -57,21 +57,19 @@ System::includes('settings', $path);
 // инициализация пользователя со всеми данными
 System::includes('data', $path);
 
-if ($config -> get('users:secure')) {
-	// более глубокая проверка пользователя по базе данных
-	// инициализация пользователя по базе данных - смотрим привязки к браузерам и ip
-	System::includes('secure', $path);
+if ($config->get('users:secure')) {
+    // более глубокая проверка пользователя по базе данных
+    // инициализация пользователя по базе данных - смотрим привязки к браузерам и ip
+    System::includes('secure', $path);
 }
 
 // читаем права пользователя
 System::includes('rights', $path);
 
 //$print = Display::getInstance();
-//$print -> dump($user -> getData());
+//$print->dump($user->getData());
 //echo '<hr>';
-//$print -> dump($db);
-//$print -> dump($state);
+//$print->dump($db);
+//$print->dump($state);
 //
 //exit;
-
-?>

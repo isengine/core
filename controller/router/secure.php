@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -32,26 +30,32 @@ $state = State::getInstance();
 $router = Router::getInstance();
 $session = Session::getInstance();
 
-$ip = $session -> get('ip');
-$array = $router -> getData('secure');
+$ip = $session->get('ip');
+$array = Objects::merge(
+    [
+        'type' => null,
+        'list' => null
+    ],
+    $router->getData('secure')
+);
 
 $mode = $array['type'];
 $list = $array['list'];
 
 if (!$mode || !System::typeIterable($list)) {
-	return;
+    return;
 }
 
 $in_range = Ip::range($ip, $list);
 
 if (
-	($mode === 'blacklist' && $in_range) ||
-	($mode === 'whitelist' && !$in_range) ||
-	($mode === 'develop' && !$in_range)
+    ($mode === 'blacklist' && $in_range) ||
+    ($mode === 'whitelist' && !$in_range) ||
+    ($mode === 'develop' && !$in_range)
 ) {
-	$state -> set('error', 401);
-	$state -> set('reason', 'access to template by your ip is not allowed');
-	$state -> set('blockip', true);
+    $state->set('error', 401);
+    $state->set('reason', 'access to template by your ip is not allowed');
+    $state->set('blockip', true);
 }
 
 unset($ip, $array, $mode, $list, $in_range);
@@ -59,5 +63,3 @@ unset($ip, $array, $mode, $list, $in_range);
 //echo '<pre>';
 //echo print_r($router, 1);
 //echo '</pre>';
-
-?>

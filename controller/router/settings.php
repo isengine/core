@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -33,33 +31,31 @@ $router = Router::getInstance();
 
 // читаем данные из настроек шаблона
 
-$path = $config -> get('path:templates') . $router -> template['name'] . DS . 'settings.ini';
+$path = $config->get('path:templates') . $router->template['name'] . DS . 'settings.ini';
 
 $local = Local::readFile($path);
 $local = Parser::fromJson($local);
 
-$router -> setData( $local ? $local : null );
-$router -> addData('mtime', $local ? filemtime($path) : time() );
+$router->setData($local ? $local : null);
+$router->addData('mtime', $local ? filemtime($path) : time());
 
 // читаем настройки шаблона из базы
 
 $db = Database::getInstance();
 
-$db -> collection('templates');
-$db -> driver -> filter -> addFilter('name', $router -> template['name']);
-$db -> launch();
+$db->collection('templates');
+$db->driver->filter->addFilter('name', $router->template['name']);
+$db->launch();
 
-$data = $db -> data -> getFirstData();
+$data = $db->data->getFirstData();
 
 if ($data) {
-	$router -> mergeData( $data, true );
-	$router -> addData('mtime', $db -> data -> getFirst() -> getEntryKey('mtime') );
+    $router->mergeData($data, true);
+    $router->addData('mtime', $db->data->getFirst()->getEntryKey('mtime'));
 }
 
-$db -> clear();
+$db->clear();
 
 //echo '<pre>';
-//echo print_r($router -> getData(), 1);
+//echo print_r($router->getData(), 1);
 //echo '</pre>';
-
-?>

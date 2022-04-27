@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -15,7 +13,6 @@ use is\Components\Display;
 use is\Components\Log;
 use is\Masters\Generator;
 
-
 // читаем user
 
 $config = Config::getInstance();
@@ -24,8 +21,8 @@ $uri = Uri::getInstance();
 
 // Если нет файла, то вообще отменяем этот раздел
 
-if (!$uri -> file) {
-	return;
+if (!$uri->file['name']) {
+    return;
 }
 
 // Определяем тип файла на соответствие настройкам роутинга
@@ -33,29 +30,27 @@ if (!$uri -> file) {
 
 $cancel = null;
 
-if ($config -> get('router:folders:convert')) {
-	
-	$extension = $config -> get('router:folders:extension');
-	$extension = $extension ? $extension : 'php';
-	
-	$index = $config -> get('router:index');
-	$index = $index ? $index : 'index';
-	
-	$add = $config -> get('router:folders:index');
-	$add = $add ? '/' . $index : null;
-	
-	$state -> set('relast', $add . '.' . $extension);
-	
-	if ($uri -> file['extension'] === $extension) {
-		$cancel = true;
-	}
-	
-	unset($extension, $index, $add);
-	
+if ($config->get('router:folders:convert')) {
+    $extension = $config->get('router:folders:extension');
+    $extension = $extension ? $extension : 'php';
+
+    $index = $config->get('router:index');
+    $index = $index ? $index : 'index';
+
+    $add = $config->get('router:folders:index');
+    $add = $add ? '/' . $index : null;
+
+    $state->set('relast', $add . '.' . $extension);
+
+    if ($uri->file['extension'] === $extension) {
+        $cancel = true;
+    }
+
+    unset($extension, $index, $add);
 }
 
 if ($cancel) {
-	return;
+    return;
 }
 
 unset($cancel);
@@ -65,21 +60,21 @@ unset($cancel);
 // то читаем его
 
 $data = [
-	'name' => $uri -> file['name'],
-	'extension' => $uri -> file['extension'],
-	'url' => '/' . $uri -> path['string'],
-	'real' => DI . Paths::toReal($uri -> path['string'])
+    'name' => $uri->file['name'],
+    'extension' => $uri->file['extension'],
+    'url' => '/' . $uri->path['string'],
+    'real' => DI . Paths::toReal($uri->path['string'])
 ];
 
 // Сам файл
 
 $file = Generator::getInstance();
-$file -> init($data);
+$file->init($data);
 
-if ($file -> error) {
-	$state = State::getInstance();
-	$state -> set('error', 404);
-	$state -> set('reason', 'file does not exists');
+if ($file->error) {
+    $state = State::getInstance();
+    $state->set('error', 404);
+    $state->set('reason', 'file does not exists');
 }
 
 unset($data);
@@ -87,5 +82,3 @@ unset($data);
 //echo '<pre>';
 //echo print_r($router, 1);
 //echo '</pre>';
-
-?>

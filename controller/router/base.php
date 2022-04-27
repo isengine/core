@@ -1,7 +1,5 @@
 <?php
 
-// Рабочее пространство имен
-
 namespace is;
 
 use is\Helpers\System;
@@ -32,56 +30,56 @@ $config = Config::getInstance();
 
 // здесь расположен базовый обработчик роутинга
 
-$path = $uri -> path['string'] ? '/' . $uri -> path['string'] : null;
+$path = $uri->path['string'] ? '/' . $uri->path['string'] : null;
 
 // определяем, где в структуре мы находимся
 
-$route = Strings::join($uri -> getRoute(), ':');
+$route = Strings::join($uri->getRoute(), ':');
 
 // составляем путь
 
 if ($route) {
-	if (Objects::match($router -> structure -> getNames(), $route)) {
-		$router -> current = $router -> structure -> getByName($route);
-	} else {
-		$state -> set('error', 404);
-		$state -> set('reason', 'page not found in structure');
-	}
+    if (Objects::match($router->structure->getNames(), $route)) {
+        $router->current = $router->structure->getByName($route);
+    } else {
+        $state->set('error', 404);
+        $state->set('reason', 'page not found in structure');
+    }
 } else {
-	// раньше этого условия не было,
-	// но теперь мы избавляемся от определения домашней страницы в структуре
-	// проблема возникает только с определением и разделением:
-	//   домашней страницы сайта,
-	//   главной страницы шаблона
-	//   секции шаблона, к которому нет доступа
-	$router -> current = new Entry;
-	$router -> current -> addData('link', '/');
+    // раньше этого условия не было,
+    // но теперь мы избавляемся от определения домашней страницы в структуре
+    // проблема возникает только с определением и разделением:
+    //   домашней страницы сайта,
+    //   главной страницы шаблона
+    //   секции шаблона, к которому нет доступа
+    $router->current = new Entry();
+    $router->current->addData('link', '/');
 }
 
 // сравниваем урл структуры с тем, который сейчас
 // и если нет совпадения, то переназначаем текущий урл
 // сохраняя при этом параметры строки
 
-$link = $router -> current -> data['link'];
+$link = $router->current->data['link'];
 
 //echo $link . '<br>';
 //echo $path . '<br>';
 
 if ($path && !Strings::find($path, $link, 0)) {
-	$state -> set('error', 404);
-	$state -> set('reason', 'page not found in structure');
+    $state->set('error', 404);
+    $state->set('reason', 'page not found in structure');
 }
 
 // секции
 
-if ($state -> get('error') === 404) {
-	$section = Objects::first($uri -> getRoute(), 'value');
-	if (
-		$section &&
-		Local::matchFolder($config -> get('path:templates') . $section)
-	) {
-		$state -> set('section', $section);
-	}
+if ($state->get('error') === 404) {
+    $section = Objects::first($uri->getRoute(), 'value');
+    if (
+        $section &&
+        Local::matchFolder($config->get('path:templates') . $section)
+    ) {
+        $state->set('section', $section);
+    }
 }
 
 // во-первых, мы должны разобрать урл, определить, где в структуре мы находимся
@@ -116,10 +114,8 @@ if ($state -> get('error') === 404) {
 // и установки, переноса из одного проекта в другой
 
 //echo '<pre>';
-//echo print_r($uri -> url, 1) . '<br>';
-//echo print_r($uri -> original, 1) . '<br>';
+//echo print_r($uri->url, 1) . '<br>';
+//echo print_r($uri->original, 1) . '<br>';
 //echo print_r($uri, 1);
 //echo print_r($router, 1);
 //echo '</pre>';
-
-?>
