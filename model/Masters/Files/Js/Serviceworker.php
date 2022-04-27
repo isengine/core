@@ -29,7 +29,13 @@ class Serviceworker extends Master
         $webapp = $view->get('state|settings:webapp');
         $icons = $view->get('icon|data');
 
-        $path = DI . (!empty($webapp['serviceworker']['path']) ? str_replace(':', DS, $webapp['serviceworker']['path']) . DS : null) . $webapp['serviceworker']['name'];
+        $path = DI . (
+            !empty($webapp['serviceworker']['path']) ? str_replace(
+                ':',
+                DS,
+                $webapp['serviceworker']['path']
+            ) . DS : null
+        ) . $webapp['serviceworker']['name'];
         $sw = null;
         if (!empty($webapp['serviceworker']['name'])) {
             if (file_exists($path)) {

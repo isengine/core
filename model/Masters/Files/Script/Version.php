@@ -14,7 +14,7 @@ header('Content-Type: text/html; charset=UTF-8');
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>isENGINE system info</title>
+    <title>isEngine Framework system info</title>
 </head>
 <body>
 
@@ -23,9 +23,9 @@ header('Content-Type: text/html; charset=UTF-8');
 
     <p><strong>System Info</strong></p>
     <p>
-        Platform: isENGINE
+        Platform: isEngine Framework
         <br>
-        Version: <?= isENGINE; ?>
+        Version: <?= ISENGINE; ?>
         <br>
         Server: <?= System::server('SERVER_SOFTWARE', true); ?>
         <br>

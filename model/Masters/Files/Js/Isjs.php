@@ -21,8 +21,8 @@ class Isjs extends Master
 
         $file = DR . 'vendor' . DS . 'isengine' . DS . 'isjs' . DS . 'init.php';
         if (file_exists($file)) {
-            if (!defined('isOPTIONS')) {
-                define('isOPTIONS', json_encode([
+            if (!defined('ISOPTIONS')) {
+                define('ISOPTIONS', json_encode([
                     'path' => Paths::toUrl(Strings::get($config->get('path:assets'), Strings::len(DI)))
                 ]));
             }

@@ -12,7 +12,7 @@ use is\Components\Uri;
 use is\Masters\View;
 use is\Masters\Files\Master;
 
-class Isjs_min extends Master
+class Isjsmin extends Master
 {
     public function launch()
     {
@@ -21,8 +21,8 @@ class Isjs_min extends Master
 
         $file = DR . 'vendor' . DS . 'isengine' . DS . 'isjs' . DS . 'init.php';
         if (file_exists($file)) {
-            if (!defined('isOPTIONS')) {
-                define('isOPTIONS', json_encode([
+            if (!defined('ISOPTIONS')) {
+                define('ISOPTIONS', json_encode([
                     'path' => Paths::toUrl(
                         Strings::get($config->get('path:assets'), Strings::len(DI))
                     ),

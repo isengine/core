@@ -12,7 +12,7 @@ use is\Components\Session;
 
 $state = State::getInstance();
 
-if (Sessions::getCookie('isENGINE')) {
+if (Sessions::getCookie('isengine')) {
     $state->set('cookie', true);
 } else {
     // работа алгоритма ниже достаточно относительна,
@@ -23,5 +23,5 @@ if (Sessions::getCookie('isENGINE')) {
 
     $state->set('cookie', false);
     $time = (new \DateTime())->getTimestamp();
-    Sessions::setCookie('isENGINE', $time);
+    Sessions::setCookie('isengine', $time);
 }
