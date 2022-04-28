@@ -4,12 +4,18 @@ namespace is\Masters\Extenders\Tvars;
 
 use is\Helpers\Strings;
 use is\Helpers\Prepare;
+use is\Helpers\Objects;
 use is\Components\Language;
 
 class Whatsapp extends Master
 {
     public function launch($data)
     {
+        $data = Objects::createByIndex(
+            [0, 1, 2, 3],
+            $data
+        );
+
         $phone = $data[0];
         $class = $data[1] ? ' class="' . $data[1] . '"' : null;
 

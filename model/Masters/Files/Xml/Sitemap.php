@@ -37,22 +37,25 @@ class Sitemap extends Master
 
         // читаем пользовательские настройки карты
 
-        $settings = Objects::merge([
-            'lastmod' => DATE_ATOM,
-            'changefreq' => [
-                'domain' => 'monthly',
-                'main' => 'daily',
-                'inner' => 'weekly',
-                'content' => 'monthly'
+        $settings = Objects::create(
+            [
+                'lastmod' => DATE_ATOM,
+                'changefreq' => [
+                    'domain' => 'monthly',
+                    'main' => 'daily',
+                    'inner' => 'weekly',
+                    'content' => 'monthly'
+                ],
+                'priority' => [
+                    'domain' => '1.0',
+                    'main' => '1.0',
+                    'inner' => '0.6',
+                    'content' => '0.8'
+                ],
+                'counter' => 50000
             ],
-            'priority' => [
-                'domain' => '1.0',
-                'main' => '1.0',
-                'inner' => '0.6',
-                'content' => '0.8'
-            ],
-            'counter' => 50000
-        ], $view->get('state|settings:sitemap'), true);
+            $view->get('state|settings:sitemap')
+        );
 
         // формируем базовые ссылки
 

@@ -69,12 +69,10 @@ if ($type !== 'content') {
 $array = Objects::reset(Objects::get($route, $id));
 $len = Objects::len($array) > 1;
 
-$router->content = [
-    'name' => $len ? Objects::last($array, 'value') : null,
-    'parents' => $len ? Objects::unlast($array) : $array
-    //'name' => Objects::first(Objects::get($route, $last), 'value'),
-    //'parents' => Objects::get($route, $id, $last - $id)
-];
+$router->content['name'] = $len ? Objects::last($array, 'value') : null;
+$router->content['parents'] = $len ? Objects::unlast($array) : $array;
+//'name' => Objects::first(Objects::get($route, $last), 'value'),
+//'parents' => Objects::get($route, $id, $last - $id)
 
 $route = Objects::get($route, 0, $last);
 

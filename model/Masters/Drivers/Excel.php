@@ -30,13 +30,7 @@ class Excel extends Master
     {
         $json = json_encode($this->filter) . json_encode($this->fields) . json_encode($this->rights);
         $path = $this->path . $this->collection;
-        $this->hash = (Local::matchFile($path) ? md5_file($path) : 0) . '.' . md5($json) . '.' . Strings::len($json);
-        if (isset($this->settings['all'])) {
-            $this->hash .= '.' . (int) $this->settings['all'];
-        }
-        if (isset($this->settings['limit'])) {
-            $this->hash .= '.' . $this->settings['limit'];
-        }
+        $this->hash = (Local::matchFile($path) ? md5_file($path) : 0) . '.' . md5($json) . '.' . Strings::len($json) . '.' . (int) $this->settings['all'] . '.' . (int) $this->settings['limit'];
     }
 
     public function read()
@@ -154,10 +148,7 @@ class Excel extends Master
                         // задавать значение по-умолчанию и преобразовывать в массив или в строку
                         // Теперь не нужно задавать это в настройках контента - так намного мощнее
 
-                        if (
-                            isset($this->settings['encoding']) &&
-                            $this->settings['encoding']
-                        ) {
+                        if (!empty($this->settings['encoding'])) {
                             $i = mb_convert_encoding($i, 'UTF-8', $this->settings['encoding']);
                         }
                         if (Strings::match($k, ':')) {
@@ -184,16 +175,10 @@ class Excel extends Master
                     if (System::typeIterable($this->parent)) {
                         $entry['parents'] = Objects::add($this->parent, $entry['parents']);
                     }
-                    if (
-                        !isset($entry['ctime']) ||
-                        !$entry['ctime']
-                    ) {
+                    if (empty($entry['ctime'])) {
                         $entry['ctime'] = $stat['ctime'];
                     }
-                    if (
-                        !isset($entry['mtime']) ||
-                        !$entry['mtime']
-                    ) {
+                    if (empty($entry['mtime'])) {
                         $entry['mtime'] = $stat['mtime'];
                     }
 

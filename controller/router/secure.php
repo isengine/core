@@ -31,11 +31,8 @@ $router = Router::getInstance();
 $session = Session::getInstance();
 
 $ip = $session->get('ip');
-$array = Objects::merge(
-    [
-        'type' => null,
-        'list' => null
-    ],
+$array = Objects::createByIndex(
+    ['type', 'list'],
     $router->getData('secure')
 );
 

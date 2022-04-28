@@ -4,15 +4,21 @@ namespace is\Masters\Extenders\Tvars;
 
 use is\Helpers\Prepare;
 use is\Components\Language;
+use is\Helpers\Objects;
 
 class Phone extends Master
 {
     public function launch($data)
     {
-        $url = $data[0];
-        $class = !empty($data[1]) ? ' class="' . $data[1] . '"' : null;
+        $data = Objects::createByIndex(
+            [0, 1, 2],
+            $data
+        );
 
-        if (empty($data[2])) {
+        $url = $data[0];
+        $class = $data[1] ? ' class="' . $data[1] . '"' : null;
+
+        if (!$data[2]) {
             $data[2] = $url;
         }
 

@@ -5,6 +5,7 @@ namespace is\Masters\Extenders\Tvars;
 use is\Helpers\Strings;
 use is\Helpers\Paths;
 use is\Helpers\Local;
+use is\Helpers\Objects;
 
 class Img extends Master
 {
@@ -18,6 +19,11 @@ class Img extends Master
         // <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
         // lozad('.demilazyload').observe();
         // lozad( document.querySelector('img') ).observe();
+
+        $data = Objects::createByIndex(
+            [0, 1, 2, 3],
+            $data
+        );
 
         $result = [
             Local::matchUrl($data[0], true),

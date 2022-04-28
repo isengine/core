@@ -3,11 +3,17 @@
 namespace is\Masters\Extenders\Tvars;
 
 use is\Helpers\System;
+use is\Helpers\Objects;
 
 class Youtube extends Master
 {
     public function launch($data)
     {
+        $data = Objects::createByIndex(
+            [0, 1, 2],
+            $data
+        );
+
         $target = $data[1];
         if ($target === 'image') {
             $type = System::set($data[2]) ? $data[2] : 'maxresdefault';

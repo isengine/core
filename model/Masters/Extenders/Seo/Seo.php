@@ -64,7 +64,6 @@ class Seo extends Tvars
 
         if (
             $this->getData('content') &&
-            isset($router->content['name']) &&
             $router->content['name']
         ) {
             $this->launchByContent();

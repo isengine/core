@@ -22,10 +22,12 @@ class Router extends Globals
     public function init()
     {
         $this->structure = new Structure();
-        $this->template = [
-            'name' => null,
-            'section' => null
-        ];
+        $this->template = Objects::createByIndex(
+            ['name', 'section']
+        );
+        $this->content = Objects::createByIndex(
+            ['name', 'parents', 'link']
+        );
     }
 
     public function setStructure($data)
