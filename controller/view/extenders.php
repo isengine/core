@@ -56,11 +56,12 @@ $view->add('icon');
 $view->add('render');
 
 $view->get('render')->init(
-    $config->get('path:templates') . $router->template['name'] . DS, // from
-    $config->get('path:assets') . Paths::toReal($router->template['name']) . DS, // to
-    '/' . Paths::toUrl(Strings::get($config->get('path:assets'), Strings::len(DI))) . $router->template['name'] . '/' // url
-    //DI . Paths::toReal(Paths::clearSlashes($config->get('path:assets'))) . DS . Paths::toReal($router->template['name']) . DS, // to
-    //'/' . Paths::toUrl(Paths::clearSlashes($config->get('path:assets'))) . '/' . $router->template['name'] . '/' // url
+    // from
+    $config->get('path:templates') . $router->template['name'] . DS,
+    // to
+    $config->get('path:assets') . Paths::toReal($router->template['name']) . DS,
+    // url
+    '/' . Paths::toUrl(Strings::get($config->get('path:assets'), Strings::len(DI))) . $router->template['name'] . '/'
 );
 
 // запускаем обнаружение устройств

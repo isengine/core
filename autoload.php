@@ -2,7 +2,7 @@
 
 namespace is;
 
-$path = realpath(__DIR__ . DS . DP . DP . DP) . DS;
+$path = realpath(__DIR__ . DS . DP . DP) . DS;
 
 $autoload = $path . 'autoload.php';
 
@@ -36,7 +36,7 @@ if (file_exists($autoload)) {
 
     $paths = [
         'app' => $path['app'] ? DR . preg_replace('/[\:\/\\\\]+/ui', DS, $path['app']) . DS : null,
-        'core' => realpath(__DIR__ . DS . DP . 'model') . DS,
+        'core' => realpath(__DIR__ . DS . 'model') . DS,
         'vendors' => $path['vendors'] ? DR . preg_replace('/[\:\/\\\\]+/ui', DS, $path['vendors']) . DS : null
     ];
 

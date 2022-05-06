@@ -36,7 +36,10 @@ if ($cache === 'default' || !$cache_custom) {
     $cache = Parser::fromString($cache_default);
 }
 
-$set_time = System::typeIterable($cache) ? (int) $cache[0] * ($cache[1] ? $config->get('time:' . $cache[1]) : 1) : (int) $cache;
+$set_time =
+    System::typeIterable($cache)
+    ? (int) $cache[0] * ($cache[1] ? $config->get('time:' . $cache[1]) : 1)
+    : (int) $cache;
 $now_time = time();
 
 if (!$set_time) {
@@ -63,10 +66,20 @@ Sessions::setHeader($data);
 $start_time = $cache_time - $set_time;
 
 $uri = Uri::getInstance();
-$page = $config->get('path:templates') . $router->template['name'] . DS . 'html' . DS . 'inner' . DS . (System::set($uri->getRoute()) ? Strings::join($uri->getRoute(), DS) : 'index') . '.php';
+
+$page =
+    $config->get('path:templates') .
+    $router->template['name'] . DS . 'html' . DS . 'inner' . DS .
+    (
+        System::set($uri->getRoute())
+        ? Strings::join($uri->getRoute(), DS)
+        : 'index'
+    ) . '.php';
+
 $page_time = file_exists($page) ? filemtime($page) : null;
 
 $template = $config->get('path:templates') . $router->template['name'] . DS . 'html' . DS . 'template.php';
+
 $template_time = file_exists($template) ? filemtime($template) : null;
 
 $settings_time = $router->getData('mtime');

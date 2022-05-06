@@ -164,6 +164,10 @@ if (!$user->data->getData()) {
         // это защитит от какого-либо несанкционированного взлома
         // или, по крайней мере, от случайного доступа к чужому аккаунту
 
-        error('403', true, 'more than one user with specified name or value of another authorised field was found in database');
+        error(
+            '403',
+            true,
+            'more than one user with specified name or value of another authorised field was found in database'
+        );
     }
     */

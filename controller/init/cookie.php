@@ -20,8 +20,6 @@ if (Sessions::getCookie('isengine')) {
     // но он позволяет не делать многократной переинициализации сессии, ajax запросы и т.п.
     // в дополнение к нему, существует блок check, который срабатывает, если !state/cookie
     // он пробует проинициализировать куки и скрипты и выводит сообщение об ошибке
-
     $state->set('cookie', false);
-    $time = (new \DateTime())->getTimestamp();
-    Sessions::setCookie('isengine', $time);
+    Sessions::setCookie('isengine', time());
 }

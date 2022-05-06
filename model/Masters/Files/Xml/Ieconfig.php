@@ -55,8 +55,10 @@ class Ieconfig extends Master
         </tile>
         <?php /*
         <notification>
-            <polling-uri src="/notifications/contoso1.xml"/> // ссылка на новости или статьи, разрешено до 5 элементов polling-uri2 ... polling-uri5
-            <frequency>30</frequency> // обновление в минутах: 30, 60, 360, 720 или 1440 (в часах это 0.5, 1, 6, 12 и 24)
+            <polling-uri src="/notifications/contoso1.xml"/>
+            // ссылка на новости или статьи, разрешено до 5 элементов polling-uri2 ... polling-uri5
+            <frequency>30</frequency>
+            // обновление в минутах: 30, 60, 360, 720 или 1440 (в часах это 0.5, 1, 6, 12 и 24)
             <cycle>1</cycle>
         </notification>
         */?>

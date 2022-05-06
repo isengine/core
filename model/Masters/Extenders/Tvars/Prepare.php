@@ -2,7 +2,7 @@
 
 namespace is\Masters\Extenders\Tvars;
 
-use is\Helpers\Prepare;
+use is\Helpers\Prepare as HelpersPrepare;
 use is\Helpers\Objects;
 
 class Prepare extends Master
@@ -15,6 +15,6 @@ class Prepare extends Master
         );
 
         $name = $data[0];
-        return Prepare::$name($data[1]);
+        return HelpersPrepare::$name($data[1]);
     }
 }

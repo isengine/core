@@ -23,7 +23,16 @@ class Youtube extends Master
         } else {
             $width = System::set($data[1]) ? $data[1] : '100%';
             $height = System::set($data[2]) ? $data[2] : '100%';
-            return '<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/' . $data[0] . '" title="YouTube Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+            return
+                '<iframe
+                    width="' . $width . '"
+                    height="' . $height . '"
+                    src="https://www.youtube.com/embed/' . $data[0] . '"
+                    title="YouTube Video"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>';
         }
     }
 }

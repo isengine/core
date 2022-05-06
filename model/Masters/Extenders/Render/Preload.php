@@ -20,6 +20,13 @@ class Preload extends Master
         $type = $i[0];
         $link = $i[1];
 
-        return '<link rel="preload" href="' . Paths::prepareUrl($link) . '" as="' . $as . '" ' . ($type ? 'type="' . $type . '" ' : null) . 'crossorigin="anonymous">';
+        return
+            '<link
+                rel="preload"
+                href="' . Paths::prepareUrl($link) . '"
+                as="' . $as . '"
+                ' . ($type ? 'type="' . $type . '" ' : null) . '
+                crossorigin="anonymous"
+            >';
     }
 }

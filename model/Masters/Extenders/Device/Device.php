@@ -11,6 +11,7 @@ use is\Helpers\System;
 use is\Helpers\Matches;
 use is\Helpers\Paths;
 use is\Parents\Data;
+use Detection\MobileDetect;
 
 class Device extends Data
 {
@@ -20,7 +21,7 @@ class Device extends Data
 
     public function __construct()
     {
-        $mobiledetect = new \Detection\MobileDetect();
+        $mobiledetect = new MobileDetect();
 
         $this->type = $mobiledetect->isMobile() ? ($mobiledetect->isTablet() ? 'tablet' : 'mobile') : 'desktop';
 

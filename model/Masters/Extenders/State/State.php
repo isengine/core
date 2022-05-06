@@ -54,7 +54,10 @@ class State extends Data
 
             'match' => [
                 'home' => !System::typeIterable($uri->route),
-                'main' => !System::typeIterable($uri->route) || Objects::len($uri->route) === 1 && Objects::first($uri->route, 'value') === $main
+                'main' =>
+                    !System::typeIterable($uri->route) ||
+                    Objects::len($uri->route) === 1 &&
+                    Objects::first($uri->route, 'value') === $main
             ],
 
             'mail' => $config->get('users:email'),

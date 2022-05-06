@@ -22,13 +22,15 @@ $uri = Uri::getInstance();
 
 if (Sessions::getCookie('current-url') !== $uri->url) {
     $current = Sessions::getCookie('current-url');
-    $current = Prepare::clear($current);
-    $current = Prepare::script($current);
-    $current = Prepare::stripTags($current);
-    $current = Prepare::urldecode($current);
-
+    if ($current) {
+        $current = Prepare::clear($current);
+        $current = Prepare::script($current);
+        $current = Prepare::stripTags($current);
+        $current = Prepare::urldecode($current);
+    } else {
+        $current = '';
+    }
     Sessions::setCookie('previous-url', $current);
-
     unset($current);
 }
 

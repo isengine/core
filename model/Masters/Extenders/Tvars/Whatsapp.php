@@ -26,6 +26,14 @@ class Whatsapp extends Master
         $lang = Language::getInstance();
         $phone = Strings::unfirst(Prepare::phone($phone, $lang->get('lang')));
 
-        return '<a href="https://wa.me/' . $phone . $data[3] . '" alt="' . Prepare::tags($data[2]) . '"' . $class . ' target="blank">' . $data[2] . '</a>';
+        return
+            '<a
+                href="https://wa.me/' . $phone . $data[3] . '"
+                alt="' . Prepare::tags($data[2]) . '"' .
+                $class .
+                'target="blank"
+            >' .
+            $data[2] .
+            '</a>';
     }
 }

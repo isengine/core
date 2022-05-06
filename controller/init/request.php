@@ -8,7 +8,7 @@ use is\Helpers\Sessions;
 use is\Helpers\Paths;
 use is\Helpers\System;
 use is\Helpers\Parser;
-use is\Helpers\Matcheses;
+use is\Helpers\Matches;
 use is\Helpers\Local;
 use is\Components\Session;
 use is\Components\Config;

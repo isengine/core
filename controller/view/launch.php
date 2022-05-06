@@ -27,7 +27,10 @@ if ($file->exists) {
 
 // section
 
-$section = $state->get('section') && $router->template['section'] ? 'sections:' . $router->template['section'] . ':' : null;
+$section =
+    $state->get('section') && $router->template['section']
+    ? 'sections:' . $router->template['section'] . ':'
+    : null;
 
 // cache header
 

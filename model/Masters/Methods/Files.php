@@ -12,6 +12,11 @@ use is\Helpers\Matches;
 
 class Files extends Master
 {
+    public function launch()
+    {
+        echo print_r($this->getData(), 1);
+    }
+
     public function txt()
     {
         echo print_r($this->getData(), 1);

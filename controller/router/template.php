@@ -94,7 +94,10 @@ if ($array['section'] && $array['error']) {
     if (!Objects::match($templates, $array['section'])) {
         $array['section'] = null;
     } else {
-        $templates = Local::search($config->get('path:templates') . $array['section'] . DS . 'html' . DS . 'sections' . DS, ['return' => 'folders']);
+        $templates = Local::search(
+            $config->get('path:templates') . $array['section'] . DS . 'html' . DS . 'sections' . DS,
+            ['return' => 'folders']
+        );
 
         if (System::typeIterable($templates)) {
             foreach ($templates['folders'] as $item) {

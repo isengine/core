@@ -60,7 +60,9 @@ if ($state->get('session')) {
     unset($item);
 
     if (
-        //!$state->get('request') || // ----- очевидно, это логическая ошибка! он еще не задан, и всегда будет проходить проверку, т.е. всегда будет выдана ошибка, однако убрав его отсюда - он останется в определении реквеста
+        //!$state->get('request') ||
+        //очевидно, это логическая ошибка! он еще не задан, и всегда будет проходить проверку,
+        //т.е. всегда будет выдана ошибка, однако убрав его отсюда - он останется в определении реквеста
         Sessions::getCookie('session') !== $token ||
         $token_time > $time ||
         !$token_verify
@@ -68,7 +70,10 @@ if ($state->get('session')) {
         $session->close();
 
         $state->set('error', 403);
-        $state->set('reason', 'bad session token or not is origin, see php session configuration and maybe session or cookies were stolen');
+        $state->set(
+            'reason',
+            'bad session token or not is origin, see php session configuration and maybe session or cookies were stolen'
+        );
     } elseif ($session_time && ($token_time < $time - $session_time)) {
         // если время токена слишком устарело
         // обновляем сессию

@@ -30,7 +30,12 @@ class Excel extends Master
     {
         $json = json_encode($this->filter) . json_encode($this->fields) . json_encode($this->rights);
         $path = $this->path . $this->collection;
-        $this->hash = (Local::matchFile($path) ? md5_file($path) : 0) . '.' . md5($json) . '.' . Strings::len($json) . '.' . (int) $this->settings['all'] . '.' . (int) $this->settings['limit'];
+        $this->hash =
+            (Local::matchFile($path) ? md5_file($path) : 0) . '.' .
+            md5($json) . '.' .
+            Strings::len($json) . '.' .
+            (int) $this->settings['all'] . '.' .
+            (int) $this->settings['limit'];
     }
 
     public function read()
@@ -58,7 +63,8 @@ class Excel extends Master
         // Общие настройки
 
         // rowkeys - номер строки, откуда берутся ключи или массив с ключами
-        // rowskip - номера строк (в виде текста или массива) которые нужно пропустить (обычно rowkeys тоже должен сюда входить)
+        // rowskip - номера строк (в виде текста или массива) которые нужно пропустить
+        // (обычно rowkeys тоже должен сюда входить)
         // colskip - номера колонок (в виде текста или массива) которые нужно пропустить
         // sheets - номера листов (в виде текста или массива) которые нужно обработать
         // fill - номер поля/колонки, который будет браться для заполнения (см. метод 'fields' в мастере)
@@ -70,18 +76,50 @@ class Excel extends Master
         // "colskip" : "0:2",
         // "fill" : 1,
 
-        $rowkeys = $this->settings['rowkeys'] ? $this->settings['rowkeys'] : 0;
+        $rowkeys =
+            $this->settings['rowkeys']
+            ? $this->settings['rowkeys']
+            : 0;
 
-        $rowskip = $this->settings['rowskip'] ? (is_array($this->settings['rowskip']) ? $this->settings['rowskip'] : Objects::convert($this->settings['rowskip'])) : [];
+        $rowskip =
+            $this->settings['rowskip']
+            ? (
+                is_array($this->settings['rowskip'])
+                ? $this->settings['rowskip']
+                : Objects::convert($this->settings['rowskip'])
+            )
+            : [];
 
-        $colskip = $this->settings['colskip'] ? (is_array($this->settings['colskip']) ? $this->settings['colskip'] : Objects::convert($this->settings['colskip'])) : [];
+        $colskip =
+            $this->settings['colskip']
+            ? (
+                is_array($this->settings['colskip'])
+                ? $this->settings['colskip']
+                : Objects::convert($this->settings['colskip'])
+            )
+            : [];
+
         $colskip_true = System::set($colskip);
 
         $keys = System::typeOf($rowkeys, 'iterable') ? $rowkeys : $excel->rows()[$rowkeys];
 
-        $sheets = System::set($this->settings['sheets']) ? (is_array($this->settings['sheets']) ? $this->settings['sheets'] : Objects::convert($this->settings['sheets'])) : Objects::keys($excel->sheetNames());
+        $sheets =
+            System::set($this->settings['sheets'])
+            ? (
+                is_array($this->settings['sheets'])
+                ? $this->settings['sheets']
+                : Objects::convert($this->settings['sheets'])
+            )
+            : Objects::keys($excel->sheetNames());
 
-        $fill = System::typeOf($this->settings['fill'], 'scalar') ? (System::type($this->settings['fill'], 'numeric') ? System::typeTo($this->settings['fill'], 'numeric') : $this->settings['fill']) : null;
+        $fill =
+            System::typeOf($this->settings['fill'], 'scalar')
+            ? (
+                System::type($this->settings['fill'], 'numeric')
+                ? System::typeTo($this->settings['fill'], 'numeric')
+                : $this->settings['fill']
+            )
+            : null;
 
         $fill_val = null;
 

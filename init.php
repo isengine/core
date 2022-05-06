@@ -2,11 +2,11 @@
 
 // Подключаем базовые константы
 
-require_once 'controller' . DIRECTORY_SEPARATOR . 'constants.php';
+require_once 'constants.php';
 
 // Подключаем загрузку библиотек и расширений ядра
 
-require_once 'controller' . DIRECTORY_SEPARATOR . 'autoload.php';
+require_once 'autoload.php';
 
 // Подключаем контроллер ядра
 

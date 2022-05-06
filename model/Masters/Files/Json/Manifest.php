@@ -27,9 +27,18 @@ class Manifest extends Master
         $path = $view->get('state|domain') . $icons['settings']['path'] . '/';
 
         $json = [
-            'name' => html_entity_decode(!empty($webapp['name']) ? $webapp['name'] : $view->get('lang|title')),
-            'short_name' => html_entity_decode(!empty($webapp['short_name']) ? $webapp['short_name'] : $view->get('lang|title')),
-            'description' => html_entity_decode(!empty($webapp['description']) ? $webapp['description'] : $view->get('lang|description')),
+            'name' =>
+                html_entity_decode(!empty($webapp['name'])
+                ? $webapp['name']
+                : $view->get('lang|title')),
+            'short_name' =>
+                html_entity_decode(!empty($webapp['short_name'])
+                ? $webapp['short_name']
+                : $view->get('lang|title')),
+            'description' =>
+                html_entity_decode(!empty($webapp['description'])
+                ? $webapp['description']
+                : $view->get('lang|description')),
             'theme_color' => $webapp['color'],
             'background_color' => $webapp['background'],
             'display' => !empty($webapp['display']) ? $webapp['display'] : 'standalone',

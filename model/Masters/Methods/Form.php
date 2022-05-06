@@ -186,7 +186,11 @@ class Form extends Master
         // при этом, если спам был обнаружен, выводится ошибка
         // и дальнейшие операции прерываются
 
-        $spam = !isset($this->getData($field)) || System::set($this->getData($field));
+        $field = $this->getData($field);
+        $spam = $field === null || System::set($field);
+        // раньше было !isset($field)
+        // условие странное, потому что $field уже будет задан
+        // но нам нужна проверка на совершенно пустое значение, даже не 0 и ''
         if ($break && $spam) {
             $this->break($break);
         }
@@ -263,8 +267,12 @@ class Form extends Master
         if ($config->get('url:query')) {
             $string .= Paths::queryJoin($array);
         } else {
-            $string .= System::type($config->get('url:rest'), 'numeric') ? null : (Strings::last($string) === '/' ? null : '/') . $config->get('url:rest') . '/';
+            $string .=
+                System::type($config->get('url:rest'), 'numeric')
+                ? null
+                : (Strings::last($string) === '/' ? null : '/') . $config->get('url:rest') . '/';
             $string .= $string .= Paths::restJoin($array);
+            // это никакая не ошибка?
         }
 
         Sessions::reload($string);

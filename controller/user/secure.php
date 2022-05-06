@@ -77,8 +77,12 @@ if ($user->getFieldsBySpecial('ban')) {
         // он уже массив, так что никаких дополнительных условий делать не нужно
         // разве только узнать имя поля в базе данных пользователя
     } elseif (!$allow['ip'] && $allow['agent']) {
-        //logging('security user verification - unknown ip but known agent, ip will be added in list with extended diapason');
-        //echo 'security user verification - unknown ip but known agent, ip will be added in list with extended diapason';
+        //$l = '
+        //  security user verification -
+        //  unknown ip but known agent, ip will be added in list with extended diapason
+        //';
+        //logging($l);
+        //echo $l;
 
         $user->addFieldsBySpecial('allowip', $allow['session_ip']);
 
@@ -86,8 +90,12 @@ if ($user->getFieldsBySpecial('ban')) {
         // он уже массив, так что никаких дополнительных условий делать не нужно
         // разве только узнать имя поля в базе данных пользователя
     } elseif (!$allow['ip'] && !$allow['agent']) {
-        //echo 'security user verification - unknown ip and agent, user must be notified and added this in lists';
-        //logging('security user verification - unknown ip and agent, user must be notified and added this in lists');
+        //$l = '
+        //  security user verification -
+        //  unknown ip and agent, user must be notified and added this in lists
+        //';
+        //logging($l);
+        //echo $l;
     }
 
     unset($allow);
