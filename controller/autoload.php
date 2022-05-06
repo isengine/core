@@ -58,7 +58,9 @@ if (file_exists($autoload)) {
             if ($module) {
                 $patha = implode(DS, array_slice($array, 0, 4));
                 $pathb = implode(DS, array_slice($array, 3));
-                $file = $item . ($key === 'vendors' && $vendors ? $vendors : $patha) . DS . 'class' . DS . $pathb . '.php';
+                $file = $item . (
+                    $key === 'vendors' && $vendors ? $vendors : $patha
+                ) . DS . 'class' . DS . $pathb . '.php';
                 unset($patha, $pathb);
                 if (file_exists($file)) {
                     require_once $file;

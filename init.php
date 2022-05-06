@@ -1,31 +1,15 @@
 <?php
 
-namespace is;
+// Подключаем базовые константы
 
-// Базовые константы
+require_once 'controller' . DIRECTORY_SEPARATOR . 'constants.php';
 
-if (!defined('ISENGINE')) {
-    define('ISENGINE', microtime(true));
-}
-if (!defined('DS')) {
-    define('DS', DIRECTORY_SEPARATOR);
-}
-if (!defined('DP')) {
-    define('DP', '..' . DIRECTORY_SEPARATOR);
-}
-if (!defined('DI')) {
-    define('DI', realpath($_SERVER['DOCUMENT_ROOT']) . DS);
-}
-if (!defined('DR')) {
-    define('DR', realpath(__DIR__ . DS . DP . DP . DP) . DS);
-}
+// Подключаем загрузку библиотек и расширений ядра
 
-// Подключаем загрузку фреймворка, расширений ядра и классов, вручную прописанных в конфигурации
-
-require_once 'controller' . DS . 'autoload.php';
+require_once 'controller' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 // Подключаем контроллер ядра
 
-require_once 'controller' . DS . 'controller.php';
+require_once 'controller' . DIRECTORY_SEPARATOR . 'controller.php';
 
 exit;
