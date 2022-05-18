@@ -156,10 +156,10 @@ if (!$index_file) {
 // конвертация
 
 if (
-    $convert_to &&
-    $convert_from &&
-    $file &&
-    Objects::match($convert_from, $file['extension'])
+    $convert_to
+    && $convert_from
+    && $file
+    && Objects::match($convert_from, $file['extension'])
 ) {
     Objects::relast($route, $file['name'] . '.' . $convert_to);
     $uri->setFromArray();
@@ -252,9 +252,9 @@ if ($folders_convert) {
             unset($last);
         }
     } elseif (
-        !$folders_index &&
-        $file['name'] === $index_file &&
-        $file['extension'] === $folders_extension
+        !$folders_index
+        && $file['name'] === $index_file
+        && $file['extension'] === $folders_extension
     ) {
         // отдельный случай для индексных файлов, когда наша цель - папка
         // но при этом есть индексный файл, а преобразование в индексный файл не задано
@@ -262,17 +262,17 @@ if ($folders_convert) {
         $route = Objects::unlast($route);
     }
 } elseif (
-    $file &&
-    ($files_convert || $files_index) &&
-    Objects::match($files_extension, $file['extension'])
+    $file
+    && ($files_convert || $files_index)
+    && Objects::match($files_extension, $file['extension'])
 ) {
     // если наша цель - файл
     // его расширение входит в список допустимых к обработке
     // и при этом есть настройки преобразования файла в папку
 
     if (
-        $files_index &&
-        $file['name'] === $index_file
+        $files_index
+        && $file['name'] === $index_file
     ) {
         // если задано преобразование индексных файлов
         // и текущий файл является индексным
@@ -281,8 +281,8 @@ if ($folders_convert) {
     }
 
     if (
-        $files_convert &&
-        $file['name'] !== $index_file
+        $files_convert
+        && $file['name'] !== $index_file
     ) {
         // если задано преобразование файлов как в принципе
         // и текущий файл не является индексным

@@ -28,8 +28,8 @@ $state = State::getInstance();
 // если пути нет или была ошибка, то выходим из этого разбора
 
 if (
-    !System::typeIterable($uri->route) ||
-    $state->get('error')
+    !System::typeIterable($uri->route)
+    || $state->get('error')
 ) {
     return;
 }

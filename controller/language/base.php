@@ -69,8 +69,8 @@ $array['uri_first'] = $lang->mergeLang($array['uri_first']);
 $array['uri_second'] = $lang->mergeLang($array['uri_second']);
 
 if (
-    $array['uri_first'] ||
-    $array['uri_second']
+    $array['uri_first']
+    || $array['uri_second']
 ) {
     if ($array['uri_first']) {
         $array['uri'] = $array['uri_first'];
@@ -97,13 +97,13 @@ Sessions::setCookie('lang', $lang->lang);
 // устанавливаем урл
 
 if (
-    System::type($config_lang, 'string') &&
-    $config_lang !== $lang->lang
+    System::type($config_lang, 'string')
+    && $config_lang !== $lang->lang
 ) {
     $uri->language = $lang->lang;
 } elseif (
-    !$config_lang ||
-    $config_lang === $uri->language
+    !$config_lang
+    || $config_lang === $uri->language
 ) {
     $uri->language = null;
 }

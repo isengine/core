@@ -25,9 +25,9 @@ if (!empty($list)) {
     $in_range = Ip::range($ip, $list);
 
     if (
-        ($mode === 'blacklist' && $in_range) ||
-        ($mode === 'whitelist' && !$in_range) ||
-        ($mode === 'develop' && !$in_range)
+        ($mode === 'blacklist' && $in_range)
+        || ($mode === 'whitelist' && !$in_range)
+        || ($mode === 'develop' && !$in_range)
     ) {
         $block = true;
     }

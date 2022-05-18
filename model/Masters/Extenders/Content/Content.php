@@ -21,8 +21,8 @@ class Content extends Entry
 
         $router = Router::getInstance();
 
-        $name = $router->content['name'];
-        $parents = $router->content['parents'];
+        $name = isset($router->content['name']) ? $router->content['name'] : null;
+        $parents = isset($router->content['parents']) ? $router->content['parents'] : null;
 
         $db = Database::getInstance();
         $db->collection('content');

@@ -21,9 +21,9 @@ class Font extends Master
 
         if ($item[1]) {
             $item[1] = Strings::split($item[1], ';, ');
-            $print .= ':ital,wght@' .
-                '0,' . Strings::join($item[1], ';0,') . ';' .
-                '1,' . Strings::join($item[1], ';1,');
+            $print .= ':ital,wght@'
+                . '0,' . Strings::join($item[1], ';0,') . ';'
+                . '1,' . Strings::join($item[1], ';1,');
         }
 
         if ($item[2]) {

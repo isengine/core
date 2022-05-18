@@ -30,7 +30,7 @@ $router = Router::getInstance();
 
 // читаем массив шаблонов
 
-$templates = Local::search($config->get('path:templates'), ['return' => 'folders']);
+$templates = Local::list($config->get('path:templates'), ['return' => 'folders']);
 foreach ($templates['folders'] as $item) {
     $templates['array'][] = $item['name'];
 }
@@ -94,7 +94,7 @@ if ($array['section'] && $array['error']) {
     if (!Objects::match($templates, $array['section'])) {
         $array['section'] = null;
     } else {
-        $templates = Local::search(
+        $templates = Local::list(
             $config->get('path:templates') . $array['section'] . DS . 'html' . DS . 'sections' . DS,
             ['return' => 'folders']
         );

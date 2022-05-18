@@ -26,8 +26,8 @@ $cache_custom = $config->get('cache:browser:custom');
 $cache_default = $config->get('cache:browser:default');
 
 if (
-    (!$cache_custom && !$cache_default) ||
-    ($cache_custom && !$cache)
+    (!$cache_custom && !$cache_default)
+    || ($cache_custom && !$cache)
 ) {
     return;
 }
@@ -68,9 +68,9 @@ $start_time = $cache_time - $set_time;
 $uri = Uri::getInstance();
 
 $page =
-    $config->get('path:templates') .
-    $router->template['name'] . DS . 'html' . DS . 'inner' . DS .
-    (
+    $config->get('path:templates')
+    . $router->template['name'] . DS . 'html' . DS . 'inner' . DS
+    . (
         System::set($uri->getRoute())
         ? Strings::join($uri->getRoute(), DS)
         : 'index'
@@ -90,11 +90,11 @@ $settings_time = $router->getData('mtime');
 // вытаскиваем страницу из кэша
 
 if (
-    $cache_time &&
-    $cache_time >= $now_time &&
-    $page_time < $start_time &&
-    $template_time < $start_time &&
-    $settings_time < $start_time
+    $cache_time
+    && $cache_time >= $now_time
+    && $page_time < $start_time
+    && $template_time < $start_time
+    && $settings_time < $start_time
 ) {
     Sessions::setHeaderCode(304);
     exit;

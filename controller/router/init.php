@@ -42,8 +42,8 @@ System::includes('base', $path);
 // правила роутинга
 
 if (
-    !$state->get('error') &&
-    $config->get('router:reload')
+    !$state->get('error')
+    && $config->get('router:reload')
 ) {
     System::includes('reload', $path);
 }

@@ -30,9 +30,9 @@ class Form extends Master
         $instance = Parser::fromString($this->getData($field));
 
         if (
-            !$instance ||
-            !System::typeIterable($instance) ||
-            Objects::len($instance) < 3
+            !$instance
+            || !System::typeIterable($instance)
+            || Objects::len($instance) < 3
         ) {
             return;
         }
@@ -229,7 +229,8 @@ class Form extends Master
         $config = Config::getInstance();
 
         $array = [];
-        $string = Sessions::getCookie('previous-url');
+        //$string = Sessions::getCookie('previous-url');
+        $string = Sessions::getCookie('current-url');
 
         // раньше работали с current-url, очевидно из-за того, что
         // система не перезаписывала current и previous при перезагрузке с запросом по api,
@@ -269,8 +270,8 @@ class Form extends Master
         } else {
             $string .=
                 System::type($config->get('url:rest'), 'numeric')
-                ? null
-                : (Strings::last($string) === '/' ? null : '/') . $config->get('url:rest') . '/';
+                ? ''
+                : (Strings::last($string) === '/' ? '' : '/') . $config->get('url:rest') . '/';
             $string .= $string .= Paths::restJoin($array);
             // это никакая не ошибка?
         }

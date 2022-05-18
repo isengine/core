@@ -61,8 +61,8 @@ if ($user->getFieldsBySpecial('ban')) {
     // проверка на присутствие текущего хэша агента в списке разрешенных
 
     if (
-        is_array($allow['user_agent']) &&
-        in_array($allow['session_agent'], $allow['user_agent'])
+        is_array($allow['user_agent'])
+        && in_array($allow['session_agent'], $allow['user_agent'])
     ) {
         $allow['agent'] = true;
     }

@@ -53,7 +53,7 @@ class Folder extends Master
         // from - real путь, где лежит исходний файл
         // to - real путь, где будет лежать готовый файл
 
-        $list = Local::search($this->from, ['return' => 'files', 'subfolders' => true, 'merge' => true]);
+        $list = Local::list($this->from, ['return' => 'files', 'subfolders' => true, 'merge' => true]);
 
         Objects::each($list, function ($item) {
             Local::createFolder($this->to . $item['path']);

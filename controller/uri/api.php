@@ -23,10 +23,13 @@ $api_name = $config->get('api:name');
 $api_key = $config->get('api:key');
 
 if (
-    $config->get('api:server') ||
-    $api_name && (
-        $uri->getPathArray(0) === $api_name ||
-        $uri->getPathArray(1) === $api_name
+    $config->get('api:server')
+    || (
+        $api_name
+        && (
+            $uri->getPathArray(0) === $api_name
+            || $uri->getPathArray(1) === $api_name
+        )
     )
 ) {
     $key = $uri->getData($api_key);

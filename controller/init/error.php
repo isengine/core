@@ -33,10 +33,10 @@ $next = Strings::get($find, Strings::find($find, $path) + Strings::len($path), 1
 // error из пути, согласно заданным настройкам
 
 if (
-    $path &&
-    System::type($code, 'numeric') &&
-    Strings::match($find, $path) &&
-    Objects::match(['', '/', '?', '&'], $next)
+    $path
+    && System::type($code, 'numeric')
+    && Strings::match($find, $path)
+    && Objects::match(['', '/', '?', '&'], $next)
 ) {
     $state->set('error', $code);
 }
@@ -52,9 +52,9 @@ if (
 // error из первого параметра get, согласно общепринятой совместимости с настройками из файла htaccess
 
 if (
-    !empty($_GET['error']) &&
-    System::type($_GET['error'], 'numeric') &&
-    Objects::first($_GET, 'key') === 'error'
+    !empty($_GET['error'])
+    && System::type($_GET['error'], 'numeric')
+    && Objects::first($_GET, 'key') === 'error'
 ) {
     $state->set('error', $_GET['error']);
 }

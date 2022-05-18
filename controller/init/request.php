@@ -45,8 +45,8 @@ if ($referrer && !Strings::match($referrer, $server)) {
             );
 
             if (
-                ($secure === 'blacklist' && $match) ||
-                ($secure === 'whitelist' && !$match)
+                ($secure === 'blacklist' && $match)
+                || ($secure === 'whitelist' && !$match)
             ) {
                 $isreferrer = false;
             }

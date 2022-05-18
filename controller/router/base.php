@@ -75,8 +75,8 @@ if ($path && !Strings::find($path, $link, 0)) {
 if ($state->get('error') === 404) {
     $section = Objects::first($uri->getRoute(), 'value');
     if (
-        $section &&
-        Local::matchFolder($config->get('path:templates') . $section)
+        $section
+        && Local::matchFolder($config->get('path:templates') . $section)
     ) {
         $state->set('section', $section);
     }

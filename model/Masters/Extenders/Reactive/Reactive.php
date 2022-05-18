@@ -35,7 +35,7 @@ class Reactive
 
     public function setList()
     {
-        $list = Local::search($this->folder, ['subfolders' => true, 'return' => 'files', 'merge' => true]);
+        $list = Local::list($this->folder, ['subfolders' => true, 'return' => 'files', 'merge' => true]);
 
         Objects::each($list, function ($item) {
             $this->string .= 'x' . Strings::get(filemtime($item['fullpath']), -4);

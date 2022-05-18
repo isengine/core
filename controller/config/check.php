@@ -38,9 +38,10 @@ foreach ($extensions as $item) {
 // Проверяем взаимодействие констант
 
 if (
-    $config->get('secure:writing') && (
-        !$config->get('db:writing:user') ||
-        !$config->get('db:writing:pass')
+    $config->get('secure:writing')
+    && (
+        !$config->get('db:writing:user')
+        || !$config->get('db:writing:pass')
     )
 ) {
     $log->data[] = 'system constants is set wrong';

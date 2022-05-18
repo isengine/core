@@ -34,8 +34,8 @@ $path = __DIR__;
 // если сессия не была открыта и доступ по api не был разрешен
 if (
     !(
-        $state->get('session') ||
-        $state->get('api') && $state->get('api') !== true
+        $state->get('session')
+        || $state->get('api') && $state->get('api') !== true
     )
 ) {
     return;

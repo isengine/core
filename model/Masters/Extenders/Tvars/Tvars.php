@@ -50,9 +50,9 @@ class Tvars extends Data
     public function objects($data)
     {
         if (
-            System::typeIterable($data) &&
-            $this->lang &&
-            Objects::match(Objects::keys($data), $this->lang)
+            System::typeIterable($data)
+            && $this->lang
+            && Objects::match(Objects::keys($data), $this->lang)
         ) {
             $data = $data[$this->lang];
         }
