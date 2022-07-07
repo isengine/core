@@ -42,6 +42,8 @@ if ($route) {
     if (Objects::match($router->structure->getNames(), $route)) {
         $router->current = $router->structure->getByName($route);
     } else {
+        $router->current = new Entry();
+        $router->current->addDataKey('link', '');
         $state->set('error', 404);
         $state->set('reason', 'page not found in structure');
     }
@@ -60,7 +62,7 @@ if ($route) {
 // и если нет совпадения, то переназначаем текущий урл
 // сохраняя при этом параметры строки
 
-$link = $router->current->data['link'];
+$link = $router->current->getData('link');
 
 //echo $link . '<br>';
 //echo $path . '<br>';

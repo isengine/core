@@ -126,7 +126,7 @@ class Seo extends Tvars
         foreach ($this->getData('content') as $key => $item) {
             $this->addData(
                 $key,
-                $content[$item]
+                !empty($content[$item]) ? $content[$item] : ''
             );
         }
         unset($key, $item);

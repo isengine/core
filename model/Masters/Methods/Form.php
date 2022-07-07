@@ -50,7 +50,11 @@ class Form extends Master
             null
         );
 
-        $module->launch($instance[1] . ':' . $instance[0], $instance[2] . ':' . 'settings');
+        $module->launch(
+            $instance[1] . ':' . $instance[0],
+            Strings::join(Objects::get($instance, 2), ':') . '|' . 'settings'
+        );
+
         unset($module);
 
         $sets = Parser::fromJson($state->get('form'));
@@ -68,29 +72,42 @@ class Form extends Master
             $value = $this->getData($name);
             $change = null;
 
-            if (System::typeIterable($item['data'])) {
+            if (
+                System::typeIterable($item['data'])
+                && !empty($value)
+            ) {
                 $change = true;
                 $value = $item['data'][$value];
             }
 
-            if ($value && !$change && $options['filter']) {
+            if (
+                $value
+                && !$change
+                && !empty($options['filter'])
+            ) {
                 $filter = Strings::split($options['filter'], ':');
-                foreach ($filter as $item) {
-                    if (Strings::match($value, $item)) {
+                foreach ($filter as $i) {
+                    if (Strings::match($value, $i)) {
                         $change = true;
-                        $value = Strings::replace($value, $item);
+                        $value = Strings::replace($value, $i);
                         $this->error($name, 'filter');
                     }
                 }
-                unset($item);
+                unset($i);
             }
 
-            if ($value && $options['prepare']) {
+            if (
+                $value
+                && !empty($options['prepare'])
+            ) {
                 $change = true;
                 $value = $this->prepareFields($value, $options['prepare']);
             }
 
-            if ($value && $options['validate']) {
+            if (
+                $value
+                && !empty($options['validate'])
+            ) {
                 $verify = $this->prepareFields($value, $options['validate']);
                 if ($value !== $verify) {
                     $change = true;
@@ -100,35 +117,57 @@ class Form extends Master
                 unset($verify);
             }
 
-            if ($value && $item['min'] && $value < $item['min']) {
+            if (
+                $value
+                && !empty($item['min'])
+                && $value < $item['min']
+            ) {
                 $change = true;
                 $value = $item['min'];
                 $this->error($name, 'min');
             }
 
-            if ($value && $item['max'] && $value > $item['max']) {
+            if (
+                $value
+                && !empty($item['max'])
+                && $value > $item['max']
+            ) {
                 $change = true;
                 $value = $item['max'];
                 $this->error($name, 'max');
             }
 
-            if ($value && $item['minlength'] && Strings::len($value) < $item['minlength']) {
+            if (
+                $value
+                && !empty($item['minlength'])
+                && Strings::len($value) < $item['minlength']
+            ) {
                 $this->error($name, 'minlength');
             }
 
-            if ($value && $item['maxlength'] && Strings::len($value) > $item['maxlength']) {
+            if (
+                $value
+                && !empty($item['maxlength'])
+                && Strings::len($value) > $item['maxlength']
+            ) {
                 $change = true;
                 $value = Strings::get($value, 0, $item['maxlength']);
                 $this->error($name, 'maxlength');
             }
 
-            if ($value && $options['match']) {
+            if (
+                $value
+                && !empty($options['match'])
+            ) {
                 if (!Matches::regexpOf($value, $options['match'], true)) {
                     $this->error($name, 'match');
                 }
             }
 
-            if (!System::set($value) && $item['required']) {
+            if (
+                !System::set($value)
+                && $item['required']
+            ) {
                 $this->error($name, 'required');
             }
 

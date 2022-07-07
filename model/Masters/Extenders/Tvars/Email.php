@@ -5,7 +5,7 @@ namespace is\Masters\Extenders\Tvars;
 use is\Helpers\Objects;
 use is\Helpers\Prepare;
 
-class Mail extends Master
+class Email extends Master
 {
     public function launch($data)
     {
@@ -17,7 +17,7 @@ class Mail extends Master
         $url = $data[0];
         $class = $data[1] ? ' class="' . $data[1] . '"' : '';
 
-        if ($data[2]) {
+        if (!$data[2]) {
             $data[2] = $url;
         }
 
